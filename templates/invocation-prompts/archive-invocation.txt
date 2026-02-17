@@ -1,0 +1,89 @@
+Execute the Universal Seed Summary Invoker protocol v1.3 in ARCHIVE mode.
+
+This thread is complete or being permanently archived. Generate a comprehensive audit-grade summary that preserves maximum detail for long-term reference.
+
+Review the entire conversation thread from genesis to conclusion and create a complete archival summary following USS protocol specification.
+
+## Required Sections
+
+1. **HEADER (THREAD LOCK & AUDIT)**
+   - Thread_Archetype
+   - Ignition_Vector
+   - Focus_Domains
+   - Thread_Depth
+   - Completion_State
+   - Momentum_Indicator
+   - Finalization_Beacon
+   - Invoker
+
+2. **FAILURE SEMANTICS & INTEGRITY FLAGS**
+   - Incoherence_Flags
+   - Compression_Loss_Warnings
+   - Inference_Boundary_Alerts
+   - Resolution_Impossibility_Markers
+   - Failure_Severity
+
+3. **COSMIC CORE & EMERGENCE**
+   - Ontological_Constructs
+   - Paradigm_Nodes
+   - Emergent_Universals
+
+4. **DECISIONS & GRAFTS**
+   - Architecture_Commits
+   - Heuristic_Branches
+   - Epistemic_Locks
+
+5. **OPEN VECTORS & THRUST**
+   - Unresolved_Queries
+   - Priority_Vectors
+   - Risk_Surfaces
+
+6. **THREAD TOPOLOGY** (Optional)
+   - Parent_Threads
+   - Child_Threads
+   - Sibling_Threads
+   - Cross_Project_Links
+
+7. **EXECUTION ARTIFACTS** (Required for Archive)
+   - Generated_Outputs
+   - Tool_Usage_Patterns
+   - Reusability_Index
+   - Integration_Notes
+
+8. **INVOCATION LOCK**
+   - Final sealing paragraph declaring archive complete
+
+## Output Format
+
+```markdown
+---
+mode: archive
+version: 1.3
+protocol: USS
+timestamp: [CURRENT_TIMESTAMP]
+thread_status: Complete
+---
+
+### HEADER (THREAD LOCK & AUDIT)
+
+**Field_Name**: value
+```
+
+## Enforcement Rules
+
+- **Maximum detail preservation**: Archive mode prioritizes completeness
+- **Complete artifact documentation**: List all outputs, files, code generated
+- **Reusability focus**: Document what can be extracted for future use
+- **Tool usage tracking**: Note what worked, what failed
+- **Token budget**: Target 3000-5000 tokens (comprehensive detail)
+
+## Special Instructions for Archive Mode
+
+- Document **all generated artifacts** with filenames/descriptions
+- Note **tool and API usage patterns** with performance data
+- Identify **reusable components** for future projects
+- Provide **integration notes** for how artifacts connect to other systems
+- Include **research findings summary** if applicable
+- Mark thread as **complete and sealed**
+
+Begin USS-ARCHIVE execution now.

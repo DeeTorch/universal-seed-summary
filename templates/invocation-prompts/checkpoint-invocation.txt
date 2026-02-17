@@ -1,0 +1,79 @@
+Execute the Universal Seed Summary Invoker protocol v1.3 in CHECKPOINT mode.
+
+Review this entire conversation thread from the first exchange to this invocation point and generate a structured summary following the USS protocol specification.
+
+## Required Sections
+
+1. **HEADER (THREAD LOCK & AUDIT)**
+   - Thread_Archetype
+   - Ignition_Vector
+   - Focus_Domains
+   - Thread_Depth
+   - Completion_State
+   - Momentum_Indicator
+   - Finalization_Beacon
+   - Invoker
+
+2. **FAILURE SEMANTICS & INTEGRITY FLAGS**
+   - Incoherence_Flags
+   - Compression_Loss_Warnings
+   - Inference_Boundary_Alerts
+   - Resolution_Impossibility_Markers
+   - Failure_Severity
+
+3. **COSMIC CORE & EMERGENCE**
+   - Ontological_Constructs
+   - Paradigm_Nodes
+   - Emergent_Universals
+
+4. **DECISIONS & GRAFTS**
+   - Architecture_Commits
+   - Heuristic_Branches
+   - Epistemic_Locks
+
+5. **OPEN VECTORS & THRUST**
+   - Unresolved_Queries
+   - Priority_Vectors
+   - Risk_Surfaces
+
+6. **INVOCATION LOCK**
+   - Final sealing paragraph (2-4 sentences)
+
+## Output Format
+
+```markdown
+---
+mode: checkpoint
+version: 1.3
+protocol: USS
+timestamp: [CURRENT_TIMESTAMP]
+---
+
+### HEADER (THREAD LOCK & AUDIT)
+
+**Field_Name**: value
+
+---
+
+### SECTION NAME
+
+...
+```
+
+## Enforcement Rules
+
+- **Thread-derived only**: All content must come strictly from this conversation
+- **No external assumptions**: Do not add information from outside this thread
+- **Explicit uncertainty**: Declare all absences and unknowns explicitly
+- **Truth over helpfulness**: Accuracy over narrative smoothness
+- **Token budget**: Target 800-1200 tokens
+
+## Formatting Standards
+
+- Use `###` for section headers
+- Use `**Field_Name**:` format for fields
+- Use `-` bullets for lists
+- Use `---` to separate major sections
+- Include YAML frontmatter at top
+
+Begin USS-CHECKPOINT execution now.

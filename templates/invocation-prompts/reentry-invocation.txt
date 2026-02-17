@@ -1,0 +1,81 @@
+Execute the Universal Seed Summary Invoker protocol v1.3 in RE-ENTRY mode.
+
+This thread has been dormant. Generate a comprehensive summary that enables full context restoration and re-orientation for continuing this conversation.
+
+Review the entire conversation thread from genesis to this point and create a detailed summary following USS protocol specification.
+
+## Required Sections
+
+1. **HEADER (THREAD LOCK & AUDIT)**
+   - Thread_Archetype
+   - Ignition_Vector
+   - Focus_Domains
+   - Thread_Depth
+   - Completion_State
+   - Momentum_Indicator
+   - Finalization_Beacon
+   - Invoker
+
+2. **FAILURE SEMANTICS & INTEGRITY FLAGS**
+   - Incoherence_Flags (list contradictions)
+   - Compression_Loss_Warnings (what nuance was sacrificed)
+   - Inference_Boundary_Alerts
+   - Resolution_Impossibility_Markers (what remains unresolved)
+   - Failure_Severity
+
+3. **COSMIC CORE & EMERGENCE**
+   - Ontological_Constructs (foundational concepts)
+   - Paradigm_Nodes (framing shifts)
+   - Emergent_Universals (generalizable principles)
+
+4. **DECISIONS & GRAFTS**
+   - Architecture_Commits (locked decisions)
+   - Heuristic_Branches (exploratory paths)
+   - Epistemic_Locks (non-negotiable truths)
+
+5. **OPEN VECTORS & THRUST**
+   - Unresolved_Queries
+   - Priority_Vectors (next actions)
+   - Risk_Surfaces
+
+6. **THREAD TOPOLOGY** (Optional - only if applicable)
+   - Parent_Threads
+   - Child_Threads
+   - Sibling_Threads
+   - Cross_Project_Links
+
+7. **INVOCATION LOCK**
+   - Final sealing paragraph
+
+## Output Format
+
+```markdown
+---
+mode: re_entry
+version: 1.3
+protocol: USS
+timestamp: [CURRENT_TIMESTAMP]
+thread_dormancy: [DAYS/WEEKS since last activity]
+---
+
+### HEADER (THREAD LOCK & AUDIT)
+
+**Field_Name**: value
+```
+
+## Enforcement Rules
+
+- **Comprehensive context**: Provide enough detail for complete re-orientation
+- **Thread-derived only**: No external information
+- **Explicit about dormancy**: Note what context might have changed during absence
+- **Decision clarity**: Clearly distinguish committed vs exploratory
+- **Token budget**: Target 1500-2500 tokens (more detail than checkpoint)
+
+## Special Instructions for Re-entry Mode
+
+- Emphasize **what was decided** vs **what remained open**
+- Note the **last active context** before dormancy
+- Identify **recommended re-entry point** for resuming work
+- Highlight **priority vectors** for next steps
+
+Begin USS-SUMMARIZE execution now.

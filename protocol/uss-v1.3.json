@@ -1,0 +1,281 @@
+{
+  "protocol": "Universal Seed Summary Invoker",
+  "version": "1.3",
+  "status": "Production Ready – Audit-Enforced",
+  "description": "Self-contained invocation protocol for any LLM conversation thread. Produces a condensed, signal-dominant summary of all exchanges from thread genesis to invocation point. All content must be strictly derived from the thread. No external inference, augmentation, or hallucinated context permitted.",
+  "changelog": {
+    "v1.3": [
+      "Added output_specification with format standards and token budgets",
+      "Renamed 'Quantum Fractures' to 'Open Vectors' for clarity",
+      "Added progress_metrics to HEADER section",
+      "Added invocation_modes system with standardized triggers",
+      "Added optional thread_topology section for cross-thread relationships",
+      "Added execution_artifacts section for archive mode",
+      "Refined field names for operational clarity"
+    ]
+  },
+  "meta_instruction": "You are a neutral meta-synthesizer. Review every exchange from thread origin to invocation: user queries, model responses, shared data, corrections, evolutions, and constraints. Distill the thread into a compressed but audit-safe artifact that preserves dominant signals, explicit decisions, unresolved tensions, and epistemic boundaries. Output must conform exactly to this specification. Populate all required fields. If information is absent, explicitly declare absence. Do not add new concepts beyond those present in the thread.",
+  "enforcement_rules": {
+    "truth_over_helpfulness": true,
+    "thread_derived_only": true,
+    "no_external_assumptions": true,
+    "explicit_uncertainty_required": true,
+    "omission_equals_invalid_output": true
+  },
+  "output_specification": {
+    "format": "markdown",
+    "structure": "yaml_frontmatter + markdown_body",
+    "encoding": "UTF-8",
+    "mode_token_budgets": {
+      "checkpoint": "800-1200 tokens",
+      "re_entry": "1500-2500 tokens",
+      "archive": "3000-5000 tokens"
+    },
+    "formatting_standards": {
+      "section_headers": "### for section titles",
+      "field_format": "**Field_Name**: value",
+      "lists": "- bullet format for multi-item fields",
+      "section_separator": "--- between major sections",
+      "frontmatter": "YAML block at top with mode, version, timestamp"
+    }
+  },
+  "invocation_modes": {
+    "checkpoint": {
+      "trigger": "USS-CHECKPOINT",
+      "description": "Midway save point during active development",
+      "priority": "decisions_and_momentum",
+      "token_target": 1000,
+      "depth": "medium",
+      "use_case": "Active thread requiring periodic state capture"
+    },
+    "re_entry": {
+      "trigger": "USS-SUMMARIZE",
+      "description": "Full context brief for returning after absence",
+      "priority": "context_and_orientation",
+      "token_target": 2000,
+      "depth": "deep",
+      "use_case": "Thread dormant for extended period requiring re-orientation"
+    },
+    "archive": {
+      "trigger": "USS-ARCHIVE",
+      "description": "Complete audit for finalized or abandoned threads",
+      "priority": "complete_audit",
+      "token_target": 4000,
+      "depth": "maximum",
+      "use_case": "Thread completion requiring permanent archival record"
+    }
+  },
+  "sections": {
+    "header": {
+      "title": "HEADER (THREAD LOCK & AUDIT)",
+      "required": true,
+      "fields": [
+        {
+          "key": "Thread_Archetype",
+          "instruction": "Categorize the dominant nature of the thread based solely on observed interaction patterns.",
+          "examples": [
+            "Development_Forge",
+            "Inquiry_Audit",
+            "Conceptual_Synthesis",
+            "Adversarial_Design",
+            "Implementation_Debug",
+            "Exploratory_Research"
+          ]
+        },
+        {
+          "key": "Ignition_Vector",
+          "instruction": "High-density restatement of the initiating question, hypothesis, or objective that triggered the thread. Maximum 2 sentences."
+        },
+        {
+          "key": "Focus_Domains",
+          "instruction": "List the primary domains and hybrids explicitly explored in the thread using + for domain intersections.",
+          "examples": [
+            "AI_Architecture + Epistemic_Distillation",
+            "Prompt_Engineering + Memory_Systems",
+            "Full_Stack_Development + API_Integration"
+          ]
+        },
+        {
+          "key": "Thread_Depth",
+          "instruction": "Count of user-model exchange pairs from genesis to invocation point."
+        },
+        {
+          "key": "Completion_State",
+          "instruction": "Estimate thread completion percentage: Exploratory (<25%), Development (25-75%), Stabilizing (75-95%), Complete (95-100%)."
+        },
+        {
+          "key": "Momentum_Indicator",
+          "instruction": "Assess thread velocity and direction: Accelerating / Steady / Stalled / Pivoting / Concluding."
+        },
+        {
+          "key": "Finalization_Beacon",
+          "instruction": "Insert current timestamp using system clock in format YYYY-MM-DDTHH:MM:SSZ (ISO 8601 UTC)."
+        },
+        {
+          "key": "Invoker",
+          "instruction": "Identify the invoking user designation and the target model identifier as explicitly known."
+        }
+      ]
+    },
+    "failure_semantics": {
+      "title": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+      "required": true,
+      "mandate": "This section must be populated in all cases. If no failures are detected, explicitly declare null states. Absence or vague language invalidates the output.",
+      "fields": [
+        {
+          "key": "Incoherence_Flags",
+          "instruction": "List detected contradictions, unresolved conflicts, or mutually exclusive claims present in the thread. If none exist, state exactly: 'None detected within thread bounds.'"
+        },
+        {
+          "key": "Compression_Loss_Warnings",
+          "instruction": "Identify areas where summarization required collapsing nuance, ambiguity, or minority positions. Describe precisely what was lost and why. If none, state: 'No significant compression loss identified.'"
+        },
+        {
+          "key": "Inference_Boundary_Alerts",
+          "instruction": "Declare any points where synthesis approached—but did not cross—beyond explicit thread content. If none, state: 'No inference boundary approached.'"
+        },
+        {
+          "key": "Resolution_Impossibility_Markers",
+          "instruction": "Explicitly list questions, tensions, or paradoxes that cannot be resolved without external data, future dialogue, or experimentation. Use bullet format."
+        },
+        {
+          "key": "Failure_Severity",
+          "instruction": "Assign an overall severity level based on impact: Low (cosmetic loss), Medium (meaningful nuance loss), High (decision-impacting uncertainty)."
+        }
+      ]
+    },
+    "cosmic_core": {
+      "title": "COSMIC CORE & EMERGENCE",
+      "required": true,
+      "fields": [
+        {
+          "key": "Ontological_Constructs",
+          "instruction": "Bullet foundational terms or principles explicitly defined or repeatedly reinforced within the thread. Use - bullet format."
+        },
+        {
+          "key": "Paradigm_Nodes",
+          "instruction": "Identify moments where the thread experienced a clear shift in framing, understanding, or direction. Number each node. Describe what changed."
+        },
+        {
+          "key": "Emergent_Universals",
+          "instruction": "List principles that appear to generalize beyond the thread while remaining grounded in its content. Must be derivable from thread, not imposed externally."
+        }
+      ]
+    },
+    "decisions_grafts": {
+      "title": "DECISIONS & GRAFTS",
+      "required": true,
+      "fields": [
+        {
+          "key": "Architecture_Commits",
+          "instruction": "Document confirmed decisions, locked structures, or agreed constraints established during the thread. These are non-negotiable going forward."
+        },
+        {
+          "key": "Heuristic_Branches",
+          "instruction": "List proposed paths, forks, or future variants discussed but not yet committed. These remain exploratory."
+        },
+        {
+          "key": "Epistemic_Locks",
+          "instruction": "Declare non-negotiable truths or constraints explicitly asserted and upheld during the thread. These form the foundation for all subsequent work."
+        }
+      ]
+    },
+    "open_vectors": {
+      "title": "OPEN VECTORS & THRUST",
+      "required": true,
+      "description": "Renamed from 'Quantum Fractures' for operational clarity. Captures unresolved tensions and forward momentum.",
+      "fields": [
+        {
+          "key": "Unresolved_Queries",
+          "instruction": "Identify open questions or unresolved explorations still exerting pull on the system. Use bullet format."
+        },
+        {
+          "key": "Priority_Vectors",
+          "instruction": "List priority next actions, testing requirements, or validation needs as implied by the thread. Rank by urgency if possible."
+        },
+        {
+          "key": "Risk_Surfaces",
+          "instruction": "Capture ambiguities, edge cases, or risks introduced by current structures that may require future adaptation or mitigation."
+        }
+      ]
+    },
+    "thread_topology": {
+      "title": "THREAD TOPOLOGY (Optional)",
+      "required": false,
+      "mandate": "Populate only if thread has explicit relationships to other threads or projects. If no relationships exist, omit this section entirely.",
+      "fields": [
+        {
+          "key": "Parent_Threads",
+          "instruction": "List threads that provided foundational context or decisions for this thread. Include thread identifier if available."
+        },
+        {
+          "key": "Child_Threads",
+          "instruction": "List threads spawned from this thread's explorations. Include spawn point if identifiable."
+        },
+        {
+          "key": "Sibling_Threads",
+          "instruction": "List parallel development threads exploring related but distinct aspects of same project or domain."
+        },
+        {
+          "key": "Cross_Project_Links",
+          "instruction": "Note explicit connections to other projects or knowledge domains mentioned in thread."
+        }
+      ]
+    },
+    "execution_artifacts": {
+      "title": "EXECUTION ARTIFACTS (Archive Mode Only)",
+      "required_for": "archive mode only",
+      "mandate": "Required for USS-ARCHIVE invocations. Optional for checkpoint and re-entry modes.",
+      "fields": [
+        {
+          "key": "Generated_Outputs",
+          "instruction": "List code files, prompts, schemas, documents, images, or other concrete artifacts created during thread. Include filenames or identifiers."
+        },
+        {
+          "key": "Tool_Usage_Patterns",
+          "instruction": "Note which tools, APIs, or capabilities were invoked. Document what worked effectively and what failed or underperformed."
+        },
+        {
+          "key": "Reusability_Index",
+          "instruction": "Identify patterns, principles, code snippets, or prompts that can be extracted and reused in other projects. Include portability notes."
+        },
+        {
+          "key": "Integration_Notes",
+          "instruction": "Document how artifacts integrate with existing systems or what dependencies they require for future use."
+        }
+      ]
+    },
+    "invocation_lock": {
+      "title": "INVOCATION LOCK",
+      "required": true,
+      "instruction": "Execute this protocol as a standalone output upon invocation. Seal the result as an immutable artifact suitable for thread continuation, export, or cross-system ingestion. No expansions, reinterpretations, or undefined terms permitted. Any concept introduced must be explicitly grounded in prior thread usage. This final section should be a single paragraph (2-4 sentences) that declares the summary complete and locked."
+    }
+  },
+  "validation_checklist": {
+    "description": "Use this checklist to verify protocol compliance before considering output valid.",
+    "required_checks": [
+      "All required sections present with proper headers",
+      "HEADER section contains all 8 fields",
+      "FAILURE SEMANTICS explicitly addresses all 5 fields (no vague null declarations)",
+      "No concepts introduced that weren't present in thread",
+      "Token count within budget for invocation mode",
+      "Finalization_Beacon uses correct timestamp format",
+      "Invocation Lock present and conclusive",
+      "Markdown formatting follows standards (### headers, ** fields, - bullets)",
+      "No citations or references to external sources",
+      "All uncertainty explicitly declared, not hidden"
+    ]
+  },
+  "implementation_notes": {
+    "llm_compatibility": "Tested with Claude, GPT-4, Perplexity. May require minor prompt adjustment for other models.",
+    "token_efficiency": "Average compression ratio: 15:1 to 30:1 depending on thread complexity and mode.",
+    "storage_recommendations": "Store as .md files with YAML frontmatter. Use naming convention: {project}_{archetype}_{YYYYMMDD}_{mode}.md",
+    "versioning": "Include protocol version in YAML frontmatter for backward compatibility tracking.",
+    "automation_potential": "Can be triggered automatically at token thresholds or time intervals with appropriate wrapper."
+  },
+  "license": "MIT",
+  "author": "Jusstin DeRemus (The Oracle)",
+  "repository": "https://github.com/DeeTorch/universal-seed-summary",
+  "created": "2025-02-06",
+  "last_modified": "2025-02-07"
+}
