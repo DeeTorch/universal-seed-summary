@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
 USS Protocol Compliance Validator
-Version 1.3
+Version 1.4 (ingestion-pack aware)
 
 Validates Universal Seed Summary Invoker output for protocol compliance.
-Checks required sections, field presence, formatting standards, and token budgets.
+Checks required sections, field presence, formatting standards, and token budgets,
+including Compression_Fidelity_Score and Resurrection_Hook.
 """
 
 import re
 import sys
 from pathlib import Path
-from typing import List, Tuple, Dict, NamedTuple
+from typing import List, NamedTuple
 import argparse
 
 
@@ -31,7 +32,7 @@ class USSValidator:
         "COSMIC CORE & EMERGENCE",
         "DECISIONS & GRAFTS",
         "OPEN VECTORS & THRUST",
-        "INVOCATION LOCK"
+        "INVOCATION LOCK",
     ]
 
     HEADER_FIELDS = [
@@ -42,7 +43,7 @@ class USSValidator:
         "Completion_State",
         "Momentum_Indicator",
         "Finalization_Beacon",
-        "Invoker"
+        "Invoker",
     ]
 
     FAILURE_SEMANTICS_FIELDS = [
@@ -50,13 +51,14 @@ class USSValidator:
         "Compression_Loss_Warnings",
         "Inference_Boundary_Alerts",
         "Resolution_Impossibility_Markers",
-        "Failure_Severity"
+        "Failure_Severity",
+        "Compression_Fidelity_Score",  # ingestion-pack extension
     ]
 
     TOKEN_BUDGETS = {
         "checkpoint": (800, 1200),
         "re_entry": (1500, 2500),
-        "archive": (3000, 5000)
+        "archive": (3000, 5000),
     }
 
     MIN_INVOCATION_LOCK_WORDS = 20  # Minimum words for 2-4 sentences
@@ -65,9 +67,9 @@ class USSValidator:
         self.content = content
         self.verbose = verbose
         self.mode = None
-        self.errors = []
-        self.warnings = []
-        self.info = []
+        self.errors: List[str] = []
+        self.warnings: List[str] = []
+        self.info: List[str] = []
 
     def validate(self) -> ValidationResult:
         """Run all validation checks"""
@@ -82,6 +84,9 @@ class USSValidator:
         is_valid = len(self.errors) == 0
         return ValidationResult(is_valid, self.errors, self.warnings, self.info)
 
+    # -------------------------------------------------------------------------
+    # Frontmatter
+    # -------------------------------------------------------------------------
     def _check_frontmatter(self):
         """Check for YAML frontmatter"""
         if not self.content.startswith("---"):
@@ -98,20 +103,27 @@ class USSValidator:
         # Check required frontmatter fields
         if "mode:" not in frontmatter:
             self.errors.append("Missing 'mode' field in frontmatter")
-        if "version:" not in frontmatter:
-            self.warnings.append("Missing 'version' field in frontmatter")
+
+        # Allow either protocol_version or version for backward compatibility
+        if "protocol_version:" not in frontmatter and "version:" not in frontmatter:
+            self.warnings.append(
+                "Missing 'protocol_version' or 'version' field in frontmatter"
+            )
+
         if "timestamp:" not in frontmatter:
             self.errors.append("Missing 'timestamp' field in frontmatter")
 
         # Extract mode for token budget checking
         mode_match = re.search(r"mode:\s*([^\s\n]+)", frontmatter)
         if mode_match:
-            # amazonq-ignore-next-line
             self.mode = mode_match.group(1)
             self.info.append(f"Detected mode: {self.mode}")
         else:
             self.mode = None
 
+    # -------------------------------------------------------------------------
+    # Sections
+    # -------------------------------------------------------------------------
     def _check_required_sections(self):
         """Check all required sections are present"""
         for section in self.REQUIRED_SECTIONS:
@@ -124,7 +136,7 @@ class USSValidator:
 
     def _check_header_fields(self):
         """Check HEADER section has all required fields"""
-        header_pattern = r"### HEADER.*?\n---"
+        header_pattern = r"### HEADER \(THREAD LOCK & AUDIT\).*?\n---"
         header_match = re.search(header_pattern, self.content, re.DOTALL)
 
         if not header_match:
@@ -152,18 +164,26 @@ class USSValidator:
 
         fs_content = fs_match.group(0)
 
+        # Check required fields exist
         for field in self.FAILURE_SEMANTICS_FIELDS:
             field_pattern = rf"\*\*{field}\*\*:"
             if not re.search(field_pattern, fs_content):
-                self.errors.append(f"Missing required FAILURE SEMANTICS field: {field}")
+                self.errors.append(
+                    f"Missing required FAILURE SEMANTICS field: {field}"
+                )
             else:
                 if self.verbose:
                     self.info.append(f"Found FAILURE SEMANTICS field: {field}")
 
         # Check for vague null declarations
         vague_patterns = [
-            "may be", "possibly", "some nuance", "might have",
-            "could be", "perhaps", "maybe"
+            "may be",
+            "possibly",
+            "some nuance",
+            "might have",
+            "could be",
+            "perhaps",
+            "maybe",
         ]
 
         fs_content_lower = fs_content.lower()
@@ -173,16 +193,29 @@ class USSValidator:
                     f"Potentially vague language in FAILURE SEMANTICS: '{pattern}'"
                 )
 
+        # Validate Compression_Fidelity_Score format: 0.00–1.00 or 'Unknown'
+        fidelity_pattern = (
+            r"\*\*Compression_Fidelity_Score\*\*:\s*(1\.00|0\.\d{1,2}|Unknown)"
+        )
+        if not re.search(fidelity_pattern, fs_content):
+            self.errors.append(
+                "FAILURE SEMANTICS: Compression_Fidelity_Score must be a float "
+                "between 0.00 and 1.00, or 'Unknown'."
+            )
+
+    # -------------------------------------------------------------------------
+    # Formatting
+    # -------------------------------------------------------------------------
     def _check_formatting(self):
         """Check formatting standards compliance"""
-        # Check section headers use ###
+        # Check section headers use ### (warn on # or ## for uppercase headings)
         invalid_headers = re.findall(r"^#{1,2}\s+[A-Z]", self.content, re.MULTILINE)
         if invalid_headers:
             self.warnings.append(
                 f"Found {len(invalid_headers)} headers not using ### format"
             )
 
-        # Check field format **Field_Name**: value
+        # Check field format **Field_Name**:
         fields = re.findall(r"\*\*(\w+)\*\*:", self.content)
         if self.verbose:
             self.info.append(f"Found {len(fields)} formatted fields")
@@ -191,13 +224,21 @@ class USSValidator:
         separators = re.findall(r"^---$", self.content, re.MULTILINE)
         if len(separators) < len(self.REQUIRED_SECTIONS):
             self.warnings.append(
-                "Fewer section separators than required sections"
+                "Fewer section separators than required sections "
+                "(expected at least one '---' between major sections)"
             )
 
+    # -------------------------------------------------------------------------
+    # Token budgets
+    # -------------------------------------------------------------------------
     def _check_token_budget(self):
         """Check token count against mode budget"""
-        if not hasattr(self, 'mode') or self.mode is None or self.mode not in self.TOKEN_BUDGETS:
-            self.warnings.append("Cannot validate token budget (unknown mode)")
+        if (
+            not hasattr(self, "mode")
+            or self.mode is None
+            or self.mode not in self.TOKEN_BUDGETS
+        ):
+            self.warnings.append("Cannot validate token budget (unknown or unsupported mode)")
             return
 
         # Rough token estimate: words * 1.3
@@ -221,6 +262,9 @@ class USSValidator:
         else:
             self.info.append("Token count within budget")
 
+    # -------------------------------------------------------------------------
+    # Invocation lock
+    # -------------------------------------------------------------------------
     def _check_invocation_lock(self):
         """Check INVOCATION LOCK section exists and is conclusive"""
         if "INVOCATION LOCK" not in self.content:
@@ -247,10 +291,21 @@ class USSValidator:
         conclusive_terms = ["complete", "locked", "sealed", "artifact", "ready"]
         if not any(term in lock_content.lower() for term in conclusive_terms):
             self.warnings.append(
-                "INVOCATION LOCK lacks conclusive language"
+                "INVOCATION LOCK lacks conclusive language (e.g., 'complete', 'locked', 'sealed', 'artifact', 'ready')"
+            )
+
+        # Validate Resurrection_Hook presence and format
+        hook_pattern = r"\*\*Resurrection_Hook\*\*:\s*> INGESTION:.*"
+        if not re.search(hook_pattern, lock_content):
+            self.errors.append(
+                "INVOCATION LOCK: Missing or improperly formatted Resurrection_Hook. "
+                "Must begin with '> INGESTION:'."
             )
 
 
+# -----------------------------------------------------------------------------
+# CLI
+# -----------------------------------------------------------------------------
 def main():
     parser = argparse.ArgumentParser(
         description="Validate USS protocol compliance for conversation summaries"
@@ -258,17 +313,18 @@ def main():
     parser.add_argument(
         "file",
         type=Path,
-        help="Path to USS summary markdown file"
+        help="Path to USS summary markdown file",
     )
     parser.add_argument(
-        "-v", "--verbose",
+        "-v",
+        "--verbose",
         action="store_true",
-        help="Show detailed validation info"
+        help="Show detailed validation info",
     )
     parser.add_argument(
         "--strict",
         action="store_true",
-        help="Treat warnings as errors"
+        help="Treat warnings as errors",
     )
 
     args = parser.parse_args()

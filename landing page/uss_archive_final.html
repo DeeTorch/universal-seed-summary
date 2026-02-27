@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#00d9ff">
+    <meta name="description" content="USS-ARCHIVE Protocol v1.3 — Complete Thread Preservation & Cross-Model Resurrection System for LLM Conversations. MUSS v1.0 Integration.">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <title>USS-ARCHIVE Protocol — Complete Thread Preservation &amp; Cross-Model Resurrection System</title>
+    <style>
+        /* ============================================================
+           CSS CUSTOM PROPERTIES
+        ============================================================ */
+        :root {
+            --bg-primary:      #0a0e1a;
+            --bg-secondary:    #121824;
+            --bg-tertiary:     #1a2332;
+            --accent-cyan:     #00d9ff;
+            --accent-cyan-soft:#7ecfdf;
+            --accent-purple:   #a78bfa;
+            --accent-pink:     #ff00aa;
+            --text-primary:    #e8edf4;
+            --text-secondary:  #9ca3af;
+            --text-muted:      #8b95a3;
+            --border-color:    #2d3748;
+            --code-bg:         #161d2d;
+            --success:         #10b981;
+            --warning:         #f59e0b;
+            --danger:          #ef4444;
+            --nav-height:      62px;
+            --spring:          cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-out:        cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* ============================================================
+           RESET & BASE — MOBILE FIRST
+        ============================================================ */
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: calc(var(--nav-height) + 16px);
+            font-size: 16px;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.8;
+            overflow-x: hidden;
+            font-feature-settings: "kern" 1, "liga" 1;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 68px;
+        }
+
+        /* ============================================================
+           A11Y — SKIP LINK
+        ============================================================ */
+        .skip-link {
+            position: absolute; top: -100%; left: 16px;
+            background: var(--accent-cyan); color: var(--bg-primary);
+            padding: 10px 20px; border-radius: 0 0 8px 8px;
+            font-weight: 700; text-decoration: none; z-index: 9999;
+            transition: top 0.2s;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* ============================================================
+           STICKY NAV — GLASSMORPHIC
+        ============================================================ */
+        .sticky-nav {
+            position: sticky; top: 0; z-index: 100;
+            height: var(--nav-height);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            background: rgba(18, 24, 36, 0.88);
+            border-bottom: 1px solid rgba(0, 217, 255, 0.18);
+            display: flex; align-items: center; padding: 0 20px;
+            opacity: 0; transform: translateY(-100%);
+            transition: opacity 0.35s var(--ease-out), transform 0.35s var(--ease-out);
+        }
+        .sticky-nav.visible { opacity: 1; transform: translateY(0); }
+        .nav-inner {
+            width: 100%; max-width: 1200px; margin: 0 auto;
+            display: flex; align-items: center;
+            justify-content: space-between; gap: 8px;
+        }
+        .nav-brand {
+            font-weight: 700; font-size: 0.85rem;
+            color: var(--accent-cyan); white-space: nowrap; flex-shrink: 0;
+        }
+        .nav-links { display: none; gap: 2px; list-style: none; }
+        .nav-links a {
+            display: flex; align-items: center;
+            padding: 6px 10px; color: var(--text-secondary);
+            text-decoration: none; font-size: 0.8rem; font-weight: 500;
+            border-radius: 6px; min-height: 44px;
+            transition: color 0.2s, background 0.2s;
+        }
+        .nav-links a:hover,
+        .nav-links a:focus-visible,
+        .nav-links a.active {
+            color: var(--accent-cyan);
+            background: rgba(0, 217, 255, 0.08);
+        }
+
+        /* ============================================================
+           HERO
+        ============================================================ */
+        .hero {
+            background: linear-gradient(135deg, #0a0e1a 0%, #1a2332 100%);
+            padding: clamp(70px,12vw,120px) 20px clamp(50px,8vw,80px);
+            text-align: center; position: relative; overflow: hidden;
+            border-bottom: 2px solid var(--accent-cyan);
+        }
+        .hero::before {
+            content: ''; position: absolute;
+            top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0,217,255,0.1) 0%, transparent 70%);
+            will-change: transform, opacity;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .hero::before { animation: pulse 8s ease-in-out infinite; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50%       { transform: scale(1.1); opacity: 0.6; }
+        }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 {
+            font-size: clamp(1.9rem, 5vw + 1rem, 3.5rem);
+            font-weight: 800; margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 50%, var(--accent-pink) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; letter-spacing: -0.5px; line-height: 1.15;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary); max-width: 800px;
+            margin: 0 auto 24px; line-height: 1.7;
+        }
+        .version-badge {
+            display: inline-block; padding: 8px 16px;
+            background: rgba(0,217,255,0.1); border: 1px solid var(--accent-cyan);
+            border-radius: 20px; color: var(--accent-cyan);
+            font-size: 0.85rem; font-weight: 600; margin-top: 10px;
+        }
+        .hero-stats {
+            display: flex; justify-content: center;
+            flex-wrap: wrap; gap: 12px; margin-top: 36px;
+        }
+        .hero-stat {
+            background: rgba(0,217,255,0.07);
+            border: 1px solid rgba(0,217,255,0.25);
+            border-radius: 10px; padding: 14px 22px;
+            min-width: 100px; text-align: center;
+        }
+        .hero-stat-value {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            font-weight: 800; color: var(--accent-cyan);
+            line-height: 1; margin-bottom: 5px;
+        }
+        .hero-stat-label {
+            font-size: 0.72rem; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.05em;
+        }
+
+        /* ============================================================
+           CONTAINER & SECTION
+        ============================================================ */
+        .container {
+            max-width: 1200px; margin: 0 auto;
+            padding: clamp(40px,6vw,60px) clamp(16px,4vw,20px);
+        }
+        .section { margin-bottom: clamp(50px,8vw,80px); }
+        .section-header { text-align: center; margin-bottom: clamp(30px,5vw,50px); }
+        .section-title {
+            font-size: clamp(1.5rem, 3.5vw + 0.5rem, 2.5rem);
+            font-weight: 700; margin-bottom: 15px; color: var(--text-primary);
+        }
+        .section-description {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-secondary); max-width: 700px; margin: 0 auto;
+        }
+
+        /* ============================================================
+           FEATURE GRID & CARDS
+        ============================================================ */
+        .feature-grid {
+            display: grid; grid-template-columns: 1fr;
+            gap: 24px; margin-top: 36px;
+        }
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px; padding: clamp(20px,4vw,30px);
+            transition: transform 0.3s var(--spring),
+                        border-color 0.3s var(--ease-out),
+                        box-shadow 0.3s var(--ease-out);
+            will-change: transform;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(0,217,255,0.18),
+                        inset 0 0 0 1px rgba(0,217,255,0.06);
+        }
+        .feature-icon {
+            font-size: 2.5rem; margin-bottom: 18px;
+            display: block; color: var(--accent-cyan);
+        }
+        .feature-title {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 600; margin-bottom: 12px; color: var(--text-primary);
+        }
+        .feature-text {
+            color: var(--text-secondary); line-height: 1.8; max-width: 68ch;
+        }
+
+        /* ============================================================
+           ARCHITECTURE — ACCORDION LAYERS
+        ============================================================ */
+        .architecture-diagram {
+            background: var(--bg-tertiary); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: clamp(20px,4vw,40px); margin: 30px 0;
+        }
+        .layer {
+            background: var(--bg-secondary); border-radius: 6px;
+            margin-bottom: 16px; overflow: hidden;
+            border-left: 4px solid var(--accent-cyan);
+            transition: box-shadow 0.25s var(--ease-out);
+        }
+        .layer:nth-child(2n)   { border-left-color: var(--accent-purple); }
+        .layer:nth-child(3n)   { border-left-color: var(--accent-pink); }
+        .layer:hover { box-shadow: 0 4px 20px rgba(0,217,255,0.1); }
+
+        details.layer summary {
+            list-style: none; cursor: pointer;
+            padding: 18px 22px;
+            display: flex; align-items: center;
+            justify-content: space-between; gap: 12px;
+            min-height: 44px; user-select: none;
+        }
+        details.layer summary::-webkit-details-marker { display: none; }
+        details.layer summary::after {
+            content: '+'; font-size: 1.4rem; color: var(--accent-cyan);
+            flex-shrink: 0; line-height: 1;
+            transition: transform 0.25s var(--spring);
+        }
+        details.layer[open] summary::after { transform: rotate(45deg); }
+        details.layer summary:focus-visible {
+            outline: 2px solid var(--accent-cyan); outline-offset: -2px;
+        }
+        .layer-title {
+            font-size: clamp(0.95rem, 2vw, 1.25rem);
+            font-weight: 600; color: var(--text-primary);
+        }
+        .layer-desc {
+            color: var(--text-secondary); line-height: 1.8;
+            padding: 0 22px 20px; max-width: 68ch;
+        }
+
+        /* ============================================================
+           CODE BLOCKS WITH COPY BUTTON
+        ============================================================ */
+        .code-wrap { position: relative; margin: 20px 0; }
+        .code-block {
+            background: var(--code-bg); border: 1px solid var(--border-color);
+            border-radius: 8px; padding: 22px;
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            font-family: 'Courier New', 'Consolas', monospace;
+            font-size: clamp(0.78rem, 1.5vw, 0.9rem); line-height: 1.7;
+            transition: border-left 0.25s var(--ease-out);
+        }
+        .code-block:hover { border-left: 4px solid var(--accent-cyan); }
+        .code-block code { color: var(--text-primary); }
+        .yaml-key     { color: var(--accent-cyan); }
+        .yaml-value   { color: var(--accent-purple); }
+        .yaml-comment { color: var(--text-muted); }
+
+        .copy-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(0,217,255,0.1);
+            border: 1px solid rgba(0,217,255,0.3);
+            color: var(--accent-cyan); font-size: 0.72rem; font-weight: 700;
+            padding: 5px 12px; border-radius: 6px; cursor: pointer;
+            min-height: 32px; min-width: 60px; font-family: inherit; z-index: 2;
+            transition: background 0.2s, color 0.2s, transform 0.2s var(--spring);
+        }
+        .copy-btn:hover { background: rgba(0,217,255,0.22); transform: scale(1.05); }
+        .copy-btn:focus-visible { outline: 2px solid var(--accent-cyan); outline-offset: 2px; }
+        .copy-btn.copied {
+            background: rgba(16,185,129,0.18);
+            border-color: var(--success); color: var(--success);
+        }
+
+        /* ============================================================
+           COMPARISON TABLE — STACKING ON MOBILE
+        ============================================================ */
+        .table-wrapper {
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            border-radius: 12px; position: relative; margin: 30px 0;
+        }
+        .table-wrapper::after {
+            content: ''; position: absolute; top: 0; right: 0;
+            width: 40px; height: 100%;
+            background: linear-gradient(to left, var(--bg-primary), transparent);
+            pointer-events: none; border-radius: 0 12px 12px 0;
+        }
+        .comparison-table {
+            width: 100%; border-collapse: collapse;
+            background: var(--bg-secondary); border-radius: 12px;
+            overflow: hidden; min-width: 700px;
+        }
+        .comparison-table th {
+            background: var(--bg-tertiary); color: var(--accent-cyan);
+            padding: 18px 16px; text-align: left; font-weight: 600;
+            border-bottom: 2px solid var(--border-color); font-size: 0.9rem;
+        }
+        .comparison-table td {
+            padding: 16px; border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary); font-size: 0.9rem; vertical-align: top;
+        }
+        .comparison-table tr:last-child td { border-bottom: none; }
+        .comparison-table tbody tr {
+            transition: background 0.2s var(--ease-out);
+        }
+        .comparison-table tbody tr:hover { background: rgba(0,217,255,0.04); }
+        .check-icon { color: var(--success); font-size: 1.1rem; }
+        .cross-icon { color: var(--danger); font-size: 1.1rem; }
+
+        @media (max-width: 700px) {
+            .table-wrapper::after { display: none; }
+            .comparison-table { min-width: unset; }
+            .comparison-table thead { display: none; }
+            .comparison-table tbody tr {
+                display: block; margin-bottom: 16px;
+                border: 1px solid var(--border-color);
+                border-radius: 10px; overflow: hidden;
+            }
+            .comparison-table td {
+                display: flex; flex-direction: column;
+                padding: 12px 14px; font-size: 0.85rem;
+                border-bottom: 1px solid rgba(45,55,72,0.6);
+            }
+            .comparison-table td::before {
+                content: attr(data-label);
+                font-weight: 600; color: var(--accent-cyan);
+                font-size: 0.72rem; text-transform: uppercase;
+                letter-spacing: 0.05em; margin-bottom: 4px;
+            }
+        }
+
+        /* ============================================================
+           CTA SECTION
+        ============================================================ */
+        .cta-section {
+            background: linear-gradient(135deg, #1a2332 0%, #0a0e1a 100%);
+            border: 2px solid var(--accent-cyan); border-radius: 16px;
+            padding: clamp(35px,6vw,60px) clamp(20px,5vw,40px);
+            text-align: center; margin: 60px 0; position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(circle at 50% 110%, rgba(167,139,250,0.1), transparent 65%);
+            pointer-events: none;
+        }
+        .cta-title {
+            font-size: clamp(1.4rem,3.5vw,2.5rem); font-weight: 700;
+            margin-bottom: 16px; color: var(--text-primary); position: relative;
+        }
+        .cta-text {
+            font-size: clamp(0.95rem,2vw,1.2rem); color: var(--text-secondary);
+            margin-bottom: 28px; max-width: 600px;
+            margin-left: auto; margin-right: auto; position: relative;
+        }
+        .btn-group {
+            display: flex; gap: 12px; justify-content: center;
+            flex-wrap: wrap; position: relative;
+        }
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 14px 32px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            color: white; text-decoration: none; border-radius: 30px;
+            font-weight: 700; font-size: clamp(0.9rem,2vw,1.05rem);
+            transition: transform 0.25s var(--spring),
+                        box-shadow 0.25s var(--ease-out),
+                        filter 0.2s;
+            border: none; cursor: pointer; min-height: 44px;
+            touch-action: manipulation; will-change: transform;
+        }
+        .btn:hover {
+            transform: scale(1.06);
+            box-shadow: 0 10px 30px rgba(0,217,255,0.35);
+            filter: brightness(1.12);
+        }
+        .btn:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-cyan); color: var(--accent-cyan);
+        }
+        .btn-secondary:hover { background: rgba(0,217,255,0.1); filter: none; }
+
+        /* ============================================================
+           WORKFLOW STEPS
+        ============================================================ */
+        .workflow-steps { display: flex; flex-direction: column; gap: 24px; margin: 36px 0; }
+        .step { display: flex; align-items: flex-start; gap: 16px; }
+        .step-number {
+            min-width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-purple) 100%);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 1.4rem; font-weight: 700;
+            color: white; flex-shrink: 0;
+            transition: transform 0.5s var(--spring);
+        }
+        .step:hover .step-number { transform: rotate(360deg); }
+        .step-content {
+            flex: 1; background: var(--bg-secondary);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            padding: clamp(18px,3vw,25px);
+            transition: border-color 0.25s var(--ease-out);
+        }
+        .step:hover .step-content { border-color: rgba(0,217,255,0.35); }
+        .step-title {
+            font-size: clamp(1rem,2vw,1.3rem); font-weight: 600;
+            color: var(--text-primary); margin-bottom: 10px;
+        }
+        .step-desc { color: var(--text-secondary); line-height: 1.8; max-width: 68ch; }
+
+        /* ============================================================
+           METRICS GRID
+        ============================================================ */
+        .metrics-grid {
+            display: grid; grid-template-columns: repeat(2,1fr);
+            gap: 16px; margin: 30px 0;
+        }
+        .metric-card {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            border-radius: 12px; padding: clamp(20px,4vw,30px); text-align: center;
+            transition: border-color 0.25s, transform 0.25s var(--spring);
+        }
+        .metric-card:hover { border-color: var(--accent-cyan); transform: translateY(-3px); }
+        .metric-value {
+            font-size: clamp(1.8rem,4vw,2.5rem); font-weight: 800;
+            color: var(--accent-cyan); margin-bottom: 8px; line-height: 1;
+        }
+        .metric-label { color: var(--text-muted); font-size: 0.88rem; line-height: 1.4; }
+
+        /* ============================================================
+           INTEGRATION LOGOS
+        ============================================================ */
+        .integration-logos {
+            display: flex; justify-content: center;
+            align-items: center; flex-wrap: wrap; gap: 12px; margin: 30px 0;
+        }
+        .logo-item {
+            padding: 12px 20px; background: var(--bg-secondary);
+            border: 1px solid var(--border-color); border-radius: 8px;
+            font-weight: 600; font-size: 0.9rem; color: var(--text-primary);
+            transition: border-color 0.25s, transform 0.25s var(--spring), color 0.2s;
+            min-height: 44px; display: flex; align-items: center;
+            touch-action: manipulation;
+        }
+        .logo-item:hover {
+            border-color: var(--accent-cyan); color: var(--accent-cyan);
+            transform: translateY(-3px);
+        }
+
+        /* ============================================================
+           HIGHLIGHT BOX
+        ============================================================ */
+        .highlight-box {
+            background: rgba(0,217,255,0.05);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 18px 22px; margin: 20px 0; border-radius: 6px;
+        }
+        .highlight-box strong { color: var(--accent-cyan); }
+
+        /* ============================================================
+           SKELETON SHIMMER
+        ============================================================ */
+        .skeleton {
+            background: linear-gradient(90deg,
+                var(--bg-tertiary) 25%, var(--bg-secondary) 50%, var(--bg-tertiary) 75%);
+            background-size: 200% 100%; border-radius: 8px;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .skeleton { animation: shimmer 1.5s infinite; }
+        }
+        @keyframes shimmer {
+            0%   { background-position: -200% 0; }
+            100% { background-position:  200% 0; }
+        }
+
+        /* ============================================================
+           MOBILE BOTTOM NAV
+        ============================================================ */
+        .mobile-bottom-nav {
+            display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+            z-index: 200; background: rgba(18,24,36,0.97);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(0,217,255,0.2);
+            padding: 6px 0 max(6px, env(safe-area-inset-bottom));
+            justify-content: space-around;
+        }
+        .mobile-bottom-nav a {
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            gap: 3px; color: var(--text-muted); text-decoration: none;
+            font-size: 0.58rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.04em;
+            padding: 6px 4px; min-width: 44px; min-height: 48px;
+            border-radius: 8px; touch-action: manipulation;
+            transition: color 0.2s, background 0.2s;
+        }
+        .mobile-bottom-nav a .nav-icon { font-size: 1.15rem; }
+        .mobile-bottom-nav a:hover,
+        .mobile-bottom-nav a:focus-visible,
+        .mobile-bottom-nav a.active {
+            color: var(--accent-cyan); background: rgba(0,217,255,0.08);
+        }
+
+        /* ============================================================
+           FOOTER
+        ============================================================ */
+        footer {
+            background: var(--bg-secondary); border-top: 1px solid var(--border-color);
+            padding: clamp(28px,5vw,40px) 20px; text-align: center;
+            color: var(--text-muted); font-size: 0.9rem; line-height: 1.9;
+        }
+        footer strong { color: var(--text-secondary); }
+        footer a { color: var(--accent-cyan-soft); text-decoration: none; }
+        footer a:hover { color: var(--accent-cyan); text-decoration: underline; }
+
+        /* ============================================================
+           GLOBAL FOCUS VISIBLE
+        ============================================================ */
+        :focus-visible {
+            outline: 2px solid var(--accent-cyan);
+            outline-offset: 3px; border-radius: 4px;
+        }
+
+        /* ============================================================
+           TABLET — 640px+
+        ============================================================ */
+        @media (min-width: 640px) {
+            .feature-grid { grid-template-columns: repeat(2,1fr); }
+            .metrics-grid { grid-template-columns: repeat(4,1fr); }
+            .step { align-items: center; }
+        }
+
+        /* ============================================================
+           DESKTOP — 1024px+
+        ============================================================ */
+        @media (min-width: 1024px) {
+            .feature-grid { grid-template-columns: repeat(3,1fr); }
+            .nav-links { display: flex; }
+            .mobile-bottom-nav { display: none; }
+            body { padding-bottom: 0; }
+        }
+
+        /* ============================================================
+           REDUCED MOTION — GLOBAL OVERRIDE
+        ============================================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- A11Y: Skip to content -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- STICKY GLASSMORPHIC NAV -->
+    <nav class="sticky-nav" id="stickyNav" role="navigation" aria-label="Section navigation">
+        <div class="nav-inner">
+            <span class="nav-brand">USS-ARCHIVE v1.3</span>
+            <ul class="nav-links" role="list">
+                <li><a href="#what">What</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#how-to">How To</a></li>
+                <li><a href="#why">Why</a></li>
+                <li><a href="#compare">Compare</a></li>
+                <li><a href="#muss">MUSS</a></li>
+                <li><a href="#find">Find It</a></li>
+                <li><a href="#specs">Specs</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="hero" id="hero" role="banner">
+        <div class="hero-content">
+            <h1>USS-ARCHIVE Protocol</h1>
+            <p class="hero-subtitle">Complete Thread Preservation &amp; Cross-Model Resurrection System for LLM Conversations</p>
+            <span class="version-badge">Version 1.3 &bull; MUSS v1.0 Integration</span>
+            <div class="hero-stats" role="list" aria-label="Protocol key statistics">
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">14:1</div>
+                    <div class="hero-stat-label">Compression Ratio</div>
+                </div>
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">5</div>
+                    <div class="hero-stat-label">Supported Models</div>
+                </div>
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">94%+</div>
+                    <div class="hero-stat-label">Fidelity Target</div>
+                </div>
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">9</div>
+                    <div class="hero-stat-label">Artifact Sections</div>
+                </div>
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">72</div>
+                    <div class="hero-stat-label">Test Assertions</div>
+                </div>
+                <div class="hero-stat" role="listitem">
+                    <div class="hero-stat-value">8</div>
+                    <div class="hero-stat-label">Schema Sections (USS)</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="main-content">
+    <div class="container">
+
+        <!-- ========================
+             WHAT IS USS-ARCHIVE
+        ========================= -->
+        <section class="section" id="what" aria-labelledby="what-title">
+            <div class="section-header">
+                <h2 class="section-title" id="what-title">What Is USS-ARCHIVE?</h2>
+                <p class="section-description">The Universal Seed Summary Invoker (USS) in ARCHIVE mode is a comprehensive protocol for preserving complete LLM conversation threads with full context, decisions, and resurrection capabilities across any AI model.</p>
+            </div>
+
+            <div class="highlight-box" role="note">
+                <strong>Core Innovation:</strong> USS-ARCHIVE transforms ephemeral AI conversations into permanent, portable, model-agnostic artifacts that capture not just what was said, but the complete context, decision trees, failure modes, and execution trajectory of an entire development session.
+            </div>
+
+            <div class="feature-grid" role="list">
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🧬</span>
+                    <h3 class="feature-title">Complete Thread DNA</h3>
+                    <p class="feature-text">Captures every decision, architecture commit, epistemic lock, and emergent pattern from your LLM session with zero information loss.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🔄</span>
+                    <h3 class="feature-title">Cross-Model Resurrection</h3>
+                    <p class="feature-text">Resume any archived thread in any LLM — Claude, GPT-4, Gemini, Grok, Perplexity — with full context restoration via the Resurrection Hook.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">📊</span>
+                    <h3 class="feature-title">Compression Fidelity Scoring</h3>
+                    <p class="feature-text">Self-assesses compression quality with a 0.00–1.00 fidelity score, explicitly marking inference boundaries and compression loss warnings.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🔐</span>
+                    <h3 class="feature-title">Immutable Artifact Seal</h3>
+                    <p class="feature-text">Once generated, the artifact is repository-committable, vault-storable, and suitable for Knowledge Graph integration with zero modification.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🧩</span>
+                    <h3 class="feature-title">8-Section USS Schema</h3>
+                    <p class="feature-text">Structured with HEADER, FAILURE SEMANTICS, COSMIC CORE, DECISIONS, OPEN VECTORS, THREAD TOPOLOGY, EXECUTION ARTIFACTS, and INVOCATION LOCK. MUSS extends this to 9 sections with LIVE MEMORY SNAPSHOT.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">⚡</span>
+                    <h3 class="feature-title">14:1 Compression Ratio</h3>
+                    <p class="feature-text">Target compression of 3000–5000 tokens for entire multi-exchange sessions, maintaining 94%+ fidelity while drastically reducing token overhead.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========================
+             ARCHITECTURE
+        ========================= -->
+        <section class="section" id="architecture" aria-labelledby="arch-title">
+            <div class="section-header">
+                <h2 class="section-title" id="arch-title">Architecture &amp; Structure</h2>
+                <p class="section-description">USS-ARCHIVE employs a sophisticated 8-section schema designed to capture complete thread semantics. Tap any layer to expand details.</p>
+            </div>
+
+            <div class="architecture-diagram" role="list" aria-label="Architecture schema layers">
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">1. HEADER — Thread Lock &amp; Audit</span></summary>
+                    <p class="layer-desc">Thread archetype, ignition vector, focus domains, depth metrics, drift events, completion state, momentum indicator, and finalization beacon. Establishes who initiated the thread, which model handled it, and what the thread accomplished.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">2. FAILURE SEMANTICS &amp; INTEGRITY FLAGS</span></summary>
+                    <p class="layer-desc">Incoherence flags, compression loss warnings, inference boundary alerts, resolution impossibility markers, failure severity assessment, and compression fidelity score. Explicitly documents what was compressed, inferred, or left unresolved.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">3. COSMIC CORE &amp; EMERGENCE</span></summary>
+                    <p class="layer-desc">Ontological constructs (protocols, schemas, engines), paradigm nodes (conceptual shifts between turns), and emergent universals — novel capabilities or insights that arose during the session and were not pre-specified.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">4. DECISIONS &amp; GRAFTS</span></summary>
+                    <p class="layer-desc">Architecture commits (what was decided), heuristic branches (what was proposed but not finalized), and epistemic locks (non-negotiable constraints). The complete decision ledger of the entire thread with full rationale.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">5. OPEN VECTORS &amp; THRUST</span></summary>
+                    <p class="layer-desc">Unresolved queries, priority vectors (immediate / high / medium / low), and risk surfaces. Documents what remains incomplete and what the next session should tackle first.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">6. THREAD TOPOLOGY</span></summary>
+                    <p class="layer-desc">Parent threads, child threads, sibling threads, and cross-project links. Maps the thread's position in the larger Knowledge Graph using [[Wikilink]] format for Obsidian integration. NOTEBOOK keys render as <code>#notebook/[key]</code> tags.</p>
+                </details>
+                <details class="layer" role="listitem">
+                    <summary><span class="layer-title">7. EXECUTION ARTIFACTS</span></summary>
+                    <p class="layer-desc">Generated outputs table (file, type, size, purpose), tool usage patterns, reusability index, and integration notes. Complete inventory of every file the thread produced, including size and deployment status.</p>
+                </details>
+                <details class="layer" role="listitem" open>
+                    <summary><span class="layer-title">8. INVOCATION LOCK &amp; RESURRECTION HOOK ✦</span></summary>
+                    <p class="layer-desc">Final immutability statement and the critical Resurrection Hook — a <code>&gt; INGESTION:</code> prefixed block (MUSS upgrades to <code>&gt; MUSS INGESTION:</code>) containing compressed thread constraints, NOTEBOOK_STATE, and DECISIONS for seamless cross-model ingestion. Copy this block into any new LLM session to instantly resurrect full context.</p>
+                </details>
+            </div>
+        </section>
+
+        <!-- ========================
+             HOW TO USE
+        ========================= -->
+        <section class="section" id="how-to" aria-labelledby="howto-title">
+            <div class="section-header">
+                <h2 class="section-title" id="howto-title">How to Use USS-ARCHIVE</h2>
+                <p class="section-description">Integrate USS-ARCHIVE into your LLM workflow in four simple steps</p>
+            </div>
+
+            <div class="highlight-box" role="note">
+                <strong>30-Second Quick Start:</strong> Paste your USS-ARCHIVE <code>.md</code> artifact into any new LLM session. The model reads the <code>&gt; INGESTION:</code> block at the bottom and instantly restores full thread context. That&apos;s it.
+            </div>
+
+            <div class="workflow-steps">
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Invoke Archive Mode</h3>
+                        <p class="step-desc">At the end of any significant LLM development session, invoke USS in <strong>archive</strong> mode. Provide the thread context and request a comprehensive USS-ARCHIVE artifact. The model will generate a 3000–5000 token structured summary.</p>
+                        <div class="code-wrap">
+                            <div class="code-block">
+<code><span class="yaml-key">mode:</span> <span class="yaml-value">archive</span>
+<span class="yaml-key">protocol:</span> <span class="yaml-value">"Universal Seed Summary Invoker"</span>
+<span class="yaml-key">protocol_version:</span> <span class="yaml-value">"1.3"</span>
+<span class="yaml-key">thread_id:</span> <span class="yaml-value">your-project-name-YYYYMMDD-archive</span>
+<span class="yaml-key">project:</span> <span class="yaml-value">"Your Project Name"</span>
+<span class="yaml-key">invoker:</span> <span class="yaml-value">"Your Name"</span>
+<span class="yaml-key">target_model:</span> <span class="yaml-value">"Model Name (e.g., Claude Sonnet 4)"</span>
+<span class="yaml-key">timestamp:</span> <span class="yaml-value">"YYYY-MM-DD HH:MM:SS TZ"</span>
+<span class="yaml-key">token_target:</span> <span class="yaml-value">3000-5000</span>
+<span class="yaml-key">compression_ratio_estimate:</span> <span class="yaml-value">"~14:1"</span></code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Save to Knowledge Base</h3>
+                        <p class="step-desc">Download the generated USS-ARCHIVE artifact as a <code>.md</code> file. Store it in your project&apos;s <code>archives/</code> directory or Obsidian vault. The filename convention is: <code>USS-[project]-[YYYYMMDD]-archive.md</code>. Dropping it into Obsidian auto-populates your Knowledge Graph via [[Wikilinks]] in the THREAD TOPOLOGY section.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Commit to Repository</h3>
+                        <p class="step-desc">USS-ARCHIVE artifacts are immutable and repository-committable. Add them to your project&apos;s Git repository alongside code, documentation, and other artifacts.</p>
+                        <div class="code-wrap">
+                            <div class="code-block">
+<code><span class="yaml-comment"># Commit message template</span>
+<span class="yaml-key">git add</span> <span class="yaml-value">archives/USS-[project]-[YYYYMMDD]-archive.md</span>
+<span class="yaml-key">git commit -m</span> <span class="yaml-value">"feat(archive): seal [project] thread — USS v1.3"</span>
+<span class="yaml-key">git push</span> <span class="yaml-value">origin main</span></code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number" aria-hidden="true">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">Resurrect When Needed</h3>
+                        <p class="step-desc">To continue a thread in any LLM, copy the entire USS-ARCHIVE artifact into a new session. The model will parse the <strong>Resurrection Hook</strong> (the <code>&gt; INGESTION:</code> block at the end) and immediately restore full thread context, constraints, and decision state.</p>
+                        <div class="highlight-box">
+                            <strong>Cross-Model Compatibility:</strong> The same USS-ARCHIVE artifact works in Claude, GPT-4o, Gemini, Grok, and Perplexity without modification. The Resurrection Hook provides universal model ingestion across all five wrappers.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================
+             WHY USE IT
+        ========================= -->
+        <section class="section" id="why" aria-labelledby="why-title">
+            <div class="section-header">
+                <h2 class="section-title" id="why-title">Why Should You Use USS-ARCHIVE?</h2>
+                <p class="section-description">Solve the fundamental problems of LLM memory, continuity, and context preservation</p>
+            </div>
+
+            <div class="feature-grid" role="list">
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: Context Window Loss</h3>
+                    <p class="feature-text">Standard LLM sessions lose all context when the window fills or the session ends. Multi-day projects require manual re-explanation every time.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Permanent Thread Memory</h3>
+                    <p class="feature-text">USS-ARCHIVE captures the entire session as a portable artifact. Resume weeks later with zero context loss.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: Model Lock-In</h3>
+                    <p class="feature-text">Complex projects built in Claude can&apos;t be continued in GPT-4 or Gemini without starting over or losing critical decisions.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Model-Agnostic Resurrection</h3>
+                    <p class="feature-text">USS-ARCHIVE works identically across all major LLMs. Switch models mid-project without friction.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: Undocumented Decisions</h3>
+                    <p class="feature-text">Months after a session, you can&apos;t remember why certain architectural choices were made or what alternatives were considered.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Complete Decision Ledger</h3>
+                    <p class="feature-text">DECISIONS &amp; GRAFTS section preserves every architecture commit, heuristic branch, and epistemic lock with full rationale.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: Lost Artifacts</h3>
+                    <p class="feature-text">Generated code, schemas, and configurations scattered across chat logs. No systematic record of what was produced.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Execution Artifact Registry</h3>
+                    <p class="feature-text">EXECUTION ARTIFACTS section maintains a complete table of every file generated, its purpose, size, and reusability index.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: No Failure Tracking</h3>
+                    <p class="feature-text">When a session produces incomplete results, there&apos;s no explicit documentation of what failed, what was inferred, or what compression losses occurred.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Explicit Failure Semantics</h3>
+                    <p class="feature-text">FAILURE SEMANTICS section documents all incoherence flags, compression warnings, and resolution impossibility markers transparently.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <h3 class="feature-title" style="color:var(--danger);">❌ Problem: Knowledge Graph Isolation</h3>
+                    <p class="feature-text">LLM sessions exist in isolation. No connection to your broader project ecosystem, wiki, or knowledge management system.</p>
+                    <h3 class="feature-title" style="margin-top:18px;color:var(--success);">✅ Solution: Obsidian Integration</h3>
+                    <p class="feature-text">THREAD TOPOLOGY section uses [[Wikilinks]] that auto-populate Obsidian Knowledge Graphs, linking parent/child/sibling threads across the entire project ecosystem.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- ========================
+             COMPARISON TABLE
+        ========================= -->
+        <section class="section" id="compare" aria-labelledby="compare-title">
+            <div class="section-header">
+                <h2 class="section-title" id="compare-title">What Makes USS-ARCHIVE Different?</h2>
+                <p class="section-description">Comparison with existing conversation archival approaches</p>
+            </div>
+
+            <div class="table-wrapper" role="region" aria-label="Feature comparison table" tabindex="0">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Feature</th>
+                            <th scope="col">USS-ARCHIVE v1.3</th>
+                            <th scope="col">ChatGPT Shared Links</th>
+                            <th scope="col">Claude Projects</th>
+                            <th scope="col">Manual Copy-Paste</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-label="Feature"><strong>Cross-Model Compatibility</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Works in all LLMs</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> GPT-only</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> Claude-only</td>
+                            <td data-label="Manual Copy-Paste">~ Manual transfer</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Decision Ledger</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Complete with rationale</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> Not captured</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> Not structured</td>
+                            <td data-label="Manual Copy-Paste"><span class="cross-icon">✗</span> Lost</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Failure Mode Documentation</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Explicit flags</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Manual Copy-Paste"><span class="cross-icon">✗</span> None</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Compression Fidelity Score</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Self-assessed 0.00–1.00</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> No metric</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> No metric</td>
+                            <td data-label="Manual Copy-Paste"><span class="cross-icon">✗</span> Unknown</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Artifact Registry</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> File table + metadata</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> No tracking</td>
+                            <td data-label="Claude Projects">~ Basic file list</td>
+                            <td data-label="Manual Copy-Paste">~ Manual</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Knowledge Graph Integration</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> [[Wikilink]] topology</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Manual Copy-Paste"><span class="cross-icon">✗</span> None</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Repository Committable</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Immutable .md format</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> Web-only</td>
+                            <td data-label="Claude Projects">~ Export required</td>
+                            <td data-label="Manual Copy-Paste">~ Manual formatting</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Resurrection Hook</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Compressed ingestion block</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Claude Projects">~ Context only</td>
+                            <td data-label="Manual Copy-Paste"><span class="cross-icon">✗</span> Full re-read required</td>
+                        </tr>
+                        <tr>
+                            <td data-label="Feature"><strong>Open Vectors Tracking</strong></td>
+                            <td data-label="USS-ARCHIVE v1.3"><span class="check-icon">✓</span> Priority-ranked next actions</td>
+                            <td data-label="ChatGPT Shared Links"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Claude Projects"><span class="cross-icon">✗</span> None</td>
+                            <td data-label="Manual Copy-Paste">~ Manual</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box" role="note">
+                <strong>Key Differentiator:</strong> USS-ARCHIVE is the only system that combines cross-model portability, explicit failure documentation, compression fidelity scoring, decision ledger preservation, and Knowledge Graph integration in a single immutable artifact format.
+            </div>
+        </section>
+
+        <!-- ========================
+             MUSS EVOLUTION
+        ========================= -->
+        <section class="section" id="muss" aria-labelledby="muss-title">
+            <div class="section-header">
+                <h2 class="section-title" id="muss-title">MUSS v1.0: The Full Lifecycle Evolution</h2>
+                <p class="section-description">USS-ARCHIVE has evolved into MUSS (Memory-Augmented Universal Seed System) for complete session lifecycle management</p>
+            </div>
+
+            <div class="architecture-diagram">
+                <details class="layer">
+                    <summary><span class="layer-title">USS v1.3: End-of-Session Archival</span></summary>
+                    <p class="layer-desc">Original protocol. Invoked at thread completion. Generates immutable archive artifact with 8-section schema. Resurrection Hook prefix: <code>&gt; INGESTION:</code>. No live session governance.</p>
+                </details>
+                <details class="layer">
+                    <summary><span class="layer-title">MARM v1.4: Live Session Governance</span></summary>
+                    <p class="layer-desc">Complementary protocol for active sessions. Anti-drift commands (<code>/m remember</code>, <code>/m focus</code>). Session-scoped only. No archival schema. Governs the live session — the half USS leaves unaddressed.</p>
+                </details>
+                <details class="layer" open>
+                    <summary><span class="layer-title">MUSS v1.0: Unified Lifecycle Engine ✦</span></summary>
+                    <p class="layer-desc">Blended USS × MARM. Governs ACTIVE → SEED → ARCHIVE → RESURRECT phases. Embeds LIVE MEMORY SNAPSHOT (NOTEBOOK_STATE + SESSION_LOG_DIGEST) in every artifact — absent from USS v1.3. 9-section schema. 5 model-specific wrappers: Claude (XML), GPT-4o (Markdown hierarchy), Grok (terminal/directive), Gemini (procedural + STEP 0 silent guard), Perplexity (direct Markdown). Bilaterally validated: <code>test_muss_protocol.py</code> (72 assertions, T1–T10) + <code>muss_validator.py</code> (artifact compliance layer). Resurrection Hook upgrades to <code>&gt; MUSS INGESTION:</code> superset.</p>
+                </details>
+            </div>
+
+            <div class="metrics-grid" role="list" aria-label="MUSS v1.0 metrics">
+                <div class="metric-card" role="listitem">
+                    <div class="metric-value">6</div>
+                    <div class="metric-label">Architecture Layers</div>
+                </div>
+                <div class="metric-card" role="listitem">
+                    <div class="metric-value">9</div>
+                    <div class="metric-label">Artifact Sections</div>
+                </div>
+                <div class="metric-card" role="listitem">
+                    <div class="metric-value">5</div>
+                    <div class="metric-label">Model Wrappers</div>
+                </div>
+                <div class="metric-card" role="listitem">
+                    <div class="metric-value">72</div>
+                    <div class="metric-label">Test Assertions</div>
+                </div>
+            </div>
+
+            <div class="highlight-box" role="note">
+                <strong>MUSS Lifecycle:</strong> <code>/muss active</code> (live session with memory) → <code>/muss seed</code> (checkpoint artifact) → <code>/muss archive</code> (immutable seal) → <code>/muss resurrect</code> (cross-model ingestion). Every phase produces a structured, validated, model-agnostic artifact.
+            </div>
+        </section>
+
+        <!-- ========================
+             WHERE TO FIND IT
+        ========================= -->
+        <section class="section" id="find" aria-labelledby="find-title">
+            <div class="section-header">
+                <h2 class="section-title" id="find-title">Where to Find USS-ARCHIVE</h2>
+                <p class="section-description">Access the complete protocol, toolchain, and documentation</p>
+            </div>
+
+            <div class="feature-grid" role="list">
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">📦</span>
+                    <h3 class="feature-title">GitHub Repository</h3>
+                    <p class="feature-text"><strong>DeeTorch/universal-seed-summary</strong><br>Complete protocol specifications, validation tools, test suites, and model wrappers.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">📄</span>
+                    <h3 class="feature-title">Protocol Files</h3>
+                    <p class="feature-text"><code>protocols/uss-v1.3.json</code> — Base spec<br><code>protocols/MUSS_v1.0_protocol.xml</code> — Full lifecycle spec (18,823 chars)</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🛠️</span>
+                    <h3 class="feature-title">Validation Toolchain</h3>
+                    <p class="feature-text"><code>tools/validator.py</code> — USS artifact validator<br><code>tools/muss_validator.py</code> — MUSS validator (5,498 chars)<br><code>tools/test_muss_protocol.py</code> — 72-assertion test suite</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🔄</span>
+                    <h3 class="feature-title">Converter Utility</h3>
+                    <p class="feature-text"><code>tools/converter.py</code> — Bidirectional USS ↔ MUSS conversion with <code>--upgrade</code> and <code>--downgrade</code> modes. Original preserved as <code>converter.py.bak</code>.</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">📚</span>
+                    <h3 class="feature-title">Documentation</h3>
+                    <p class="feature-text"><code>protocols/README.md</code> — Protocol relationship guide<br><code>CHANGELOG.md</code> — Version history with full MUSS v1.0 entry<br>GitHub &amp; Obsidian integration guides</p>
+                </article>
+                <article class="feature-card" role="listitem">
+                    <span class="feature-icon" aria-hidden="true">🧪</span>
+                    <h3 class="feature-title">Test Fixtures</h3>
+                    <p class="feature-text"><code>output/sample_muss_seed.md</code> — Canonical MUSS SEED artifact (4,538 chars) for validation smoke tests. Permanent fixture; does not change between sessions.</p>
+                </article>
+            </div>
+
+            <div class="integration-logos" role="list" aria-label="Supported models and integrations">
+                <div class="logo-item" role="listitem">Claude Sonnet 4</div>
+                <div class="logo-item" role="listitem">GPT-4o</div>
+                <div class="logo-item" role="listitem">Gemini</div>
+                <div class="logo-item" role="listitem">Grok</div>
+                <div class="logo-item" role="listitem">Perplexity</div>
+                <div class="logo-item" role="listitem">Obsidian</div>
+                <div class="logo-item" role="listitem">GitHub</div>
+            </div>
+        </section>
+
+        <!-- ========================
+             CTA
+        ========================= -->
+        <div class="cta-section" role="complementary" aria-label="Get started">
+            <h2 class="cta-title">Start Preserving Your LLM Threads Today</h2>
+            <p class="cta-text">Download the USS-ARCHIVE protocol and toolchain. Never lose context, decisions, or artifacts again.</p>
+            <div class="btn-group">
+                <a href="https://github.com/DeeTorch/universal-seed-summary" class="btn"
+                   target="_blank" rel="noopener noreferrer"
+                   aria-label="View USS-ARCHIVE on GitHub (opens in new tab)">View on GitHub</a>
+                <a href="#architecture" class="btn btn-secondary">Read the Architecture</a>
+            </div>
+        </div>
+
+        <!-- ========================
+             TECHNICAL SPECS
+        ========================= -->
+        <section class="section" id="specs" aria-labelledby="specs-title">
+            <div class="section-header">
+                <h2 class="section-title" id="specs-title">Technical Specifications</h2>
+            </div>
+
+            <div class="code-wrap">
+                <div class="code-block">
+<code><span class="yaml-comment"># USS-ARCHIVE v1.3 + MUSS v1.0 — Technical Specifications</span>
+
+<span class="yaml-key">protocol_name:</span>   <span class="yaml-value">"Universal Seed Summary Invoker"</span>
+<span class="yaml-key">version:</span>         <span class="yaml-value">"1.3" (USS)  /  "1.0" (MUSS)</span>
+<span class="yaml-key">encoding:</span>        <span class="yaml-value">UTF-8</span>
+<span class="yaml-key">format:</span>          <span class="yaml-value">Markdown (.md)</span>
+<span class="yaml-key">schema_sections:</span> <span class="yaml-value">8 (USS)  /  9 (MUSS)</span>
+<span class="yaml-key">token_range:</span>     <span class="yaml-value">3000–5000</span>
+<span class="yaml-key">compression:</span>     <span class="yaml-value">~14:1</span>
+<span class="yaml-key">fidelity_target:</span> <span class="yaml-value">0.94+</span>
+
+<span class="yaml-comment"># Supported Models + Wrappers</span>
+<span class="yaml-key">supported_models:</span>
+  <span class="yaml-value">- Claude (Anthropic)   — XML wrapper</span>
+  <span class="yaml-value">- GPT-4o (OpenAI)      — Markdown hierarchy wrapper</span>
+  <span class="yaml-value">- Gemini (Google)      — Procedural + STEP 0 silent guard</span>
+  <span class="yaml-value">- Grok (xAI)           — Terminal/directive wrapper</span>
+  <span class="yaml-value">- Perplexity (Sonar)   — Direct Markdown wrapper</span>
+
+<span class="yaml-comment"># Toolchain — all run from repo root, not from tools/</span>
+<span class="yaml-key">validation:</span>
+  <span class="yaml-value">- tools/validator.py           # USS v1.3 artifact validator</span>
+  <span class="yaml-value">- tools/muss_validator.py      # MUSS artifact schema compliance</span>
+  <span class="yaml-value">- tools/test_muss_protocol.py  # 72-assertion XML integrity (T1–T10)</span>
+<span class="yaml-key">conversion:</span>
+  <span class="yaml-value">- tools/converter.py --upgrade    # USS → MUSS</span>
+  <span class="yaml-value">- tools/converter.py --downgrade  # MUSS → USS</span>
+<span class="yaml-key">integration:</span>
+  <span class="yaml-value">- Obsidian [[Wikilinks]] — auto Knowledge Graph via Thread Topology</span>
+  <span class="yaml-value">- Git immutable .md commits — repo-committable immediately</span>
+  <span class="yaml-value">- tools/indexer.py — semantic search indexer</span>
+
+<span class="yaml-comment"># MUSS v1.0 Additions vs USS v1.3</span>
+<span class="yaml-key">muss_new:</span>
+  <span class="yaml-value">- Section 2: LIVE MEMORY SNAPSHOT (NOTEBOOK_STATE + SESSION_LOG_DIGEST)</span>
+  <span class="yaml-value">- Lifecycle engine: ACTIVE → SEED → ARCHIVE → RESURRECT</span>
+  <span class="yaml-value">- Upgraded hook: &gt; MUSS INGESTION: (superset of USS hook)</span>
+  <span class="yaml-value">- 5 model wrappers under &lt;model_profiles&gt; in protocol XML</span>
+  <span class="yaml-value">- Bilateral validation: XML structural + artifact output layers</span>
+  <span class="yaml-value">- /muss command registry for live session governance</span>
+
+<span class="yaml-comment"># Epistemic Locks (non-negotiable constraints)</span>
+<span class="yaml-key">locks:</span>
+  <span class="yaml-value">- All MUSS artifacts MUST produce identical 9-section schema regardless of wrapper</span>
+  <span class="yaml-value">- muss_validator.py MUST return PASSED before any artifact is repo-committable</span>
+  <span class="yaml-value">- test_muss_protocol.py MUST be run from repository root (not tools/)</span>
+  <span class="yaml-value">- Compression_Fidelity_Score MUST be float 0.00–1.00 (not % or label)</span>
+  <span class="yaml-value">- converter.py.bak MUST exist before patching converter.py</span></code>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer role="contentinfo">
+        <p><strong>USS-ARCHIVE Protocol v1.3 / MUSS v1.0</strong> &bull; Developed by Jusstin DeRemus (The Oracle)</p>
+        <p>Part of the Fólkvangr Neural Core ecosystem</p>
+        <p style="margin-top:16px;font-size:0.82rem;">2026 &bull; Open Source &bull; MIT License &bull;
+            <a href="https://github.com/DeeTorch/universal-seed-summary"
+               target="_blank" rel="noopener noreferrer">github.com/DeeTorch/universal-seed-summary</a>
+        </p>
+    </footer>
+
+    <!-- MOBILE BOTTOM NAV (hidden on desktop) -->
+    <nav class="mobile-bottom-nav" role="navigation" aria-label="Mobile bottom navigation">
+        <a href="#what" aria-label="What is USS-ARCHIVE">
+            <span class="nav-icon" aria-hidden="true">🧬</span><span>What</span>
+        </a>
+        <a href="#architecture" aria-label="Architecture">
+            <span class="nav-icon" aria-hidden="true">🏗️</span><span>Arch</span>
+        </a>
+        <a href="#how-to" aria-label="How to use">
+            <span class="nav-icon" aria-hidden="true">⚡</span><span>How To</span>
+        </a>
+        <a href="#compare" aria-label="Comparison table">
+            <span class="nav-icon" aria-hidden="true">📊</span><span>Compare</span>
+        </a>
+        <a href="#muss" aria-label="MUSS protocol">
+            <span class="nav-icon" aria-hidden="true">🔄</span><span>MUSS</span>
+        </a>
+        <a href="#find" aria-label="Where to find it">
+            <span class="nav-icon" aria-hidden="true">📦</span><span>Find</span>
+        </a>
+    </nav>
+
+    <!-- ============================================================
+         JAVASCRIPT — zero dependencies, runs inline
+    ============================================================ -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ----------------------------------------------------------
+        // 1. STICKY NAV — show after hero scrolls out of viewport
+        // ----------------------------------------------------------
+        var hero = document.getElementById('hero');
+        var nav  = document.getElementById('stickyNav');
+
+        if (hero && nav && 'IntersectionObserver' in window) {
+            new IntersectionObserver(function (entries) {
+                nav.classList.toggle('visible', !entries[0].isIntersecting);
+            }, { threshold: 0 }).observe(hero);
+        }
+
+        // ----------------------------------------------------------
+        // 2. ACTIVE NAV HIGHLIGHT — desktop sticky nav
+        // ----------------------------------------------------------
+        var sections  = document.querySelectorAll('section[id]');
+        var navLinks  = document.querySelectorAll('.nav-links a');
+        var mobileLinks = document.querySelectorAll('.mobile-bottom-nav a');
+
+        function makeActiveSetter(links) {
+            return function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        links.forEach(function (l) {
+                            l.classList.remove('active');
+                            l.removeAttribute('aria-current');
+                        });
+                        var sel = '[href="#' + entry.target.id + '"]';
+                        var active = document.querySelector(
+                            links[0] && links[0].closest('.nav-links')
+                                ? '.nav-links ' + sel
+                                : '.mobile-bottom-nav ' + sel
+                        );
+                        if (active) {
+                            active.classList.add('active');
+                            active.setAttribute('aria-current', 'true');
+                        }
+                    }
+                });
+            };
+        }
+
+        if ('IntersectionObserver' in window && sections.length) {
+            var opts = { rootMargin: '-28% 0px -60% 0px', threshold: 0 };
+            var desktopObs = new IntersectionObserver(makeActiveSetter(navLinks), opts);
+            var mobileObs  = new IntersectionObserver(makeActiveSetter(mobileLinks), opts);
+            sections.forEach(function (s) {
+                desktopObs.observe(s);
+                mobileObs.observe(s);
+            });
+        }
+
+        // ----------------------------------------------------------
+        // 3. COPY-TO-CLIPBOARD — inject button on each .code-wrap
+        // ----------------------------------------------------------
+        document.querySelectorAll('.code-wrap').forEach(function (wrap) {
+            var block = wrap.querySelector('.code-block');
+            if (!block) return;
+
+            var btn = document.createElement('button');
+            btn.textContent = 'Copy';
+            btn.className   = 'copy-btn';
+            btn.setAttribute('aria-label', 'Copy code to clipboard');
+            btn.setAttribute('type', 'button');
+
+            btn.addEventListener('click', function () {
+                var raw = block.innerText || block.textContent || '';
+                // strip accidental "Copy" text that may be prepended
+                var text = raw.replace(/^Copy
+?/, '').trim();
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(function () {
+                        flash(btn, '✓ Copied', true);
+                    }).catch(function () {
+                        legacyCopy(text, btn);
+                    });
+                } else {
+                    legacyCopy(text, btn);
+                }
+            });
+
+            wrap.appendChild(btn);
+        });
+
+        function flash(btn, label, success) {
+            btn.textContent = label;
+            if (success) btn.classList.add('copied');
+            btn.setAttribute('aria-label', label);
+            setTimeout(function () {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+                btn.setAttribute('aria-label', 'Copy code to clipboard');
+            }, 2000);
+        }
+
+        function legacyCopy(text, btn) {
+            try {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                flash(btn, '✓ Copied', true);
+            } catch (e) {
+                flash(btn, 'Error', false);
+            }
+        }
+
+        // ----------------------------------------------------------
+        // 4. PWA — register service worker if available
+        // ----------------------------------------------------------
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').catch(function () {});
+            });
+        }
+
+    }());
+    </script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-# Universal Seed Summary Invoker (USS)
+ Universal Seed Summary Invoker (USS)
 
 > **Enterprise-grade conversation thread distillation protocol for LLM memory continuity**
 
@@ -9,13 +9,13 @@
 
 ---
 
-## What Is USS?
+ What Is USS?
 
 **Universal Seed Summary Invoker** is a deterministic, LLM-agnostic protocol that transforms any conversation thread into a **compressed, signal-dominant continuity kernel**. It preserves architectural decisions, tracks epistemic boundaries, and maintains audit-grade integrity across session boundaries—without hallucination or semantic drift.
 
 Think of it as a **reasoning checksum** for your AI conversations.
 
-### The Problem
+ The Problem
 
 Modern LLM workflows suffer from four critical failures:
 
@@ -24,7 +24,7 @@ Modern LLM workflows suffer from four critical failures:
 - **Decision Amnesia** – Prior commitments and constraints are forgotten or violated
 - **Non-Portability** – Thread understanding cannot reliably transfer across models or sessions
 
-### The Solution
+ The Solution
 
 USS provides **audit-grade distillation** that achieves **15:1 to 30:1 compression ratios** while maintaining signal integrity through:
 
@@ -36,7 +36,7 @@ USS provides **audit-grade distillation** that achieves **15:1 to 30:1 compressi
 
 ---
 
-## Core Guarantees
+ Core Guarantees
 
 USS enforces five non-negotiable principles:
 
@@ -50,9 +50,9 @@ USS enforces five non-negotiable principles:
 
 ---
 
-## Use Cases
+ Use Cases
 
-### 🔄 Checkpoint (Active Development)
+ 🔄 Checkpoint (Active Development)
 **When**: Mid-thread save point during active work  
 **Token Budget**: 800-1200  
 **Best For**: Daily/weekly development cycles, rapid iteration  
@@ -60,7 +60,7 @@ USS enforces five non-negotiable principles:
 
 **Example**: Pausing an active code generation session to capture current architectural decisions and next steps.
 
-### 🧭 Re-entry (Return After Absence)
+ 🧭 Re-entry (Return After Absence)
 **When**: Returning to dormant thread after days/weeks away  
 **Token Budget**: 1500-2500  
 **Best For**: Context restoration, full orientation brief  
@@ -68,7 +68,7 @@ USS enforces five non-negotiable principles:
 
 **Example**: Resuming a persona design project after a month—need full context on decisions made and open questions.
 
-### 📦 Archive (Permanent Record)
+ 📦 Archive (Permanent Record)
 **When**: Thread completion or long-term storage  
 **Token Budget**: 3000-5000  
 **Best For**: Project completion, compliance records, knowledge bases  
@@ -78,31 +78,31 @@ USS enforces five non-negotiable principles:
 
 ---
 
-## Quick Start
+ Quick Start
 
-### 1. Choose Your Mode
+ 1. Choose Your Mode
 
 Determine which invocation fits your need:
 - **Active work, need periodic save?** → Checkpoint
 - **Returning after time away?** → Re-entry
 - **Thread complete, need permanent record?** → Archive
 
-### 2. Copy Invocation Prompt
+ 2. Copy Invocation Prompt
 
 Get the template from [`templates/invocation-prompts/`](templates/invocation-prompts/):
 
 ```bash
-# Checkpoint mode
+ Checkpoint mode
 cat templates/invocation-prompts/checkpoint-invocation.txt
 
-# Re-entry mode
+ Re-entry mode
 cat templates/invocation-prompts/reentry-invocation.txt
 
-# Archive mode
+ Archive mode
 cat templates/invocation-prompts/archive-invocation.txt
 ```
 
-### 3. Paste Into Your LLM Conversation
+ 3. Paste Into Your LLM Conversation
 
 Works with:
 - ✅ Claude (3.5 Sonnet, 4, Opus)
@@ -112,7 +112,7 @@ Works with:
 - ✅ Gemini Pro/Ultra
 - ✅ Most instruction-following models
 
-### 4. Receive Structured Summary
+ 4. Receive Structured Summary
 
 The LLM generates a markdown artifact following USS protocol:
 
@@ -124,7 +124,7 @@ protocol: USS
 timestamp: 2026-02-07 10:45:00 PST
 ---
 
-### HEADER (THREAD LOCK & AUDIT)
+ HEADER (THREAD LOCK & AUDIT)
 
 **Thread_Archetype**: Development_Forge
 **Ignition_Vector**: User initiated full-stack development...
@@ -132,7 +132,7 @@ timestamp: 2026-02-07 10:45:00 PST
 ...
 ```
 
-### 5. Save and Index
+ 5. Save and Index
 
 Store using naming convention:
 
@@ -144,69 +144,69 @@ Store using naming convention:
 
 ---
 
-## Protocol Structure
+ Protocol Structure
 
-### Required Sections
+ Required Sections
 
 Every USS summary contains six mandatory sections:
 
-#### 1. HEADER (Thread Lock & Audit)
+ 1. HEADER (Thread Lock & Audit)
 Metadata capturing thread identity, domains, depth, completion state, and momentum.
 
 **Key Fields**: Thread_Archetype, Ignition_Vector, Focus_Domains, Thread_Depth, Completion_State, Momentum_Indicator, Finalization_Beacon, Invoker
 
-#### 2. FAILURE SEMANTICS & INTEGRITY FLAGS
+ 2. FAILURE SEMANTICS & INTEGRITY FLAGS
 Explicit tracking of contradictions, compression losses, and unresolved tensions.
 
 **Key Fields**: Incoherence_Flags, Compression_Loss_Warnings, Inference_Boundary_Alerts, Resolution_Impossibility_Markers, Failure_Severity
 
-#### 3. COSMIC CORE & EMERGENCE
+ 3. COSMIC CORE & EMERGENCE
 Foundational concepts, paradigm shifts, and emergent principles.
 
 **Key Fields**: Ontological_Constructs, Paradigm_Nodes, Emergent_Universals
 
-#### 4. DECISIONS & GRAFTS
+ 4. DECISIONS & GRAFTS
 Architectural commitments, exploratory branches, and epistemic locks.
 
 **Key Fields**: Architecture_Commits, Heuristic_Branches, Epistemic_Locks
 
-#### 5. OPEN VECTORS & THRUST
+ 5. OPEN VECTORS & THRUST
 Unresolved queries, priority actions, and risk surfaces.
 
 **Key Fields**: Unresolved_Queries, Priority_Vectors, Risk_Surfaces
 
-#### 6. INVOCATION LOCK
+ 6. INVOCATION LOCK
 Final seal declaring artifact complete and ready for use.
 
-### Optional Sections
+ Optional Sections
 
 **Thread Topology** – Cross-thread relationships and dependencies (for multi-project tracking)  
 **Execution Artifacts** – Generated outputs, tool usage, reusability notes (required in archive mode)
 
 ---
 
-## Features
+ Features
 
-### 🎯 Signal Preservation Over Noise
+ 🎯 Signal Preservation Over Noise
 Maintains decision context, architectural reasoning, and epistemic boundaries while compressing narrative details.
 
-### 🚨 Failure Semantics Transparency
+ 🚨 Failure Semantics Transparency
 Explicitly tracks:
 - **Incoherence flags** – Contradictions in the thread
 - **Compression loss warnings** – What nuance was sacrificed
 - **Inference boundary alerts** – Where synthesis approached speculation
 - **Resolution impossibility markers** – What can't be decided yet
 
-### 🔄 Paradigm Node Detection
+ 🔄 Paradigm Node Detection
 Identifies moments where thread framing shifted, enabling phase transition tracking across long projects.
 
-### 📋 Decision Audit Trails
+ 📋 Decision Audit Trails
 Separates committed architectures from exploratory branches, preventing confusion about what's locked vs flexible.
 
-### 🌐 Cross-Thread Knowledge Graphs
+ 🌐 Cross-Thread Knowledge Graphs
 Optional topology mapping enables multi-thread project management with parent/child/sibling relationships.
 
-### 🔧 Complete Tool Suite
+ 🔧 Complete Tool Suite
 Three production-ready utilities for working with summaries:
 - **validator.py** – Protocol compliance checker
 - **indexer.py** – Archive indexer and searcher
@@ -214,31 +214,31 @@ Three production-ready utilities for working with summaries:
 
 ---
 
-## Repository Structure
+ Repository Structure
 
 ```
 universal-seed-summary/
-├── README.md                   # This file
-├── LICENSE                     # MIT License
-├── CHANGELOG.md                # Version history
-├── CONTRIBUTING.md             # Contribution guidelines
-├── .gitignore                  # Repository ignore patterns
-├── requirements.txt            # Python dependencies
+├── README.md                    This file
+├── LICENSE                      MIT License
+├── CHANGELOG.md                 Version history
+├── CONTRIBUTING.md              Contribution guidelines
+├── .gitignore                   Repository ignore patterns
+├── requirements.txt             Python dependencies
 │
 ├── protocol/
-│   └── uss-v1.3.json          # Complete protocol specification
+│   └── uss-v1.3.json           Complete protocol specification
 │
 ├── docs/
-│   ├── quickstart.md          # 5-minute getting started guide
-│   └── TOOLS_README.md        # Complete tools documentation
+│   ├── quickstart.md           5-minute getting started guide
+│   └── TOOLS_README.md         Complete tools documentation
 │
 ├── examples/
 │   ├── checkpoint/
-│   │   └── checkpoint_example.md    # Erosforge project checkpoint
+│   │   └── checkpoint_example.md     Erosforge project checkpoint
 │   ├── re-entry/
-│   │   └── reentry_example.md       # UVB project re-entry
+│   │   └── reentry_example.md        UVB project re-entry
 │   └── archive/
-│       └── archive_example.md       # Research archive
+│       └── archive_example.md        Research archive
 │
 ├── templates/
 │   └── invocation-prompts/
@@ -247,39 +247,39 @@ universal-seed-summary/
 │       └── archive-invocation.txt
 │
 └── tools/
-    ├── validator.py           # Protocol compliance checker
-    ├── indexer.py             # Archive indexer and searcher
-    └── converter.py           # Format converter
+    ├── validator.py            Protocol compliance checker
+    ├── indexer.py              Archive indexer and searcher
+    └── converter.py            Format converter
 ```
 
 ---
 
-## Tools
+ Tools
 
-### Validator (`tools/validator.py`)
+ Validator (`tools/validator.py`)
 
 Checks USS output for protocol compliance.
 
 **Features**:
 - Verifies all required sections and fields present
-- Validates formatting standards (###, **, -, ---)
+- Validates formatting standards (, **, -, ---)
 - Checks token budgets per mode
 - Detects vague failure semantics language
 - Validates INVOCATION LOCK completeness
 
 **Usage**:
 ```bash
-# Basic validation
+ Basic validation
 python tools/validator.py my-summary.md
 
-# Verbose output with details
+ Verbose output with details
 python tools/validator.py my-summary.md -v
 
-# Strict mode (treat warnings as errors)
+ Strict mode (treat warnings as errors)
 python tools/validator.py my-summary.md --strict
 ```
 
-### Indexer (`tools/indexer.py`)
+ Indexer (`tools/indexer.py`)
 
 Builds searchable index of USS summary archives.
 
@@ -292,19 +292,19 @@ Builds searchable index of USS summary archives.
 
 **Usage**:
 ```bash
-# Index directory
+ Index directory
 python tools/indexer.py ./summaries/ -v
 
-# Search indexed summaries
+ Search indexed summaries
 python tools/indexer.py ./summaries/ --search "Erosforge"
 python tools/indexer.py ./summaries/ --mode checkpoint
 python tools/indexer.py ./summaries/ --archetype "Development_Forge"
 
-# Combined filters
+ Combined filters
 python tools/indexer.py ./summaries/ --mode archive --project "UVB"
 ```
 
-### Converter (`tools/converter.py`)
+ Converter (`tools/converter.py`)
 
 Converts USS summaries between formats.
 
@@ -315,13 +315,13 @@ Converts USS summaries between formats.
 
 **Usage**:
 ```bash
-# Convert to JSON
+ Convert to JSON
 python tools/converter.py my-summary.md --to json
 
-# Convert to YAML
+ Convert to YAML
 python tools/converter.py my-summary.md --to yaml
 
-# Convert JSON back to Markdown
+ Convert JSON back to Markdown
 python tools/converter.py my-summary.json --to markdown
 ```
 
@@ -329,23 +329,23 @@ python tools/converter.py my-summary.json --to markdown
 
 ---
 
-## Installation
+ Installation
 
-### Requirements
+ Requirements
 - Python 3.9+
 - No external dependencies for core functionality
 
-### Setup
+ Setup
 
 ```bash
-# Clone repository
+ Clone repository
 git clone https://github.com/DeeTorch/universal-seed-summary.git
 cd universal-seed-summary
 
-# Optional: Install enhanced dependencies
+ Optional: Install enhanced dependencies
 pip install -r requirements.txt
 
-# Verify tools work
+ Verify tools work
 python tools/validator.py examples/checkpoint/checkpoint_example.md
 python tools/indexer.py examples/
 python tools/converter.py examples/checkpoint/checkpoint_example.md --to json
@@ -353,9 +353,9 @@ python tools/converter.py examples/checkpoint/checkpoint_example.md --to json
 
 ---
 
-## Integration Examples
+ Integration Examples
 
-### AI Persona Memory Systems
+ AI Persona Memory Systems
 USS provides the distillation layer for persona continuity across sessions. Use checkpoint mode for persona evolution tracking.
 
 **Example Projects**:
@@ -363,20 +363,20 @@ USS provides the distillation layer for persona continuity across sessions. Use 
 - Erosforge – Code generation platform
 - Fólkvangr Neural Core – AI system orchestration
 
-### Research Knowledge Bases
+ Research Knowledge Bases
 Archive mode creates permanent records of exploratory threads with explicit uncertainty tracking.
 
-### Development Project Management
+ Development Project Management
 Thread topology mapping enables multi-thread dependency tracking across complex projects.
 
-### LLM Prompt Engineering
+ LLM Prompt Engineering
 Decision audit trails document what prompt structures worked, failed, or remain exploratory.
 
 ---
 
-## Real-World Examples
+ Real-World Examples
 
-### Checkpoint: Erosforge Development Session
+ Checkpoint: Erosforge Development Session
 **Project**: Full-stack code generation platform  
 **Thread Depth**: 12 exchanges  
 **Completion**: 40%  
@@ -385,7 +385,7 @@ Decision audit trails document what prompt structures worked, failed, or remain 
 
 [View full example →](examples/checkpoint/checkpoint_example.md)
 
-### Re-entry: UVB Persona Architecture
+ Re-entry: UVB Persona Architecture
 **Project**: AI persona with memory persistence  
 **Thread Depth**: 18 exchanges  
 **Dormancy**: 3 weeks  
@@ -394,7 +394,7 @@ Decision audit trails document what prompt structures worked, failed, or remain 
 
 [View full example →](examples/re-entry/reentry_example.md)
 
-### Archive: Prompt Engineering Research
+ Archive: Prompt Engineering Research
 **Project**: Multi-platform prompt optimization study  
 **Thread Depth**: 24 exchanges  
 **Status**: Complete  
@@ -405,7 +405,7 @@ Decision audit trails document what prompt structures worked, failed, or remain 
 
 ---
 
-## Documentation
+ Documentation
 
 - **[Quick Start Guide](docs/quickstart.md)** – Get started in 5 minutes
 - **[Tools Documentation](docs/TOOLS_README.md)** – Complete guide to validator, indexer, converter
@@ -413,7 +413,7 @@ Decision audit trails document what prompt structures worked, failed, or remain 
 
 ---
 
-## Contributing
+ Contributing
 
 Contributions welcome! We're especially interested in:
 
@@ -427,22 +427,22 @@ Contributions welcome! We're especially interested in:
 
 ---
 
-## Roadmap
+ Roadmap
 
-### v1.3 (Current) – Production Ready
+ v1.3 (Current) – Production Ready
 ✅ Complete protocol specification  
 ✅ Three invocation modes with token budgets  
 ✅ Working examples for all modes  
 ✅ Three utility tools (validator, indexer, converter)  
 ✅ Professional documentation  
 
-### v1.4 (Planned) – Enhanced Tooling
+ v1.4 (Planned) – Enhanced Tooling
 - Enhanced validator with auto-fix mode
 - Indexer with semantic search
 - Converter with XML support
 - Cross-platform validation reports
 
-### v2.0 (Future) – Enterprise Edition
+ v2.0 (Future) – Enterprise Edition
 - Formal white paper and governance documentation
 - Compliance framework mapping (SOC2, ISO 27001)
 - Advanced topology visualization
@@ -452,9 +452,9 @@ Contributions welcome! We're especially interested in:
 
 ---
 
-## FAQ
+ FAQ
 
-### How is USS different from regular summarization?
+ How is USS different from regular summarization?
 
 USS is **audit-grade distillation**, not narrative summarization. It preserves:
 - Architectural decisions and their reasoning
@@ -464,7 +464,7 @@ USS is **audit-grade distillation**, not narrative summarization. It preserves:
 
 Traditional summaries optimize for brevity; USS optimizes for **continuity without drift**.
 
-### Which LLMs work best with USS?
+ Which LLMs work best with USS?
 
 USS is **model-agnostic** and works with any instruction-following model. Tested extensively on:
 - Claude (3.5 Sonnet, 4, Opus) – Excellent
@@ -473,7 +473,7 @@ USS is **model-agnostic** and works with any instruction-following model. Tested
 - Grok (2, 3) – Very Good
 - Gemini Pro/Ultra – Good
 
-### Can I modify the protocol for my needs?
+ Can I modify the protocol for my needs?
 
 Yes! USS is MIT licensed. You can:
 - Add custom fields to sections
@@ -483,7 +483,7 @@ Yes! USS is MIT licensed. You can:
 
 We encourage sharing improvements back to the community.
 
-### How do I handle very long threads (100+ exchanges)?
+ How do I handle very long threads (100+ exchanges)?
 
 For threads exceeding 50+ exchanges:
 1. Use **checkpoint mode** every 15-20 exchanges
@@ -491,7 +491,7 @@ For threads exceeding 50+ exchanges:
 3. Use **re-entry mode** when resuming
 4. Final **archive mode** captures full journey with references to checkpoints
 
-### What if my LLM doesn't follow the format perfectly?
+ What if my LLM doesn't follow the format perfectly?
 
 Use the validator:
 ```bash
@@ -503,14 +503,14 @@ Common issues:
 - Formatting errors → Run with `--strict` to catch
 - Token budget exceeded → Acceptable in archive mode
 
-### How do I search across many archived summaries?
+ How do I search across many archived summaries?
 
 Use the indexer:
 ```bash
-# Build index
+ Build index
 python tools/indexer.py ./summaries/ -o my-index.json
 
-# Search
+ Search
 python tools/indexer.py ./summaries/ --search "machine learning" --mode archive
 ```
 
@@ -518,7 +518,7 @@ Creates searchable JSON index with metadata from all summaries.
 
 ---
 
-## License
+ License
 
 MIT License – See [LICENSE](LICENSE) for details.
 
@@ -530,7 +530,7 @@ You are free to:
 
 ---
 
-## Author
+ Author
 
 **Jusstin DeRemus (The Oracle)**  
 AI Systems Architect | Prompt Engineer | Full-Stack Developer  
@@ -544,7 +544,7 @@ Part of the **Fólkvangr Systems Neural Core** architecture initiative.
 
 ---
 
-## Acknowledgments
+ Acknowledgments
 
 Developed through iterative testing across Claude, GPT-4, Perplexity, and Grok platforms. Special thanks to:
 
@@ -555,7 +555,7 @@ Developed through iterative testing across Claude, GPT-4, Perplexity, and Grok p
 
 ---
 
-## Citation
+ Citation
 
 If you use USS in research or commercial projects, please cite:
 
@@ -571,7 +571,7 @@ If you use USS in research or commercial projects, please cite:
 
 ---
 
-## Status
+ Status
 
 **🚀 Production Ready**  
 **Version**: 1.3  

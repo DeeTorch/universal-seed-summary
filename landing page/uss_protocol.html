@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>USS — Universal Seed Summary Invoker</title>
+  <style>
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #161b24;
+      --border: #1e2636;
+      --accent: #4f9cf9;
+      --accent2: #7b5ea7;
+      --accent3: #2ecfa8;
+      --text: #e2e8f0;
+      --muted: #8892a4;
+      --tag-bg: #1a2236;
+      --tag-color: #4f9cf9;
+      --warn: #f97316;
+      --code-bg: #0d1117;
+      --hero-glow: radial-gradient(ellipse at 50% 0%, rgba(79,156,249,0.13) 0%, transparent 70%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,12,16,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--text); }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--hero-glow), var(--bg);
+      text-align: center;
+      padding: 100px 2rem 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent3);
+      border: 1px solid var(--accent3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin: 1.2rem auto 2.4rem;
+      max-width: 640px;
+    }
+
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-bottom: 2.8rem;
+    }
+
+    .hero-meta-item {
+      text-align: center;
+    }
+
+    .hero-meta-item .val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-meta-item .lbl {
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 40px;
+      background: var(--border);
+      align-self: center;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #0a0c10;
+    }
+
+    .btn-primary:hover { background: #6fb3ff; }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    section {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent3);
+      margin-bottom: 0.6rem;
+    }
+
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── WHAT IS IT ── */
+    .what-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 700px) { .what-grid { grid-template-columns: 1fr; } }
+
+    .what-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+    }
+
+    .what-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.7rem;
+    }
+
+    .what-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; }
+
+    /* ── SCHEMA SECTION ── */
+    .schema-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .schema-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 10px 10px 0;
+      padding: 1.2rem 1.6rem;
+      display: flex;
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+
+    .schema-item.green { border-left-color: var(--accent3); }
+    .schema-item.purple { border-left-color: var(--accent2); }
+    .schema-item.orange { border-left-color: var(--warn); }
+
+    .schema-num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent);
+      min-width: 2rem;
+      line-height: 1;
+    }
+
+    .schema-item.green .schema-num { color: var(--accent3); }
+    .schema-item.purple .schema-num { color: var(--accent2); }
+    .schema-item.orange .schema-num { color: var(--warn); }
+
+    .schema-content h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .schema-content p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      overflow-x: auto;
+      font-family: 'Cascadia Code', 'Fira Code', 'Courier New', monospace;
+      font-size: 0.83rem;
+      line-height: 1.75;
+      color: #c9d1d9;
+    }
+
+    .code-block .c-key { color: #79c0ff; }
+    .code-block .c-str { color: #a5d6ff; }
+    .code-block .c-val { color: #7ee787; }
+    .code-block .c-cmt { color: #8b949e; font-style: italic; }
+    .code-block .c-head { color: #d2a8ff; font-weight: 700; }
+    .code-block .c-field { color: #ffa657; }
+
+    /* ── MODES ── */
+    .modes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 750px) { .modes-grid { grid-template-columns: 1fr; } }
+
+    .mode-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.8rem;
+      text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .mode-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .mode-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .mode-card h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .mode-card p { color: var(--muted); font-size: 0.88rem; }
+
+    /* ── DIFFERENTIATORS ── */
+    .diff-table-wrap {
+      overflow-x: auto;
+    }
+
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .diff-table th {
+      text-align: left;
+      padding: 0.9rem 1.2rem;
+      background: var(--surface2);
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .diff-table td {
+      padding: 0.85rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle;
+    }
+
+    .diff-table tr:last-child td { border-bottom: none; }
+
+    .diff-table td:first-child { color: var(--muted); font-weight: 600; }
+
+    .check { color: var(--accent3); font-weight: 700; }
+    .cross { color: #f87171; font-weight: 700; }
+    .partial { color: var(--warn); font-weight: 700; }
+
+    .uss-col { color: var(--accent); font-weight: 700; }
+
+    /* ── HOW TO USE ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+
+    .step {
+      display: flex;
+      gap: 1.6rem;
+      padding: 0 0 2.5rem 0;
+      position: relative;
+    }
+
+    .step-num {
+      width: 46px;
+      height: 46px;
+      min-width: 46px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #0a0c10;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step:nth-child(even) .step-num { background: var(--accent3); }
+
+    .step-body h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-body p { color: var(--muted); font-size: 0.92rem; }
+
+    .step-body code {
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: 0.82rem;
+      font-family: monospace;
+    }
+
+    /* ── MODEL PROFILES ── */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
+    }
+
+    @media (max-width: 700px) { .profiles-grid { grid-template-columns: 1fr; } }
+
+    .profile-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .profile-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .p-claude { background: #c25e1a; }
+    .p-gpt { background: #10a37f; }
+    .p-grok { background: #1a1a2e; border: 1px solid #333; }
+    .p-gemini { background: #4285f4; }
+
+    .profile-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .profile-tag {
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .profile-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    /* ── INTEGRITY ENGINE ── */
+    .integrity-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+
+    @media (max-width: 750px) { .integrity-grid { grid-template-columns: 1fr; } }
+
+    .integrity-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.4rem;
+    }
+
+    .integrity-card .i-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .integrity-card h4 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .integrity-card p { color: var(--muted); font-size: 0.85rem; }
+
+    /* ── WHERE TO FIND ── */
+    .find-cards {
+      display: flex;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+    }
+
+    .find-card {
+      flex: 1;
+      min-width: 240px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.6rem;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .find-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+    .find-card .fc-icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
+
+    .find-card h4 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+
+    .find-card p { color: var(--muted); font-size: 0.87rem; }
+
+    .find-card .fc-url {
+      display: inline-block;
+      margin-top: 0.9rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-family: monospace;
+    }
+
+    /* ── TAGS ── */
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--tag-color);
+      font-size: 0.76rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: linear-gradient(135deg, rgba(79,156,249,0.06), rgba(46,207,168,0.06));
+      border: 1px solid rgba(79,156,249,0.2);
+      border-radius: 12px;
+      padding: 2rem 2.4rem;
+      margin-top: 2.5rem;
+    }
+
+    .callout h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .callout p { color: var(--muted); font-size: 0.92rem; }
+
+    .callout code {
+      background: var(--code-bg);
+      color: var(--accent3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.83rem;
+      font-family: monospace;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--accent); font-weight: 600; }
+
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">USS<span> Protocol</span></a>
+  <ul class="nav-links">
+    <li><a href="#what">What Is It</a></li>
+    <li><a href="#schema">Schema</a></li>
+    <li><a href="#use">How to Use</a></li>
+    <li><a href="#why">Why USS</a></li>
+    <li><a href="#different">vs Others</a></li>
+    <li><a href="#models">Model Profiles</a></li>
+    <li><a href="#find">Find It</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">v1.3 + Ingestion-Pack Active</div>
+  <h1>Universal Seed<br/><span class="highlight">Summary Invoker</span></h1>
+  <p class="hero-sub">
+    A structured AI protocol that compresses any conversation into a portable, audit-safe, cross-model artifact — so no knowledge is ever lost between sessions.
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="val">8</span>
+      <span class="lbl">Schema Sections</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="val">4</span>
+      <span class="lbl">Model Wrappers</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="val">3</span>
+      <span class="lbl">Invocation Modes</span>
+    </div>
+    <div class="hero-divider"></div>
+    <div class="hero-meta-item">
+      <span class="val">0.93</span>
+      <span class="lbl">Fidelity Score (avg)</span>
+    </div>
+  </div>
+  <div class="btn-group">
+    <a href="#use" class="btn btn-primary">Get Started</a>
+    <a href="#find" class="btn btn-ghost">View on GitHub →</a>
+  </div>
+</div>
+
+
+<!-- WHAT IS IT -->
+<section id="what">
+  <div class="container">
+    <p class="section-tag">Overview</p>
+    <h2>What Is USS?</h2>
+    <p class="lead">
+      The Universal Seed Summary Invoker (USS) is a formal prompt protocol designed by Jusstin DeRemus (The Oracle). It acts as a <strong>meta-synthesizer</strong> — an instruction layer you inject into any LLM to transform a full conversation thread into a compressed, structured, machine-readable artifact. Think of it as a "save state" for AI conversations.
+    </p>
+    <div class="what-grid">
+      <div class="what-card">
+        <h3>🧬 What It Produces</h3>
+        <p>USS generates a YAML-fronted Markdown document containing a locked record of your thread: its architecture decisions, open questions, failure flags, knowledge topology, and a Resurrection Hook — a single sentence that can rehydrate any LLM back into the exact context of the prior session.</p>
+      </div>
+      <div class="what-card">
+        <h3>🔒 What It Protects Against</h3>
+        <p>Context loss across sessions, hallucinated continuations when resuming conversations, inconsistent summaries between models, and undocumented architectural drift. USS enforces "truth-over-helpfulness" as a hard constraint — no invention, no inference outside thread boundaries.</p>
+      </div>
+      <div class="what-card">
+        <h3>⚙️ What It Is Not</h3>
+        <p>USS is not a chatbot plugin, not a memory database, and not a summarization tool. It is a prompt-level protocol — a schema and a set of constraints you invoke inside any capable LLM to produce a canonical audit artifact from a conversation thread.</p>
+      </div>
+      <div class="what-card">
+        <h3>🌐 Where It Lives</h3>
+        <p>USS runs inside the LLM itself, triggered by pasting the protocol into any session. Artifacts output by USS are portable Markdown files that can be committed to GitHub, stored in Obsidian, ingested by other LLMs, or archived in any knowledge management system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SCHEMA -->
+<section id="schema">
+  <div class="container">
+    <p class="section-tag">Architecture</p>
+    <h2>The 8-Section Schema</h2>
+    <p class="lead">Every USS artifact follows a rigid, ordered schema. Each section is either required or conditionally required. The schema is identical across all four model wrappers — only the delivery scaffolding changes per model.</p>
+
+    <div class="schema-list">
+      <div class="schema-item">
+        <div class="schema-num">1</div>
+        <div class="schema-content">
+          <h4>HEADER — Thread Lock &amp; Audit</h4>
+          <p>Establishes the thread's identity: archetype classification, ignition vector, focus domains, depth, completion state, momentum indicator, finalization beacon, and invoker. This is the permanent "fingerprint" of the conversation.</p>
+        </div>
+      </div>
+      <div class="schema-item orange">
+        <div class="schema-num">2</div>
+        <div class="schema-content">
+          <h4>FAILURE SEMANTICS &amp; INTEGRITY FLAGS</h4>
+          <p>Zero-tolerance section. Must be fully populated — no vague nulls. Captures incoherence flags, compression loss warnings, inference boundary alerts, resolution impossibility markers, failure severity (Low/Medium/High), and the Compression Fidelity Score (0.00–1.00 float).</p>
+        </div>
+      </div>
+      <div class="schema-item green">
+        <div class="schema-num">3</div>
+        <div class="schema-content">
+          <h4>COSMIC CORE &amp; EMERGENCE</h4>
+          <p>The conceptual heart of the artifact. Maps ontological constructs (key concepts), paradigm nodes (pivotal shifts in the thread), and emergent universals (cross-thread insights that transcend the immediate conversation).</p>
+        </div>
+      </div>
+      <div class="schema-item">
+        <div class="schema-num">4</div>
+        <div class="schema-content">
+          <h4>DECISIONS &amp; GRAFTS</h4>
+          <p>Locks in what was decided. Architecture commits, heuristic branches (decisions that could go either way), and epistemic locks (facts treated as non-negotiable within this thread). Prevents revisiting settled ground.</p>
+        </div>
+      </div>
+      <div class="schema-item orange">
+        <div class="schema-num">5</div>
+        <div class="schema-content">
+          <h4>OPEN VECTORS &amp; THRUST</h4>
+          <p>Forward-facing section. Unresolved queries, priority vectors with urgency tiers (Immediate / High / Medium / Low), and risk surfaces — specific, named failure modes, not vague concerns.</p>
+        </div>
+      </div>
+      <div class="schema-item purple">
+        <div class="schema-num">6</div>
+        <div class="schema-content">
+          <h4>THREAD TOPOLOGY (Conditional)</h4>
+          <p>Only included if explicit cross-thread links exist. Maps parent, child, and sibling threads using <code>[[Wikilink]]</code> formatting for direct Obsidian Knowledge Graph compatibility. Domains tagged as <code>#hashtags</code>.</p>
+        </div>
+      </div>
+      <div class="schema-item purple">
+        <div class="schema-num">7</div>
+        <div class="schema-content">
+          <h4>EXECUTION ARTIFACTS (Archive Mode Only)</h4>
+          <p>Required when <code>mode: archive</code>. Records all generated outputs, tool usage patterns, reusability index, and integration notes — creating a full provenance chain for the session's deliverables.</p>
+        </div>
+      </div>
+      <div class="schema-item green">
+        <div class="schema-num">8</div>
+        <div class="schema-content">
+          <h4>INVOCATION LOCK + Resurrection Hook</h4>
+          <p>A 2–4 sentence sealing paragraph declaring the artifact immutable. Closes with the Resurrection Hook — a single bootstrapping sentence formatted as <code>&gt; INGESTION: You are resuming a thread with the following established constraints: [...]</code> — designed to cold-start any LLM into full thread context.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sample Output -->
+    <div style="margin-top: 2.5rem;">
+      <p style="color: var(--muted); font-size: 0.85rem; margin-bottom: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600;">Sample YAML Frontmatter + Resurrection Hook</p>
+      <div class="code-block">
+<span class="c-cmt">--- (YAML Frontmatter)</span>
+<span class="c-key">mode</span>: <span class="c-val">re_entry</span>
+<span class="c-key">protocol</span>: <span class="c-str">"Universal Seed Summary Invoker"</span>
+<span class="c-key">protocol_version</span>: <span class="c-str">"1.3"</span>
+<span class="c-key">timestamp</span>: <span class="c-str">"2026-02-26 00:22:00 PST"</span>
+<span class="c-cmt">---</span>
+
+<span class="c-head">### INVOCATION LOCK</span>
+
+<span class="c-cmt">... sealing paragraph ...</span>
+
+<span class="c-field">**Resurrection_Hook**:</span>
+<span class="c-str">&gt; INGESTION: You are resuming a thread with the following established</span>
+<span class="c-str">  constraints: USS v1.3 + ingestion-pack enhancements are the active</span>
+<span class="c-str">  protocol spec; four model-specific wrapper prompts have been generated</span>
+<span class="c-str">  with identical output schemas; validator.py requires two regex patches;</span>
+<span class="c-str">  all files target the DeeTorch/universal-seed-summary GitHub repository;</span>
+<span class="c-str">  next actions: patch validator, commit wrapper files, generate uss-v1.4.json.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW TO USE -->
+<section id="use">
+  <div class="container">
+    <p class="section-tag">Usage Guide</p>
+    <h2>How to Use USS</h2>
+    <p class="lead">USS requires no installation. It runs inside any capable LLM session. There are two components: the protocol prompt (the instruction layer) and the mode parameter (which controls output type).</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Copy the USS Protocol Prompt</h4>
+          <p>Retrieve the latest USS system prompt from the <code>DeeTorch/universal-seed-summary</code> GitHub repository. Use the universal ingestion-optimized version or one of the four model-specific wrappers (Claude XML, GPT-4o Markdown, Grok terminal, Gemini procedural).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Choose Your Invocation Mode</h4>
+          <p>Set <code>mode</code> in the YAML frontmatter to one of three values: <code>checkpoint</code> (mid-session snapshot), <code>re_entry</code> (resuming an archived thread), or <code>archive</code> (final session seal with full execution artifact logging).</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Paste Into Your LLM Session</h4>
+          <p>Drop the USS protocol prompt at the end of your active conversation — or at the start of a new session alongside a prior USS artifact. The model executes the protocol silently and generates the structured Markdown output.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Run the Validator</h4>
+          <p>Pipe the output through <code>validator.py</code> in the <code>tools/</code> directory. The validator checks all required fields, verifies the <code>Compression_Fidelity_Score</code> float, and confirms the <code>Resurrection_Hook</code> is present and properly formatted.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Store &amp; Sync the Artifact</h4>
+          <p>Commit the validated <code>.md</code> file to your GitHub repository and/or drop it into your Obsidian vault. The <code>[[Wikilink]]</code> formatting in the THREAD TOPOLOGY section is natively compatible with Obsidian's Knowledge Graph view — cross-thread links render automatically.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h4>Resurrect Any Thread, Anywhere</h4>
+          <p>To resume a thread in any new session or any model, paste the <code>Resurrection_Hook</code> sentence as your opening message. The model is instantly rehydrated into the established constraints, decisions, and open vectors of the prior session — zero context rebuild required.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modes Callout -->
+    <div style="margin-top: 3rem;">
+      <h3 style="color: #fff; margin-bottom: 1.4rem; font-size: 1.2rem;">The Three Invocation Modes</h3>
+      <div class="modes-grid">
+        <div class="mode-card">
+          <div class="mode-icon">📸</div>
+          <h3>Checkpoint</h3>
+          <p>Mid-session snapshot. Captures current state without sealing the thread. Use when a conversation is active but you need a restore point before exploring a risky branch.</p>
+        </div>
+        <div class="mode-card">
+          <div class="mode-icon">🔁</div>
+          <h3>Re-Entry</h3>
+          <p>Resumes a previously archived thread. The protocol ingests a prior USS artifact and continues from its established constraints. The most common daily-use mode.</p>
+        </div>
+        <div class="mode-card">
+          <div class="mode-icon">🗄️</div>
+          <h3>Archive</h3>
+          <p>Final seal. Triggers Section 7 (Execution Artifacts). Produces a full provenance record of all generated outputs, tool usage, and integration notes. Use at true project completion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHY USS -->
+<section id="why">
+  <div class="container">
+    <p class="section-tag">Value Proposition</p>
+    <h2>Why You Should Use USS</h2>
+    <p class="lead">Every LLM session is ephemeral by default. USS converts that ephemerality into a structured, durable, cross-model knowledge layer.</p>
+
+    <div class="integrity-grid">
+      <div class="integrity-card">
+        <div class="i-icon">🧠</div>
+        <h4>Zero Context Rebuilding</h4>
+        <p>The Resurrection Hook delivers the full established context of any session in a single sentence. No more "can you remind me where we left off?" prompts.</p>
+      </div>
+      <div class="integrity-card">
+        <div class="i-icon">🔏</div>
+        <h4>Audit-Safe Artifacts</h4>
+        <p>Every USS output is a locked, immutable record. The Compression Fidelity Score quantifies nuance preservation. Failure flags surface exactly what was uncertain or compressed.</p>
+      </div>
+      <div class="integrity-card">
+        <div class="i-icon">🌐</div>
+        <h4>Cross-Model Portability</h4>
+        <p>A USS artifact generated by Claude can be ingested by GPT-4o, Grok, or Gemini with identical fidelity. The schema is model-agnostic; only the wrapper scaffolding differs.</p>
+      </div>
+      <div class="integrity-card">
+        <div class="i-icon">🗂️</div>
+        <h4>Knowledge Graph Sync</h4>
+        <p>Thread Topology uses <code>[[Wikilink]]</code> formatting natively. Drop USS artifacts into Obsidian and your entire project history becomes a navigable knowledge graph instantly.</p>
+      </div>
+      <div class="integrity-card">
+        <div class="i-icon">⚖️</div>
+        <h4>Truth-Over-Helpfulness Enforcement</h4>
+        <p>USS prohibits the LLM from inventing, inferring, or hallucinating. Every field is thread-derived. If data is absent, it must be explicitly declared absent — no silent omissions.</p>
+      </div>
+      <div class="integrity-card">
+        <div class="i-icon">🛠️</div>
+        <h4>Toolchain Integration</h4>
+        <p>Ships with <code>validator.py</code>, <code>indexer.py</code>, and <code>converter.py</code>. Automate validation on commit, index artifacts for semantic search, and convert to any format your workflow requires.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h3>The Core Problem USS Solves</h3>
+      <p>LLM context windows are finite. Long threads degrade. Resuming sessions produces hallucinated continuations. Without a protocol, every new session is a clean slate — and every insight built across hours of collaborative work can be silently lost. USS makes conversation memory a <em>first-class engineered artifact</em>, not an afterthought.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIFFERENTIATORS -->
+<section id="different">
+  <div class="container">
+    <p class="section-tag">Competitive Landscape</p>
+    <h2>What Makes USS Different</h2>
+    <p class="lead">There are summarization tools, memory APIs, and conversation exporters. USS occupies a different category entirely.</p>
+
+    <div class="diff-table-wrap">
+      <table class="diff-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th class="uss-col">USS Protocol</th>
+            <th>Generic Summary Prompts</th>
+            <th>LLM Memory APIs (e.g. ChatGPT Memory)</th>
+            <th>Conversation Export Tools</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Structured, versioned schema</td>
+            <td class="uss-col check">✓ 8-section rigid schema</td>
+            <td class="cross">✗ Free-form</td>
+            <td class="partial">~ Proprietary, opaque</td>
+            <td class="cross">✗ Raw transcript only</td>
+          </tr>
+          <tr>
+            <td>Fidelity score / integrity flags</td>
+            <td class="uss-col check">✓ Float 0.00–1.00 + 5 flag types</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+          </tr>
+          <tr>
+            <td>Cross-model portable artifact</td>
+            <td class="uss-col check">✓ Identical schema, 4 model wrappers</td>
+            <td class="cross">✗ Model-specific</td>
+            <td class="cross">✗ Locked to one platform</td>
+            <td class="partial">~ Format only, no semantics</td>
+          </tr>
+          <tr>
+            <td>One-sentence thread resurrection</td>
+            <td class="uss-col check">✓ Resurrection Hook</td>
+            <td class="cross">✗ Must re-paste full summary</td>
+            <td class="partial">~ Auto-inject, but uncontrolled</td>
+            <td class="cross">✗ Manual rebuild</td>
+          </tr>
+          <tr>
+            <td>Obsidian / Knowledge Graph sync</td>
+            <td class="uss-col check">✓ Native [[Wikilink]] formatting</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+          </tr>
+          <tr>
+            <td>Hallucination-prevention enforcement</td>
+            <td class="uss-col check">✓ Hard negative constraints</td>
+            <td class="cross">✗ No guardrails</td>
+            <td class="partial">~ Platform-level RLHF only</td>
+            <td class="cross">✗ N/A</td>
+          </tr>
+          <tr>
+            <td>Programmatic validation toolchain</td>
+            <td class="uss-col check">✓ validator.py + indexer.py</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+            <td class="cross">✗ None</td>
+          </tr>
+          <tr>
+            <td>Open-source &amp; self-hosted</td>
+            <td class="uss-col check">✓ GitHub, no dependencies</td>
+            <td class="partial">~ Varies</td>
+            <td class="cross">✗ Vendor-locked</td>
+            <td class="partial">~ Some</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- MODEL PROFILES -->
+<section id="models">
+  <div class="container">
+    <p class="section-tag">Model Obedience Profiles</p>
+    <h2>The Four Model Wrappers</h2>
+    <p class="lead">Identical USS output schema — different delivery scaffolding. Each wrapper is optimized for the behavioral tendencies of its target model. Wrapper files live in <code>templates/invocation-prompts/</code>.</p>
+
+    <div class="profiles-grid">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-icon p-claude">Cl</div>
+          <div>
+            <div class="profile-name">Claude</div>
+            <div class="profile-tag">XML Wrapper — <code>uss-v1.4-claude.txt</code></div>
+          </div>
+        </div>
+        <p>Claude responds most reliably to XML-tagged instruction blocks. The USS Claude wrapper wraps the protocol in <code>&lt;uss_protocol_v1.4&gt;</code> tags, separating role, constraints, schema, and validation gate into discrete XML elements. Claude's strong instruction-following ensures near-zero schema deviation.</p>
+      </div>
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-icon p-gpt">G+</div>
+          <div>
+            <div class="profile-name">ChatGPT / GPT-4o</div>
+            <div class="profile-tag">Markdown Hierarchy — <code>uss-v1.4-chatgpt.txt</code></div>
+          </div>
+        </div>
+        <p>GPT-4o interprets Markdown heading hierarchies as instruction priority tiers. The USS GPT wrapper uses clean <code>##</code> and <code>###</code> heading structures with bold field labels. This approach capitalizes on GPT's strong Markdown-to-structure mapping and produces highly reliable YAML frontmatter compliance.</p>
+      </div>
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-icon p-grok">Gk</div>
+          <div>
+            <div class="profile-name">Grok (xAI)</div>
+            <div class="profile-tag">Terminal Framing — <code>uss-v1.4-grok.txt</code></div>
+          </div>
+        </div>
+        <p>Grok responds well to terse, directive, terminal-style commands. The USS Grok wrapper frames the protocol as an executable script — short imperative statements, <code>// EXECUTE PROTOCOL NOW.</code> as the closer. Risk note: this wrapper has not been live-tested at scale; verbose meta-commentary from Grok is a known risk surface.</p>
+      </div>
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="profile-icon p-gemini">Gm</div>
+          <div>
+            <div class="profile-name">Gemini</div>
+            <div class="profile-tag">Procedural Steps — <code>uss-v1.4-gemini.txt</code></div>
+          </div>
+        </div>
+        <p>Gemini follows numbered procedural step formats most reliably. The USS Gemini wrapper presents each protocol phase as an explicit numbered step. A <code>STEP 0: Do not narrate these steps. Execute them silently.</code> directive is recommended to prevent Gemini from narrating the steps before execution — a known behavioral risk.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHERE TO FIND IT -->
+<section id="find">
+  <div class="container">
+    <p class="section-tag">Availability</p>
+    <h2>Where to Find USS</h2>
+    <p class="lead">USS is open-source, self-hosted, and platform-independent. All protocol versions, model wrappers, and toolchain scripts are maintained in a single GitHub repository.</p>
+
+    <div class="find-cards">
+      <div class="find-card">
+        <div class="fc-icon">🐙</div>
+        <h4>GitHub Repository</h4>
+        <p>Primary source for all USS versions, model wrapper templates, Python toolchain (validator, indexer, converter), and release notes.</p>
+        <span class="fc-url">github.com/DeeTorch/universal-seed-summary</span>
+      </div>
+      <div class="find-card">
+        <div class="fc-icon">📓</div>
+        <h4>Obsidian Vault</h4>
+        <p>Drop any USS <code>.md</code> artifact into your Obsidian vault. Thread Topology <code>[[Wikilinks]]</code> auto-render as Knowledge Graph edges. No plugin required.</p>
+        <span class="fc-url">Your Local Vault / obsidian.md</span>
+      </div>
+      <div class="find-card">
+        <div class="fc-icon">🛠️</div>
+        <h4>Python Toolchain</h4>
+        <p>Three CLI tools in the <code>tools/</code> directory: <code>validator.py</code> (schema compliance), <code>indexer.py</code> (artifact search indexing), <code>converter.py</code> (format conversion).</p>
+        <span class="fc-url">repo/tools/validator.py</span>
+      </div>
+      <div class="find-card">
+        <div class="fc-icon">📄</div>
+        <h4>Version Specification</h4>
+        <p>The canonical v1.3 JSON spec is the active base. The v1.4 ingestion-pack adds <code>Compression_Fidelity_Score</code>, <code>Resurrection_Hook</code>, and Wikilink topology. Formal <code>uss-v1.4.json</code> spec pending.</p>
+        <span class="fc-url">repo/uss-v1.3.json → uss-v1.4.json</span>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 2.5rem;">
+      <h3>Current Protocol Status</h3>
+      <p>USS is at <strong>v1.3 + Ingestion-Pack</strong> (active). Pending items before formal v1.4 release: patch <code>validator.py</code> with two new regex patterns (<code>Compression_Fidelity_Score</code> float and <code>Resurrection_Hook</code> string check), commit four model wrapper <code>.txt</code> files to repository, and optionally generate the canonical <code>uss-v1.4.json</code> spec document. Live testing of Grok and Gemini wrappers is still in the queue.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  Designed and architected by <span>Jusstin DeRemus (The Oracle)</span> &nbsp;·&nbsp;
+  USS Protocol v1.3 + Ingestion-Pack &nbsp;·&nbsp;
+  <span>DeeTorch/universal-seed-summary</span> &nbsp;·&nbsp;
+  Built 2026
+</footer>
+
+</body>
+</html>
