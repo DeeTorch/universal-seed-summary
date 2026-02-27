@@ -7,6 +7,10 @@ Converts USS summaries between formats:
 - Markdown (native format)
 - JSON (structured data)
 - YAML (human-readable structured)
+
+MUSS Support:
+- --upgrade: USS v1.3 -> MUSS v1.0
+- --downgrade: MUSS v1.0 -> USS v1.3
 """
 
 import json
@@ -15,6 +19,7 @@ import sys
 from pathlib import Path
 from typing import Dict, Any, Optional
 import argparse
+from datetime import datetime
 
 
 class USSConverter:
@@ -270,6 +275,101 @@ class USSConverter:
         return "\n".join(lines)
 
 
+# MUSS Conversion Functions
+def upgrade_to_muss(filepath: str) -> None:
+    """USS v1.3 artifact -> MUSS v1.0 artifact"""
+    path = Path(filepath)
+    content = path.read_text(encoding="utf-8")
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # 1. Update protocol field
+    content = re.sub(
+        r'^protocol:.*$',
+        'protocol: Memory-Augmented Universal Seed System',
+        content,
+        flags=re.MULTILINE
+    )
+
+    # 2. Add/rename version to protocol_version
+    content = re.sub(
+        r'^version:.*$',
+        'protocol_version: "1.0"',
+        content,
+        flags=re.MULTILINE
+    )
+
+    # 3. Inject MUSS YAML fields after timestamp line
+    muss_fields = f"session_id: MUSS_SESSION_{ts}\nexchange_count: 0\ndrift_risk: LOW\n"
+    content = re.sub(
+        r'(timestamp:.*)\n(---)',
+        f'\\1\n{muss_fields}\\2',
+        content
+    )
+
+    # 4. Inject LIVE MEMORY SNAPSHOT section after HEADER section
+    live_memory = "\n### LIVE MEMORY SNAPSHOT\n\n"
+    live_memory += "**SESSION_LOG_DIGEST**: No entries logged. (Scaffolded via USS->MUSS upgrade.)\n"
+    live_memory += "**NOTEBOOK_STATE**: No notebook entries. (Scaffolded via USS->MUSS upgrade.)\n"
+    live_memory += "**Active_Directives**: None.\n"
+    live_memory += "**Commands_Issued**: None.\n"
+
+    # Find HEADER section and insert after it
+    content = re.sub(
+        r'(### HEADER.*?(?=\n###|\n\n|\Z))',
+        r'\1' + live_memory,
+        content,
+        flags=re.DOTALL
+    )
+
+    # 5. Update Resurrection_Hook prefix
+    content = re.sub(r'> INGESTION:', '> MUSS INGESTION:', content)
+
+    out_path = path.with_name(path.stem + "_muss_v1.0.md")
+    out_path.write_text(content, encoding="utf-8")
+    print(f"[CONVERTER] Upgraded: {filepath} -> {out_path}")
+
+
+def downgrade_to_uss(filepath: str) -> None:
+    """MUSS v1.0 artifact -> USS v1.3 artifact"""
+    path = Path(filepath)
+    content = path.read_text(encoding="utf-8")
+
+    # 1. Update protocol field
+    content = re.sub(
+        r'^protocol:.*$',
+        'protocol: Universal Seed Summary Invoker',
+        content,
+        flags=re.MULTILINE
+    )
+
+    # 2. Update version
+    content = re.sub(
+        r'^protocol_version:.*$',
+        'version: "1.3"',
+        content,
+        flags=re.MULTILINE
+    )
+
+    # 3. Remove MUSS-only YAML fields
+    for field in ["session_id", "exchange_count", "drift_risk"]:
+        content = re.sub(rf'^{field}:.*\n', '', content, flags=re.MULTILINE)
+
+    # 4. Remove LIVE MEMORY SNAPSHOT section
+    content = re.sub(
+        r'\n### LIVE MEMORY SNAPSHOT.*?(?=\n###|\Z)',
+        '',
+        content,
+        flags=re.DOTALL
+    )
+
+    # 5. Revert Resurrection_Hook prefix
+    content = re.sub(r'> MUSS INGESTION:', '> INGESTION:', content)
+
+    out_path = path.with_name(path.stem + "_uss_v1.3.md")
+    out_path.write_text(content, encoding="utf-8")
+    print(f"[CONVERTER] Downgraded: {filepath} -> {out_path}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Convert USS summaries between formats (Markdown, JSON, YAML)"
@@ -349,181 +449,6 @@ def main():
 if __name__ == "__main__":
     # Check for MUSS upgrade/downgrade mode first
     if len(sys.argv) >= 3 and sys.argv[1] in ("--upgrade", "--downgrade"):
-        from datetime import datetime
-        
-        LIVE_MEMORY_SCAFFOLD = """
-### LIVE MEMORY SNAPSHOT
-
-**SESSION_LOG_DIGEST**: No entries logged. (Scaffolded via USS->MUSS upgrade.)
-**NOTEBOOK_STATE**: No notebook entries. (Scaffolded via USS->MUSS upgrade.)
-**Active_Directives**: None.
-**Commands_Issued**: None.
-"""
-
-        MUSS_YAML_ADDITIONS = "session_id: MUSS_SESSION_UPGRADED_{ts}\nexchange_count: 0\ndrift_risk: LOW\n"
-        
-        def upgrade_to_muss(filepath: str) -> None:
-            """USS v1.3 artifact -> MUSS v1.0 artifact"""
-            path = Path(filepath)
-            content = path.read_text(encoding="utf-8")
-            ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-
-            # 1. Update protocol field
-            content = re.sub(
-                r'^protocol:\s*.*
-
-        def downgrade_to_uss(filepath: str) -> None:
-            """MUSS v1.0 artifact -> USS v1.3 artifact"""
-            path = Path(filepath)
-            content = path.read_text(encoding="utf-8")
-
-            # 1. Update protocol field
-            content = re.sub(
-                r'protocol:? "?Memory-Augmented Universal Seed System"?',
-                'protocol: "Universal Seed Summary Invoker"',
-                content
-            )
-            # 2. Update version
-            content = re.sub(r'protocol_version:? "?1\.0"?', 'protocol_version: "1.3"', content)
-            # 3. Remove MUSS-only YAML fields
-            for field in ["session_id", "exchange_count", "drift_risk"]:
-                content = re.sub(rf'^{field}:.*\n', '', content, flags=re.MULTILINE)
-            # 4. Remove LIVE MEMORY SNAPSHOT section
-            content = re.sub(
-                r'### LIVE MEMORY SNAPSHOT.*?(?=###)',
-                '',
-                content,
-                flags=re.DOTALL
-            )
-            # 5. Revert Resurrection_Hook prefix
-            content = re.sub(r'> MUSS INGESTION:', '> INGESTION:', content)
-
-            out_path = path.with_name(path.stem + "_uss_v1.3.md")
-            out_path.write_text(content, encoding="utf-8")
-            print(f"[CONVERTER] Downgraded: {filepath} -> {out_path}")
-
-        mode, filepath = sys.argv[1], sys.argv[2]
-        if mode == "--upgrade":
-            upgrade_to_muss(filepath)
-        elif mode == "--downgrade":
-            downgrade_to_uss(filepath)
-        else:
-            print(f"Unknown mode: {mode}")
-            sys.exit(1)
-    else:
-        main()
-,
-                'protocol: Memory-Augmented Universal Seed System',
-                content,
-                flags=re.MULTILINE
-            )
-            # 2. Update version
-            content = re.sub(
-                r'^version:\s*.*
-
-        def downgrade_to_uss(filepath: str) -> None:
-            """MUSS v1.0 artifact -> USS v1.3 artifact"""
-            path = Path(filepath)
-            content = path.read_text(encoding="utf-8")
-
-            # 1. Update protocol field
-            content = re.sub(
-                r'protocol:? "?Memory-Augmented Universal Seed System"?',
-                'protocol: "Universal Seed Summary Invoker"',
-                content
-            )
-            # 2. Update version
-            content = re.sub(r'protocol_version:? "?1\.0"?', 'protocol_version: "1.3"', content)
-            # 3. Remove MUSS-only YAML fields
-            for field in ["session_id", "exchange_count", "drift_risk"]:
-                content = re.sub(rf'^{field}:.*\n', '', content, flags=re.MULTILINE)
-            # 4. Remove LIVE MEMORY SNAPSHOT section
-            content = re.sub(
-                r'### LIVE MEMORY SNAPSHOT.*?(?=###)',
-                '',
-                content,
-                flags=re.DOTALL
-            )
-            # 5. Revert Resurrection_Hook prefix
-            content = re.sub(r'> MUSS INGESTION:', '> INGESTION:', content)
-
-            out_path = path.with_name(path.stem + "_uss_v1.3.md")
-            out_path.write_text(content, encoding="utf-8")
-            print(f"[CONVERTER] Downgraded: {filepath} -> {out_path}")
-
-        mode, filepath = sys.argv[1], sys.argv[2]
-        if mode == "--upgrade":
-            upgrade_to_muss(filepath)
-        elif mode == "--downgrade":
-            downgrade_to_uss(filepath)
-        else:
-            print(f"Unknown mode: {mode}")
-            sys.exit(1)
-    else:
-        main()
-,
-                'protocol_version: "1.0"',
-                content,
-                flags=re.MULTILINE
-            )
-            # 3. Inject MUSS YAML fields after timestamp line
-            muss_fields = f"session_id: MUSS_SESSION_{ts}\nexchange_count: 0\ndrift_risk: LOW\n"
-            content = re.sub(
-                r'(timestamp:.*)\n(---)',
-                f'\\1\n{muss_fields}\\2',
-                content
-            )
-            # 4. Inject LIVE MEMORY SNAPSHOT section after HEADER section
-            live_memory = "\n### LIVE MEMORY SNAPSHOT\n\n"
-            live_memory += "**SESSION_LOG_DIGEST**: No entries logged. (Scaffolded via USS->MUSS upgrade.)\n"
-            live_memory += "**NOTEBOOK_STATE**: No notebook entries. (Scaffolded via USS->MUSS upgrade.)\n"
-            live_memory += "**Active_Directives**: None.\n"
-            live_memory += "**Commands_Issued**: None.\n"
-            
-            # Find HEADER section and insert after it
-            content = re.sub(
-                r'(### HEADER.*?(?=\n###|\n\n|\Z))',
-                f'\\1{live_memory}',
-                content,
-                flags=re.DOTALL
-            )
-            # 5. Update Resurrection_Hook prefix
-            content = re.sub(r'> INGESTION:', '> MUSS INGESTION:', content)
-
-            out_path = path.with_name(path.stem + "_muss_v1.0.md")
-            out_path.write_text(content, encoding="utf-8")
-            print(f"[CONVERTER] Upgraded: {filepath} -> {out_path}")
-
-        def downgrade_to_uss(filepath: str) -> None:
-            """MUSS v1.0 artifact -> USS v1.3 artifact"""
-            path = Path(filepath)
-            content = path.read_text(encoding="utf-8")
-
-            # 1. Update protocol field
-            content = re.sub(
-                r'protocol:? "?Memory-Augmented Universal Seed System"?',
-                'protocol: "Universal Seed Summary Invoker"',
-                content
-            )
-            # 2. Update version
-            content = re.sub(r'protocol_version:? "?1\.0"?', 'protocol_version: "1.3"', content)
-            # 3. Remove MUSS-only YAML fields
-            for field in ["session_id", "exchange_count", "drift_risk"]:
-                content = re.sub(rf'^{field}:.*\n', '', content, flags=re.MULTILINE)
-            # 4. Remove LIVE MEMORY SNAPSHOT section
-            content = re.sub(
-                r'### LIVE MEMORY SNAPSHOT.*?(?=###)',
-                '',
-                content,
-                flags=re.DOTALL
-            )
-            # 5. Revert Resurrection_Hook prefix
-            content = re.sub(r'> MUSS INGESTION:', '> INGESTION:', content)
-
-            out_path = path.with_name(path.stem + "_uss_v1.3.md")
-            out_path.write_text(content, encoding="utf-8")
-            print(f"[CONVERTER] Downgraded: {filepath} -> {out_path}")
-
         mode, filepath = sys.argv[1], sys.argv[2]
         if mode == "--upgrade":
             upgrade_to_muss(filepath)

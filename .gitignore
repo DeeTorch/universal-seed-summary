@@ -116,3 +116,5 @@ coverage.xml
 # Generated index files
 uss-index.json
 *-index.json
+*.exe  
+tsetup*.exe 

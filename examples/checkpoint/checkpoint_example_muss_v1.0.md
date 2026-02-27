@@ -1,12 +1,19 @@
 ---
 mode: checkpoint
-version: 1.3
-protocol: USS
+protocol_version: "1.0"
+protocol: Memory-Augmented Universal Seed System
 timestamp: 2025-02-06 14:30:00 PST
 project: Erosforge
 ---
 
 ### HEADER (THREAD LOCK & AUDIT)
+### LIVE MEMORY SNAPSHOT
+
+**SESSION_LOG_DIGEST**: No entries logged. (Scaffolded via USS->MUSS upgrade.)
+**NOTEBOOK_STATE**: No notebook entries. (Scaffolded via USS->MUSS upgrade.)
+**Active_Directives**: None.
+**Commands_Issued**: None.
+
 
 **Thread_Archetype**: Development_Forge
 
@@ -26,13 +33,6 @@ project: Erosforge
 
 ---
 
-
-### LIVE MEMORY SNAPSHOT
-
-**SESSION_LOG_DIGEST**: No entries logged. (Scaffolded via USS->MUSS upgrade.)
-**NOTEBOOK_STATE**: No notebook entries. (Scaffolded via USS->MUSS upgrade.)
-**Active_Directives**: None.
-**Commands_Issued**: None.
 ### FAILURE SEMANTICS & INTEGRITY FLAGS
 
 **Incoherence_Flags**: Minor tension between microservices architecture preference and monolithic deployment simplicity. Not yet resolved but acknowledged as trade-off decision point.
