@@ -589,13 +589,49 @@ MARM v1.4 (live session governance). Full lifecycle: ACTIVE → SEED → ARCHIVE
 
 ---
 
+## Oracle Session 2 (2026-02-27) — Ecosystem Health 90.2/100 ✅
+
+### Overview
+Completed 16 artifacts across 2 beacon runs (SPC-APEX, SPC-PANTHEON) and 7 major decisions.
+
+### Key Metrics
+- **Health**: 74 → 90.2/100 (+16.2 pts) — **TARGET ACHIEVED**
+- **CPTMP**: v1.0.0 → v1.1.0 (fully patched, L4 rating)
+- **Protocols**: 18 registered · all L-rated
+- **Shadow links**: 9 → 5 (-4 retired)
+- **New canon**: PRT-EPS · PRT-UDFNEXUS · DEPLOYMENT_LADDER
+
+### Decisions Resolved (7)
+- **D01-C** – PRJ-UVB retired (voice → FNC, persona → ELITEAI)
+- **D06** – CPTMP P0 patches (version gate + SIB link type)
+- **D07** – CPTMP P1 patches (gap rules + formula + workflows)
+- **D08** – L1–L5 deployment ladder canonized
+- **D09** – PRT-UDFNEXUS registered canon (first NODE_NEW promotion)
+- **D10-C** – SPC-PANTHEON declared FUTURE/UNBUILT
+- **D-NEW** – APF origin declared (SPC-APEX governing node)
+
+### New Artifacts
+**Protocols**: `CPTMP_v1.1_protocol.md` · `PRT-UDFNEXUS_v2.0.0.md`
+**Docs**: `DEPLOYMENT_LADDER_CANON.md`
+**Decisions**: 7 decision records (D01, D06–D10, D-NEW)
+**Vault**: 2 beacons · 2 analyses · 1 delta report · 1 checkpoint · 1 changelog
+
+### Next Priorities
+- D03–D05 Oracle declarations (GEMINIKING, DTIE, WUP lineage)
+- D11 APF→FNC link beacon (SPC-FNC)
+- D12–D13 USS tagging (SOTA, DTIE proto)
+- Session 3: SPC-FORGE, SPC-VAULT beacons
+
+---
+
  Status
 
-**🚀 Production Ready**  
-**Version**: 1.3  
-**Last Updated**: February 27, 2026  
-**Stability**: Stable  
-**Maintenance**: Active  
+**🚀 Production Ready**
+**Version**: 1.3
+**Last Updated**: February 27, 2026
+**Ecosystem Health**: 90.2/100 ✅
+**Stability**: Stable
+**Maintenance**: Active
 
 ---
 
