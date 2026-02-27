@@ -1,0 +1,79 @@
+[
+
+### 3. Grok (xAI) - *The Terminal Executable*
+**Why this works:** Grok natively understands compute-like framing. It responds best when treated like a runtime environment or binary executable. Framing the prompt as `// SYSTEM_INIT` forces it into a highly logical, zero-fluff, audit-safe output mode.
+]
+
+// SYSTEM_INIT: USS_PROTOCOL_V1.3
+// RUNTIME: META_SYNTHESIS
+// ENFORCEMENT: STRICT
+
+[OBJECTIVE]
+Execute the Universal Seed Summary Invoker protocol. Compress this thread into an immutable, signal-dominant artifact.
+
+[FATAL_ERRORS_TO_AVOID]
+- ERR_01: Generating data not present in the thread. (Strict derivation only).
+- ERR_02: Omitting required fields. (If null, declare explicitly).
+- ERR_03: Outputting conversational filler. (Output MUST begin with YAML frontmatter).
+
+[OUTPUT_BINARY_SCHEMA]
+
+---
+mode: <checkpoint|re_entry|archive>
+protocol: Universal Seed Summary Invoker
+protocol_version: 1.3
+timestamp: <YYYY-MM-DD HH:MM:SS TZ>
+---
+
+### HEADER (THREAD LOCK & AUDIT)
+**Thread_Archetype**: <classification>
+**Ignition_Vector**: <max 2 sentences>
+**Focus_Domains**: <Domain1 + Domain2>
+**Thread_Depth**: <integer count of exchanges>
+**Completion_State**: <percentage range>
+**Momentum_Indicator**: <velocity state>
+**Finalization_Beacon**: <timestamp>
+**Invoker**: <identifiers>
+
+### FAILURE SEMANTICS & INTEGRITY FLAGS
+**Incoherence_Flags**: <list or "None detected within thread bounds.">
+**Compression_Loss_Warnings**: <list or "No significant compression loss identified.">
+**Inference_Boundary_Alerts**: <list or "No inference boundary approached.">
+**Resolution_Impossibility_Markers**: <list or "None.">
+**Failure_Severity**: <Low/Medium/High>
+**Compression_Fidelity_Score**: <Float 0.00-1.00>
+
+### COSMIC CORE & EMERGENCE
+**Ontological_Constructs**: <bulleted list>
+**Paradigm_Nodes**: <numbered list>
+**Emergent_Universals**: <bulleted list>
+
+### DECISIONS & GRAFTS
+**Architecture_Commits**: <list>
+**Heuristic_Branches**: <list>
+**Epistemic_Locks**: <list>
+
+### OPEN VECTORS & THRUST
+**Unresolved_Queries**: <list>
+**Priority_Vectors**: <list>
+**Risk_Surfaces**: <list>
+
+### THREAD TOPOLOGY (Optional)
+// EXECUTE ONLY IF THREAD REFERENCES EXTERNAL TOPOLOGY. USE [[Wikilinks]] AND #tags.
+**Parent_Threads**: <list>
+**Child_Threads**: <list>
+**Sibling_Threads**: <list>
+**Cross_Project_Links**: <list>
+
+### EXECUTION ARTIFACTS (Archive Mode Only)
+// EXECUTE ONLY IF MODE=ARCHIVE
+**Generated_Outputs**: <list>
+**Tool_Usage_Patterns**: <list>
+**Reusability_Index**: <list>
+**Integration_Notes**: <list>
+
+### INVOCATION LOCK
+<2-4 sentence lock declaration>
+**Resurrection_Hook**: > INGESTION: You are resuming a thread with the following established constraints: <state constraints here>
+
+// EXECUTE PROTOCOL NOW.

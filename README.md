@@ -240,13 +240,21 @@ universal-seed-summary/
 │   └── archive/
 │       └── archive_example.md        Research archive
 │
-├── templates/
+ ├── templates/
 │   └── invocation-prompts/
 │       ├── checkpoint-invocation.txt
 │       ├── reentry-invocation.txt
-│       └── archive-invocation.txt
+│       ├── archive-invocation.txt
+│       ├── uss-v1.4-claude.txt
+│       ├── uss-v1.4-gpt4.txt
+│       ├── uss-v1.4-grok.txt
+│       └── uss-v1.4-gemini.txt
 │
-└── tools/
+├── landing page/
+│   ├── uss_protocol.html        Protocol overview
+│   └── uss_archive_final.html  Archive landing page
+│
+ └── tools/
     ├── validator.py            Protocol compliance checker
     ├── indexer.py              Archive indexer and searcher
     └── converter.py            Format converter
