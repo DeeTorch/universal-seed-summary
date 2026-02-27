@@ -5,6 +5,39 @@ All notable changes to the Universal Seed Summary Invoker protocol will be docum
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [MUSS v1.0] - 2026-02-27
+
+### Added
+
+- **MUSS Protocol**: Memory-Augmented Universal Seed System - blended protocol combining USS v1.3 with MARM v1.4
+- **Live Session Governance**: Real-time accuracy enforcement, anti-drift management, safeguard checks
+- **Session Log System**: Running ledger with categories (DECISION, INSIGHT, OPEN, RISK, ARTIFACT, DIRECTIVE)
+- **Notebook System**: Persistent key-value store for session data
+- **Drift Management**: Automatic DRIFT_FLAG at exchange thresholds (LOW/MEDIUM/HIGH)
+- **Lifecycle Engine**: Full ACTIVE -> SEED -> ARCHIVE -> RESURRECT transitions
+- **9-Layer Artifact Schema**: HEADER, LIVE MEMORY SNAPSHOT, FAILURE SEMANTICS, COSMIC CORE, DECISIONS, OPEN VECTORS, THREAD TOPOLOGY, EXECUTION ARTIFACTS, INVOCATION LOCK
+- **Model Profiles**: Delivery wrappers for Claude, ChatGPT, Grok, Gemini, Perplexity
+- **Toolchain Integration**: muss_validator.py, converter.py (--upgrade/--downgrade), indexer.py
+- **Resurrection Hook**: Standardized format for thread resumption
+
+### Changed
+
+- **Protocol Versioning**: MUSS v1.0 runs alongside USS v1.3 (not replacing)
+- **Artifact Format**: Added LIVE MEMORY SNAPSHOT section (MUSS-native)
+- **YAML Frontmatter**: Added session_id, exchange_count, drift_risk fields
+- **Validation**: MUSS validator extends USS validator with MUSS-specific checks
+
+### Documentation
+
+- Full MUSS protocol in protocols/MUSS_v1.0_protocol.xml
+- Protocol directory documentation in protocols/README.md
+- Test suite in test/test_muss_protocol.py
+
+### Upgrade Path
+
+- USS v1.3 -> MUSS v1.0: Use `python tools/converter.py --upgrade <artifact.md>`
+- MUSS v1.0 -> USS v1.3: Use `python tools/converter.py --downgrade <artifact.md>`
+
 ## [1.3.0] - 2025-02-07
 
 ### Added

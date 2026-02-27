@@ -571,11 +571,21 @@ If you use USS in research or commercial projects, please cite:
 @software{deremus2026uss,
   title={Universal Seed Summary Invoker: Audit-Grade Thread Distillation Protocol},
   author={DeRemus, Jusstin},
-  year={2025},
+  year={2026},
   version={1.3},
   url={https://github.com/DeeTorch/universal-seed-summary}
 }
 ```
+---
+
+## MUSS v1.0 — Memory-Augmented Universal Seed System
+
+A blended protocol combining USS v1.3 (archival + resurrection) with
+MARM v1.4 (live session governance). Full lifecycle: ACTIVE → SEED → ARCHIVE → RESURRECT.
+
+**Protocol file:** `protocols/MUSS_v1.0_protocol.xml`
+**Validator:** `tools/muss_validator.py`
+**Converter:** `tools/converter.py --upgrade / --downgrade`
 
 ---
 
@@ -583,7 +593,7 @@ If you use USS in research or commercial projects, please cite:
 
 **🚀 Production Ready**  
 **Version**: 1.3  
-**Last Updated**: February 7, 2025  
+**Last Updated**: February 27, 2026  
 **Stability**: Stable  
 **Maintenance**: Active  
 
