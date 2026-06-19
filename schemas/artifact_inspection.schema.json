@@ -1,0 +1,579 @@
+{
+  "$defs": {
+    "ArtifactScore": {
+      "properties": {
+        "total_score": {
+          "maximum": 100.0,
+          "minimum": 0.0,
+          "title": "Total Score",
+          "type": "number"
+        },
+        "grade": {
+          "title": "Grade",
+          "type": "string"
+        },
+        "mvp_ready": {
+          "title": "Mvp Ready",
+          "type": "boolean"
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/ScoreComponent"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "recommendations": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Recommendations",
+          "type": "array"
+        }
+      },
+      "required": [
+        "total_score",
+        "grade",
+        "mvp_ready",
+        "components"
+      ],
+      "title": "ArtifactScore",
+      "type": "object"
+    },
+    "EvidenceAnchor": {
+      "additionalProperties": false,
+      "description": "A single source-thread anchor supporting a USS claim.",
+      "properties": {
+        "message_id": {
+          "title": "Message Id",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "source_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Index"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timestamp"
+        },
+        "excerpt": {
+          "default": "",
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "match_score": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Match Score",
+          "type": "number"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EvidenceConfidence",
+          "default": "unsupported"
+        }
+      },
+      "required": [
+        "message_id",
+        "role"
+      ],
+      "title": "EvidenceAnchor",
+      "type": "object"
+    },
+    "EvidenceClaim": {
+      "additionalProperties": false,
+      "description": "One parsed claim extracted from a USS summary field.",
+      "properties": {
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "claim_text": {
+          "title": "Claim Text",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EvidenceStatus",
+          "default": "unsupported"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EvidenceConfidence",
+          "default": "unsupported"
+        },
+        "anchors": {
+          "items": {
+            "$ref": "#/$defs/EvidenceAnchor"
+          },
+          "title": "Anchors",
+          "type": "array"
+        },
+        "explicit_message_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Explicit Message Refs",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim_id",
+        "section",
+        "field",
+        "claim_text"
+      ],
+      "title": "EvidenceClaim",
+      "type": "object"
+    },
+    "EvidenceConfidence": {
+      "description": "Confidence level attached to an evidence claim.",
+      "enum": [
+        "explicit_reference",
+        "lexical_match",
+        "weak_lexical_match",
+        "absent",
+        "unsupported"
+      ],
+      "title": "EvidenceConfidence",
+      "type": "string"
+    },
+    "EvidenceCoverage": {
+      "description": "Aggregate evidence coverage metrics.",
+      "properties": {
+        "claim_count": {
+          "default": 0,
+          "title": "Claim Count",
+          "type": "integer"
+        },
+        "supported_count": {
+          "default": 0,
+          "title": "Supported Count",
+          "type": "integer"
+        },
+        "weakly_supported_count": {
+          "default": 0,
+          "title": "Weakly Supported Count",
+          "type": "integer"
+        },
+        "unsupported_count": {
+          "default": 0,
+          "title": "Unsupported Count",
+          "type": "integer"
+        },
+        "absent_claim_count": {
+          "default": 0,
+          "title": "Absent Claim Count",
+          "type": "integer"
+        },
+        "explicit_ref_count": {
+          "default": 0,
+          "title": "Explicit Ref Count",
+          "type": "integer"
+        },
+        "anchor_count": {
+          "default": 0,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "coverage_ratio": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Coverage Ratio",
+          "type": "number"
+        },
+        "weighted_support_ratio": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Weighted Support Ratio",
+          "type": "number"
+        }
+      },
+      "title": "EvidenceCoverage",
+      "type": "object"
+    },
+    "EvidenceMap": {
+      "additionalProperties": false,
+      "description": "Machine-readable map from USS claims to source-thread messages.",
+      "properties": {
+        "artifact_id": {
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "thread_id": {
+          "title": "Thread Id",
+          "type": "string"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InvocationMode"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "protocol_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Protocol Version"
+        },
+        "generated_at": {
+          "title": "Generated At",
+          "type": "string"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/EvidenceClaim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "coverage": {
+          "$ref": "#/$defs/EvidenceCoverage"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "artifact_id",
+        "thread_id",
+        "generated_at"
+      ],
+      "title": "EvidenceMap",
+      "type": "object"
+    },
+    "EvidenceStatus": {
+      "description": "Support status for a generated claim.",
+      "enum": [
+        "supported",
+        "weakly_supported",
+        "unsupported",
+        "absent_claim"
+      ],
+      "title": "EvidenceStatus",
+      "type": "string"
+    },
+    "EvidenceValidationReport": {
+      "description": "Validation report for an evidence map.",
+      "properties": {
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        },
+        "issue_count": {
+          "default": 0,
+          "title": "Issue Count",
+          "type": "integer"
+        },
+        "issues": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Issues",
+          "type": "array"
+        },
+        "missing_message_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Missing Message Refs",
+          "type": "array"
+        },
+        "unsupported_claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Unsupported Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "valid"
+      ],
+      "title": "EvidenceValidationReport",
+      "type": "object"
+    },
+    "InvocationMode": {
+      "description": "Supported USS v1.3 invocation modes.",
+      "enum": [
+        "checkpoint",
+        "re_entry",
+        "archive"
+      ],
+      "title": "InvocationMode",
+      "type": "string"
+    },
+    "ScoreComponent": {
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "weight": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Weight",
+          "type": "number"
+        },
+        "raw_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Raw Score",
+          "type": "number"
+        },
+        "weighted_score": {
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Weighted Score",
+          "type": "number"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "weight",
+        "raw_score",
+        "weighted_score"
+      ],
+      "title": "ScoreComponent",
+      "type": "object"
+    },
+    "ValidationIssue": {
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "severity": {
+          "$ref": "#/$defs/ValidationIssueSeverity",
+          "default": "error"
+        },
+        "section": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Section"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field"
+        }
+      },
+      "required": [
+        "code",
+        "message"
+      ],
+      "title": "ValidationIssue",
+      "type": "object"
+    },
+    "ValidationIssueSeverity": {
+      "enum": [
+        "info",
+        "warning",
+        "error"
+      ],
+      "title": "ValidationIssueSeverity",
+      "type": "string"
+    },
+    "ValidationReport": {
+      "properties": {
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InvocationMode"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "protocol_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Protocol Version"
+        },
+        "artifact_path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Artifact Path"
+        },
+        "issue_count": {
+          "default": 0,
+          "title": "Issue Count",
+          "type": "integer"
+        },
+        "issues": {
+          "items": {
+            "$ref": "#/$defs/ValidationIssue"
+          },
+          "title": "Issues",
+          "type": "array"
+        }
+      },
+      "required": [
+        "valid"
+      ],
+      "title": "ValidationReport",
+      "type": "object"
+    }
+  },
+  "description": "Full inspection bundle for a USS artifact.",
+  "properties": {
+    "artifact_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Artifact Path"
+    },
+    "thread_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Thread Path"
+    },
+    "validation_report": {
+      "$ref": "#/$defs/ValidationReport"
+    },
+    "evidence_map": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvidenceMap"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "evidence_validation": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/EvidenceValidationReport"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "score": {
+      "$ref": "#/$defs/ArtifactScore"
+    },
+    "summary": {
+      "additionalProperties": true,
+      "title": "Summary",
+      "type": "object"
+    }
+  },
+  "required": [
+    "validation_report",
+    "score"
+  ],
+  "title": "ArtifactInspection",
+  "type": "object"
+}

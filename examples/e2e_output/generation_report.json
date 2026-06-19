@@ -1,0 +1,54 @@
+{
+  "run_id": "run_15f69013698a",
+  "status": "completed",
+  "mode": "checkpoint",
+  "provider": "static",
+  "model": null,
+  "started_at": "2026-06-19T06:09:22Z",
+  "finished_at": "2026-06-19T06:09:22Z",
+  "duration_ms": 6,
+  "input_thread_path": "examples/thread_minimal.json",
+  "protocol_path": "protocols/uss_v1_3.protocol.json",
+  "output_paths": {
+    "output_dir": "examples/e2e_output",
+    "summary_md": "examples/e2e_output/summary.md",
+    "validation_report_json": "examples/e2e_output/validation_report.json",
+    "redaction_report_json": "examples/e2e_output/redaction_report.json",
+    "evidence_map_json": "examples/e2e_output/evidence_map.json",
+    "inspection_report_json": "examples/e2e_output/inspection_report.json",
+    "generation_report_json": "examples/e2e_output/generation_report.json"
+  },
+  "valid": true,
+  "mvp_ready": true,
+  "validation_issue_count": 0,
+  "redaction_hit_count": 0,
+  "evidence_claim_count": 24,
+  "evidence_weighted_support_ratio": 0.9688,
+  "inspection_score": 98.91,
+  "inspection_grade": "A",
+  "attempts": [
+    {
+      "attempt_number": 1,
+      "valid": true,
+      "issue_count": 0,
+      "prompt_metadata": {
+        "thread_id": "thread_minimal_001",
+        "message_count": 3,
+        "exchange_pair_count": 1,
+        "required_sections": [
+          "HEADER (THREAD LOCK & AUDIT)",
+          "FAILURE SEMANTICS & INTEGRITY FLAGS",
+          "COSMIC CORE & EMERGENCE",
+          "DECISIONS & GRAFTS",
+          "OPEN VECTORS & THRUST",
+          "INVOCATION LOCK"
+        ],
+        "redaction_hit_count": 0
+      },
+      "output_char_count": 4077,
+      "output_preview": "--- mode: checkpoint protocol: Universal Seed Summary Invoker protocol_version: \"1.3\" timestamp: \"2026-06-19T06:09:22Z\" source_thread_id: thread_minimal_001 tool_version: \"1.1.0\" --- ### HEADER (THREAD LOCK & AUDIT) **Thread_Archetype**: Development_Forge [evidence: msg_001, msg_002, msg_003] **Ignition_Vector**: The thread requested a USS Engine execution path that converts a transcript into validated continuity artifacts. [evidence: msg_001] **Focus_Domains**: AI_Architecture + Epistemic_Dist…"
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

@@ -1,0 +1,103 @@
+{
+  "$defs": {
+    "TranscriptMessage": {
+      "additionalProperties": true,
+      "description": "One normalized message in a conversation thread.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "role": {
+          "$ref": "#/$defs/TranscriptRole"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timestamp"
+        },
+        "source_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Index"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ],
+      "title": "TranscriptMessage",
+      "type": "object"
+    },
+    "TranscriptRole": {
+      "description": "Supported normalized speaker roles.",
+      "enum": [
+        "system",
+        "user",
+        "assistant",
+        "tool",
+        "developer",
+        "unknown"
+      ],
+      "title": "TranscriptRole",
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Canonical transcript format consumed by USS Engine prompt compilation.",
+  "properties": {
+    "thread_id": {
+      "title": "Thread Id",
+      "type": "string"
+    },
+    "source": {
+      "default": "unknown",
+      "title": "Source",
+      "type": "string"
+    },
+    "created_at": {
+      "title": "Created At",
+      "type": "string"
+    },
+    "messages": {
+      "items": {
+        "$ref": "#/$defs/TranscriptMessage"
+      },
+      "title": "Messages",
+      "type": "array"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    }
+  },
+  "required": [
+    "messages"
+  ],
+  "title": "NormalizedThread",
+  "type": "object"
+}

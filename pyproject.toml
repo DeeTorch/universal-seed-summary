@@ -1,0 +1,28 @@
+[project]
+name = "uss-engine"
+version = "1.1.0"
+description = "Local-first MVP continuity engine for Universal Seed Summary Invoker artifacts: transcript normalization, redaction, prompt compilation, provider execution, validation, evidence anchoring, artifact inspection, and release-ready reports, provider activation, and enterprise-safe API key handling."
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.6",
+  "PyYAML>=6.0",
+  "typer>=0.12",
+  "rich>=13.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "ruff>=0.5"
+]
+
+[project.scripts]
+uss = "uss_engine.cli:app"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "tests"]

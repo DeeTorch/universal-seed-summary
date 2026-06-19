@@ -1,0 +1,99 @@
+{
+  "$defs": {
+    "RedactionCategory": {
+      "enum": [
+        "email",
+        "phone",
+        "openai_api_key",
+        "anthropic_api_key",
+        "github_token",
+        "aws_access_key",
+        "bearer_token",
+        "url_credentials",
+        "private_key_block",
+        "generic_secret_assignment"
+      ],
+      "title": "RedactionCategory",
+      "type": "string"
+    },
+    "RedactionHit": {
+      "properties": {
+        "category": {
+          "$ref": "#/$defs/RedactionCategory"
+        },
+        "message_id": {
+          "title": "Message Id",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "source_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Index"
+        },
+        "start": {
+          "title": "Start",
+          "type": "integer"
+        },
+        "end": {
+          "title": "End",
+          "type": "integer"
+        },
+        "placeholder": {
+          "title": "Placeholder",
+          "type": "string"
+        }
+      },
+      "required": [
+        "category",
+        "message_id",
+        "role",
+        "start",
+        "end",
+        "placeholder"
+      ],
+      "title": "RedactionHit",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "redacted": {
+      "title": "Redacted",
+      "type": "boolean"
+    },
+    "hit_count": {
+      "default": 0,
+      "title": "Hit Count",
+      "type": "integer"
+    },
+    "hits": {
+      "items": {
+        "$ref": "#/$defs/RedactionHit"
+      },
+      "title": "Hits",
+      "type": "array"
+    },
+    "categories": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Categories",
+      "type": "object"
+    }
+  },
+  "required": [
+    "redacted"
+  ],
+  "title": "RedactionReport",
+  "type": "object"
+}
