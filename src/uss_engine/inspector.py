@@ -76,6 +76,10 @@ def inspect_text(
                 "evidence_supported": evidence_map.coverage.supported_count,
                 "evidence_weak": evidence_map.coverage.weakly_supported_count,
                 "evidence_unsupported": evidence_map.coverage.unsupported_count,
+                "evidence_derived_metadata": evidence_map.coverage.derived_metadata_count,
+                "evidence_system_metadata": evidence_map.coverage.system_metadata_count,
+                "evidence_protocol_null_declarations": evidence_map.coverage.protocol_null_declaration_count,
+                "evidence_protocol_assessments": evidence_map.coverage.protocol_assessment_count,
                 "evidence_weighted_support_ratio": evidence_map.coverage.weighted_support_ratio,
             }
         )

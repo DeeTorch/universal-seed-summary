@@ -126,7 +126,11 @@
         "lexical_match",
         "weak_lexical_match",
         "absent",
-        "unsupported"
+        "unsupported",
+        "derived_metadata",
+        "system_metadata",
+        "protocol_null_declaration",
+        "protocol_assessment"
       ],
       "title": "EvidenceConfidence",
       "type": "string"
@@ -157,6 +161,26 @@
         "absent_claim_count": {
           "default": 0,
           "title": "Absent Claim Count",
+          "type": "integer"
+        },
+        "derived_metadata_count": {
+          "default": 0,
+          "title": "Derived Metadata Count",
+          "type": "integer"
+        },
+        "system_metadata_count": {
+          "default": 0,
+          "title": "System Metadata Count",
+          "type": "integer"
+        },
+        "protocol_null_declaration_count": {
+          "default": 0,
+          "title": "Protocol Null Declaration Count",
+          "type": "integer"
+        },
+        "protocol_assessment_count": {
+          "default": 0,
+          "title": "Protocol Assessment Count",
           "type": "integer"
         },
         "explicit_ref_count": {
@@ -193,7 +217,11 @@
         "supported",
         "weakly_supported",
         "unsupported",
-        "absent_claim"
+        "absent_claim",
+        "derived_metadata",
+        "system_metadata",
+        "protocol_null_declaration",
+        "protocol_assessment"
       ],
       "title": "EvidenceStatus",
       "type": "string"

@@ -2,6 +2,16 @@
 
 All notable changes to USS Engine are documented here.
 
+## [1.1.1] - 2026-06-19
+
+### Fixed
+
+- Calibrated evidence classification to avoid false unsupported penalties for metadata and protocol fields.
+- Added `derived_metadata`, `system_metadata`, `protocol_null_declaration`, and `protocol_assessment` evidence statuses.
+- Classified `Focus_Domains`, `Invoker`, and `Failure_Severity` correctly after live Gemini provider validation.
+- Preserved strict unsupported scoring for real unanchored factual claims.
+
+
 ## [1.1.0] - 2026-06-18
 
 ### Status
