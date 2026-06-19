@@ -34,12 +34,21 @@ WORD_RE = re.compile(r"[A-Za-z0-9_]{3,}")
 BULLET_RE = re.compile(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)(?P<text>.+?)\s*$")
 
 
-STRUCTURAL_METADATA_FIELDS = {
+DERIVED_METADATA_FIELDS = {
     "Thread_Archetype",
-    "Thread_Depth",
+    "Focus_Domains",
     "Completion_State",
     "Momentum_Indicator",
+}
+
+SYSTEM_METADATA_FIELDS = {
+    "Thread_Depth",
     "Finalization_Beacon",
+    "Invoker",
+}
+
+PROTOCOL_ASSESSMENT_FIELDS = {
+    "Failure_Severity",
 }
 
 STOPWORDS = {
@@ -58,6 +67,10 @@ class EvidenceStatus(StrEnum):
     weakly_supported = "weakly_supported"
     unsupported = "unsupported"
     absent_claim = "absent_claim"
+    derived_metadata = "derived_metadata"
+    system_metadata = "system_metadata"
+    protocol_null_declaration = "protocol_null_declaration"
+    protocol_assessment = "protocol_assessment"
 
 
 class EvidenceConfidence(StrEnum):
@@ -68,6 +81,10 @@ class EvidenceConfidence(StrEnum):
     weak_lexical_match = "weak_lexical_match"
     absent = "absent"
     unsupported = "unsupported"
+    derived_metadata = "derived_metadata"
+    system_metadata = "system_metadata"
+    protocol_null_declaration = "protocol_null_declaration"
+    protocol_assessment = "protocol_assessment"
 
 
 class EvidenceAnchor(BaseModel):
@@ -122,6 +139,10 @@ class EvidenceCoverage(BaseModel):
     weakly_supported_count: int = 0
     unsupported_count: int = 0
     absent_claim_count: int = 0
+    derived_metadata_count: int = 0
+    system_metadata_count: int = 0
+    protocol_null_declaration_count: int = 0
+    protocol_assessment_count: int = 0
     explicit_ref_count: int = 0
     anchor_count: int = 0
     coverage_ratio: float = Field(ge=0.0, le=1.0, default=0.0)
@@ -239,8 +260,6 @@ def extract_claims(summary_text: str, *, max_claims_per_field: int = 5) -> list[
             continue
         fields = parse_fields(section_body)
         for field_name, value in fields.items():
-            if section_title == "HEADER (THREAD LOCK & AUDIT)" and field_name in STRUCTURAL_METADATA_FIELDS:
-                continue
             if _is_structural_or_null(value):
                 claim_texts = [value.strip()]
             else:
@@ -254,6 +273,17 @@ def anchor_claim(claim: EvidenceClaim, thread: NormalizedThread) -> EvidenceClai
     """Attach best-effort thread anchors to one extracted claim."""
 
     explicit_refs = _extract_explicit_refs(claim.claim_text)
+    classification = _classified_status_for_claim(claim)
+    if classification is not None:
+        status, confidence, note = classification
+        return claim.model_copy(
+            update={
+                "status": status,
+                "confidence": confidence,
+                "explicit_message_refs": explicit_refs,
+                "notes": [note],
+            }
+        )
     valid_ref_anchors: list[EvidenceAnchor] = []
     message_by_id = {message.id: message for message in thread.messages}
 
@@ -276,10 +306,13 @@ def anchor_claim(claim: EvidenceClaim, thread: NormalizedThread) -> EvidenceClai
     if _is_absence_or_null_claim(claim.claim_text):
         return claim.model_copy(
             update={
-                "status": EvidenceStatus.absent_claim,
-                "confidence": EvidenceConfidence.absent,
+                "status": EvidenceStatus.protocol_null_declaration,
+                "confidence": EvidenceConfidence.protocol_null_declaration,
                 "explicit_message_refs": explicit_refs,
-                "notes": _missing_ref_notes(explicit_refs, message_by_id),
+                "notes": [
+                    *_missing_ref_notes(explicit_refs, message_by_id),
+                    "Protocol-required null declaration; excluded from unsupported evidence penalties.",
+                ],
             }
         )
 
@@ -361,25 +394,73 @@ def calculate_coverage(claims: list[EvidenceClaim]) -> EvidenceCoverage:
     weak = sum(1 for claim in claims if claim.status == EvidenceStatus.weakly_supported)
     unsupported = sum(1 for claim in claims if claim.status == EvidenceStatus.unsupported)
     absent = sum(1 for claim in claims if claim.status == EvidenceStatus.absent_claim)
+    derived_metadata = sum(1 for claim in claims if claim.status == EvidenceStatus.derived_metadata)
+    system_metadata = sum(1 for claim in claims if claim.status == EvidenceStatus.system_metadata)
+    protocol_null = sum(1 for claim in claims if claim.status == EvidenceStatus.protocol_null_declaration)
+    protocol_assessment = sum(1 for claim in claims if claim.status == EvidenceStatus.protocol_assessment)
+    non_penalized = derived_metadata + system_metadata + protocol_null + protocol_assessment
     explicit_refs = sum(len(claim.explicit_message_refs) for claim in claims)
     anchors = sum(len(claim.anchors) for claim in claims)
     if claim_count == 0:
         coverage_ratio = 0.0
         weighted = 0.0
     else:
-        coverage_ratio = (supported + weak + absent) / claim_count
-        weighted = (supported + 0.5 * weak + 0.75 * absent) / claim_count
+        coverage_ratio = (supported + weak + absent + non_penalized) / claim_count
+        weighted = (supported + 0.5 * weak + 0.75 * absent + non_penalized) / claim_count
     return EvidenceCoverage(
         claim_count=claim_count,
         supported_count=supported,
         weakly_supported_count=weak,
         unsupported_count=unsupported,
         absent_claim_count=absent,
+        derived_metadata_count=derived_metadata,
+        system_metadata_count=system_metadata,
+        protocol_null_declaration_count=protocol_null,
+        protocol_assessment_count=protocol_assessment,
         explicit_ref_count=explicit_refs,
         anchor_count=anchors,
         coverage_ratio=round(coverage_ratio, 4),
         weighted_support_ratio=round(weighted, 4),
     )
+
+
+def _classified_status_for_claim(claim: EvidenceClaim) -> tuple[EvidenceStatus, EvidenceConfidence, str] | None:
+    """Classify claims that do not require direct lexical anchoring.
+
+    USS artifacts include fields that are derived from the whole thread, system
+    metadata, protocol null declarations, or protocol-level assessments. Treating
+    those as ordinary factual claims creates false unsupported-evidence penalties.
+    """
+
+    if _is_absence_or_null_claim(claim.claim_text):
+        return (
+            EvidenceStatus.protocol_null_declaration,
+            EvidenceConfidence.protocol_null_declaration,
+            "Protocol-required null declaration; excluded from unsupported evidence penalties.",
+        )
+
+    if claim.field in DERIVED_METADATA_FIELDS:
+        return (
+            EvidenceStatus.derived_metadata,
+            EvidenceConfidence.derived_metadata,
+            "Derived metadata field; evaluated as whole-thread classification, not direct lexical evidence.",
+        )
+
+    if claim.field in SYSTEM_METADATA_FIELDS:
+        return (
+            EvidenceStatus.system_metadata,
+            EvidenceConfidence.system_metadata,
+            "System metadata field; derived from transcript/runtime metadata rather than message body text.",
+        )
+
+    if claim.field in PROTOCOL_ASSESSMENT_FIELDS:
+        return (
+            EvidenceStatus.protocol_assessment,
+            EvidenceConfidence.protocol_assessment,
+            "Protocol assessment field; evaluated from failure semantics rather than direct lexical evidence.",
+        )
+
+    return None
 
 
 def _make_claim(section: str, field: str, claim_text: str, index: int) -> EvidenceClaim:

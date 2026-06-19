@@ -1,6 +1,6 @@
 [project]
 name = "uss-engine"
-version = "1.1.0"
+version = "1.1.1"
 description = "Local-first MVP continuity engine for Universal Seed Summary Invoker artifacts: transcript normalization, redaction, prompt compilation, provider execution, validation, evidence anchoring, artifact inspection, and release-ready reports, provider activation, and enterprise-safe API key handling."
 requires-python = ">=3.11"
 dependencies = [

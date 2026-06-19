@@ -46,3 +46,49 @@ def test_build_evidence_map_from_files():
         thread_path=ROOT / "examples" / "thread_minimal.json",
     )
     assert evidence_map.coverage.weighted_support_ratio > 0.5
+
+def test_metadata_and_protocol_fields_are_not_unsupported():
+    summary = """---
+mode: checkpoint
+protocol_version: '1.3'
+timestamp: '2026-06-19T00:00:00Z'
+---
+
+### HEADER (THREAD LOCK & AUDIT)
+
+**Thread_Archetype**: Development_Forge
+**Ignition_Vector**: The objective is to transform USS into a local-first tool. [evidence: msg_001]
+**Focus_Domains**: Protocol_Design + Tool_Development + Local_First_Architecture + AI_Engineering
+**Thread_Depth**: 2
+**Completion_State**: Development (25-75%)
+**Momentum_Indicator**: Accelerating
+**Finalization_Beacon**: 2026-06-19T00:00:00Z
+**Invoker**: User, Assistant
+
+### FAILURE SEMANTICS & INTEGRITY FLAGS
+
+**Incoherence_Flags**: None detected within thread bounds.
+**Compression_Loss_Warnings**: No significant compression loss identified.
+**Inference_Boundary_Alerts**: No inference boundary approached.
+**Resolution_Impossibility_Markers**:
+- External provider behavior requires live testing.
+**Failure_Severity**: Low
+
+### INVOCATION LOCK
+
+This checkpoint is complete and locked.
+"""
+    thread = load_thread(ROOT / "examples" / "thread_minimal.json")
+    evidence_map = build_evidence_map(summary_text=summary, thread=thread)
+    by_field = {claim.field: claim for claim in evidence_map.claims}
+
+    assert by_field["Focus_Domains"].status == EvidenceStatus.derived_metadata
+    assert by_field["Invoker"].status == EvidenceStatus.system_metadata
+    assert by_field["Failure_Severity"].status == EvidenceStatus.protocol_assessment
+    assert by_field["Incoherence_Flags"].status == EvidenceStatus.protocol_null_declaration
+    assert not any(
+        claim.status == EvidenceStatus.unsupported
+        for claim in evidence_map.claims
+        if claim.field in {"Focus_Domains", "Invoker", "Failure_Severity"}
+    )
+

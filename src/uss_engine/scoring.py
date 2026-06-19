@@ -55,6 +55,10 @@ def score_artifact(
             f"supported={evidence_map.coverage.supported_count}",
             f"weak={evidence_map.coverage.weakly_supported_count}",
             f"unsupported={evidence_map.coverage.unsupported_count}",
+            f"derived_metadata={evidence_map.coverage.derived_metadata_count}",
+            f"system_metadata={evidence_map.coverage.system_metadata_count}",
+            f"protocol_null={evidence_map.coverage.protocol_null_declaration_count}",
+            f"protocol_assessment={evidence_map.coverage.protocol_assessment_count}",
         ]
         if evidence_map.coverage.unsupported_count:
             recommendations.append("Review unsupported claims and either anchor them, weaken them, or declare absence.")
