@@ -1,0 +1,1017 @@
+{
+  "artifact_path": "examples/e2e_output/summary.md",
+  "thread_path": "examples/thread_minimal.json",
+  "validation_report": {
+    "valid": true,
+    "mode": "checkpoint",
+    "protocol_version": "1.3",
+    "artifact_path": "examples/e2e_output/summary.md",
+    "issue_count": 0,
+    "issues": []
+  },
+  "evidence_map": {
+    "artifact_id": "examples/e2e_output/summary.md",
+    "thread_id": "thread_minimal_001",
+    "mode": "checkpoint",
+    "protocol_version": "1.3",
+    "generated_at": "2026-06-19T06:09:22Z",
+    "claims": [
+      {
+        "claim_id": "claim_e57598b4b457",
+        "section": "HEADER (THREAD LOCK & AUDIT)",
+        "field": "Ignition_Vector",
+        "claim_text": "The thread requested a USS Engine execution path that converts a transcript into validated continuity artifacts. [evidence: msg_001]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_55ce743c5d3f",
+        "section": "HEADER (THREAD LOCK & AUDIT)",
+        "field": "Focus_Domains",
+        "claim_text": "AI_Architecture + Epistemic_Distillation + CLI_Tooling [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_7e5756047d60",
+        "section": "HEADER (THREAD LOCK & AUDIT)",
+        "field": "Invoker",
+        "claim_text": "Invoking user and target model are known only within the supplied normalized thread bounds. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_7ffe0e9f6993",
+        "section": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+        "field": "Incoherence_Flags",
+        "claim_text": "None detected within thread bounds.",
+        "status": "absent_claim",
+        "confidence": "absent",
+        "anchors": [],
+        "explicit_message_refs": [],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_2915a35acf38",
+        "section": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+        "field": "Compression_Loss_Warnings",
+        "claim_text": "No significant compression loss identified.",
+        "status": "absent_claim",
+        "confidence": "absent",
+        "anchors": [],
+        "explicit_message_refs": [],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_af2967d1d6bc",
+        "section": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+        "field": "Inference_Boundary_Alerts",
+        "claim_text": "No inference boundary approached.",
+        "status": "absent_claim",
+        "confidence": "absent",
+        "anchors": [],
+        "explicit_message_refs": [],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_eecfce246cf8",
+        "section": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+        "field": "Resolution_Impossibility_Markers",
+        "claim_text": "Live provider behavior cannot be proven by static mode alone; provider execution requires configured runtime credentials or a local Ollama server. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_aa0821e640f0",
+        "section": "FAILURE SEMANTICS & INTEGRITY FLAGS",
+        "field": "Failure_Severity",
+        "claim_text": "Low - static E2E output is structurally valid but not a semantic substitute for live provider generation. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_350b36c3887f",
+        "section": "COSMIC CORE & EMERGENCE",
+        "field": "Ontological_Constructs",
+        "claim_text": "USS Engine is treated as a local-first continuity engine rather than a loose prompt. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_a3ee510b752a",
+        "section": "COSMIC CORE & EMERGENCE",
+        "field": "Ontological_Constructs",
+        "claim_text": "The artifact must stay thread-derived and validation-backed. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_a475573466e4",
+        "section": "COSMIC CORE & EMERGENCE",
+        "field": "Paradigm_Nodes",
+        "claim_text": "The mission moved from protocol design into executable end-to-end tooling. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_f7f071e0608e",
+        "section": "COSMIC CORE & EMERGENCE",
+        "field": "Paradigm_Nodes",
+        "claim_text": "Evidence anchoring makes thread-derived claims inspectable after generation. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_e0c793f233c7",
+        "section": "COSMIC CORE & EMERGENCE",
+        "field": "Emergent_Universals",
+        "claim_text": "Durable AI memory artifacts require generation, validation, redaction, evidence mapping, and inspection as separate layers. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_0b427c79da46",
+        "section": "DECISIONS & GRAFTS",
+        "field": "Architecture_Commits",
+        "claim_text": "Preserve the validator as the trust spine. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_962863c263d8",
+        "section": "DECISIONS & GRAFTS",
+        "field": "Architecture_Commits",
+        "claim_text": "Run redaction before prompt compilation and generation. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_81594adb04be",
+        "section": "DECISIONS & GRAFTS",
+        "field": "Architecture_Commits",
+        "claim_text": "Emit summary, validation, redaction, evidence, inspection, and generation reports from one command. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_9119af6d8af7",
+        "section": "DECISIONS & GRAFTS",
+        "field": "Heuristic_Branches",
+        "claim_text": "Static generation proves orchestration while OpenAI, Anthropic, and Ollama adapters provide live execution paths. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_7359ea68525c",
+        "section": "DECISIONS & GRAFTS",
+        "field": "Epistemic_Locks",
+        "claim_text": "Claims must be grounded in supplied source messages or explicitly marked as unresolved. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_00995f646bb4",
+        "section": "OPEN VECTORS & THRUST",
+        "field": "Unresolved_Queries",
+        "claim_text": "Which live provider should become the default production path remains unresolved within this artifact. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_3579d2f96357",
+        "section": "OPEN VECTORS & THRUST",
+        "field": "Priority_Vectors",
+        "claim_text": "Verify provider-backed generation with configured credentials or a local Ollama runtime. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_a5b8b3fe1ab5",
+        "section": "OPEN VECTORS & THRUST",
+        "field": "Priority_Vectors",
+        "claim_text": "Harden repair prompts using exact validator errors. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_cf6d080991e4",
+        "section": "OPEN VECTORS & THRUST",
+        "field": "Priority_Vectors",
+        "claim_text": "Package v1.0 with release docs and reproducible examples. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_457bf1f36d17",
+        "section": "OPEN VECTORS & THRUST",
+        "field": "Risk_Surfaces",
+        "claim_text": "Static output can prove file contracts and validation, but not provider quality, cost, latency, or model-specific formatting drift. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      },
+      {
+        "claim_id": "claim_14d2d122f755",
+        "section": "INVOCATION LOCK",
+        "field": "Invocation_Lock",
+        "claim_text": "This USS artifact is complete for `checkpoint` mode and locked as a deterministic v1.0 MVP pipeline output. It is suitable for validating the end-to-end artifact contract, while live provider conclusions remain bounded by future configured execution. [evidence: msg_001, msg_002, msg_003]",
+        "status": "supported",
+        "confidence": "explicit_reference",
+        "anchors": [
+          {
+            "message_id": "msg_001",
+            "role": "user",
+            "source_index": 0,
+            "timestamp": "2026-06-18T20:00:01Z",
+            "excerpt": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_002",
+            "role": "assistant",
+            "source_index": 1,
+            "timestamp": "2026-06-18T20:00:05Z",
+            "excerpt": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          },
+          {
+            "message_id": "msg_003",
+            "role": "user",
+            "source_index": 2,
+            "timestamp": "2026-06-18T20:00:10Z",
+            "excerpt": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer.",
+            "match_score": 1.0,
+            "confidence": "explicit_reference"
+          }
+        ],
+        "explicit_message_refs": [
+          "msg_001",
+          "msg_002",
+          "msg_003"
+        ],
+        "notes": []
+      }
+    ],
+    "coverage": {
+      "claim_count": 24,
+      "supported_count": 21,
+      "weakly_supported_count": 0,
+      "unsupported_count": 0,
+      "absent_claim_count": 3,
+      "explicit_ref_count": 61,
+      "anchor_count": 61,
+      "coverage_ratio": 1.0,
+      "weighted_support_ratio": 0.9688
+    },
+    "warnings": []
+  },
+  "evidence_validation": {
+    "valid": true,
+    "issue_count": 0,
+    "issues": [],
+    "missing_message_refs": [],
+    "unsupported_claim_ids": []
+  },
+  "score": {
+    "total_score": 98.91,
+    "grade": "A",
+    "mvp_ready": true,
+    "components": [
+      {
+        "name": "structure_validation",
+        "weight": 0.4,
+        "raw_score": 1.0,
+        "weighted_score": 0.4,
+        "notes": [
+          "USS structural validator passed."
+        ]
+      },
+      {
+        "name": "evidence_coverage",
+        "weight": 0.35,
+        "raw_score": 0.9688,
+        "weighted_score": 0.3391,
+        "notes": [
+          "claims=24",
+          "supported=21",
+          "weak=0",
+          "unsupported=0"
+        ]
+      },
+      {
+        "name": "anchor_integrity",
+        "weight": 0.15,
+        "raw_score": 1.0,
+        "weighted_score": 0.15,
+        "notes": [
+          "All evidence references resolve to source-thread messages."
+        ]
+      },
+      {
+        "name": "risk_surface",
+        "weight": 0.1,
+        "raw_score": 1.0,
+        "weighted_score": 0.1,
+        "notes": [
+          "No major risk penalties detected."
+        ]
+      }
+    ],
+    "recommendations": []
+  },
+  "summary": {
+    "valid": true,
+    "mode": "checkpoint",
+    "protocol_version": "1.3",
+    "validation_issues": 0,
+    "score": 98.91,
+    "grade": "A",
+    "mvp_ready": true,
+    "evidence_claims": 24,
+    "evidence_supported": 21,
+    "evidence_weak": 0,
+    "evidence_unsupported": 0,
+    "evidence_weighted_support_ratio": 0.9688
+  }
+}

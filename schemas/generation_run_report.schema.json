@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "USS Engine Generation Run Report",
+  "type": "object",
+  "required": [
+    "run_id",
+    "status",
+    "mode",
+    "provider",
+    "started_at",
+    "finished_at",
+    "duration_ms",
+    "input_thread_path",
+    "protocol_path",
+    "output_paths",
+    "valid",
+    "mvp_ready",
+    "validation_issue_count",
+    "redaction_hit_count",
+    "attempts"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "completed_with_warnings",
+        "failed_validation",
+        "failed_generation"
+      ]
+    },
+    "mode": {
+      "enum": [
+        "checkpoint",
+        "re_entry",
+        "archive"
+      ]
+    },
+    "provider": {
+      "enum": [
+        "static",
+        "openai",
+        "anthropic",
+        "gemini",
+        "grok",
+        "xai",
+        "ollama"
+      ]
+    },
+    "model": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "finished_at": {
+      "type": "string"
+    },
+    "duration_ms": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "input_thread_path": {
+      "type": "string"
+    },
+    "protocol_path": {
+      "type": "string"
+    },
+    "output_paths": {
+      "type": "object"
+    },
+    "valid": {
+      "type": "boolean"
+    },
+    "mvp_ready": {
+      "type": "boolean"
+    },
+    "validation_issue_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "redaction_hit_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "evidence_claim_count": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "evidence_weighted_support_ratio": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 1
+    },
+    "inspection_score": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 100
+    },
+    "inspection_grade": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "attempts": {
+      "type": "array"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

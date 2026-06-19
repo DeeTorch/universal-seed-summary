@@ -1,0 +1,357 @@
+{
+  "$defs": {
+    "CosmicCoreSection": {
+      "properties": {
+        "Ontological_Constructs": {
+          "title": "Ontological Constructs",
+          "type": "string"
+        },
+        "Paradigm_Nodes": {
+          "title": "Paradigm Nodes",
+          "type": "string"
+        },
+        "Emergent_Universals": {
+          "title": "Emergent Universals",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Ontological_Constructs",
+        "Paradigm_Nodes",
+        "Emergent_Universals"
+      ],
+      "title": "CosmicCoreSection",
+      "type": "object"
+    },
+    "DecisionsGraftsSection": {
+      "properties": {
+        "Architecture_Commits": {
+          "title": "Architecture Commits",
+          "type": "string"
+        },
+        "Heuristic_Branches": {
+          "title": "Heuristic Branches",
+          "type": "string"
+        },
+        "Epistemic_Locks": {
+          "title": "Epistemic Locks",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Architecture_Commits",
+        "Heuristic_Branches",
+        "Epistemic_Locks"
+      ],
+      "title": "DecisionsGraftsSection",
+      "type": "object"
+    },
+    "ExecutionArtifactsSection": {
+      "properties": {
+        "Generated_Outputs": {
+          "title": "Generated Outputs",
+          "type": "string"
+        },
+        "Tool_Usage_Patterns": {
+          "title": "Tool Usage Patterns",
+          "type": "string"
+        },
+        "Reusability_Index": {
+          "title": "Reusability Index",
+          "type": "string"
+        },
+        "Integration_Notes": {
+          "title": "Integration Notes",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Generated_Outputs",
+        "Tool_Usage_Patterns",
+        "Reusability_Index",
+        "Integration_Notes"
+      ],
+      "title": "ExecutionArtifactsSection",
+      "type": "object"
+    },
+    "FailureSemanticsSection": {
+      "properties": {
+        "Incoherence_Flags": {
+          "title": "Incoherence Flags",
+          "type": "string"
+        },
+        "Compression_Loss_Warnings": {
+          "title": "Compression Loss Warnings",
+          "type": "string"
+        },
+        "Inference_Boundary_Alerts": {
+          "title": "Inference Boundary Alerts",
+          "type": "string"
+        },
+        "Resolution_Impossibility_Markers": {
+          "title": "Resolution Impossibility Markers",
+          "type": "string"
+        },
+        "Failure_Severity": {
+          "title": "Failure Severity",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Incoherence_Flags",
+        "Compression_Loss_Warnings",
+        "Inference_Boundary_Alerts",
+        "Resolution_Impossibility_Markers",
+        "Failure_Severity"
+      ],
+      "title": "FailureSemanticsSection",
+      "type": "object"
+    },
+    "FrontMatter": {
+      "additionalProperties": true,
+      "description": "YAML front matter expected at the top of USS Markdown artifacts.",
+      "properties": {
+        "mode": {
+          "$ref": "#/$defs/InvocationMode"
+        },
+        "protocol": {
+          "default": "Universal Seed Summary Invoker",
+          "title": "Protocol",
+          "type": "string"
+        },
+        "protocol_version": {
+          "default": "1.3",
+          "title": "Protocol Version",
+          "type": "string"
+        },
+        "timestamp": {
+          "title": "Timestamp",
+          "type": "string"
+        },
+        "source_thread_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Thread Id"
+        },
+        "tool_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tool Version"
+        }
+      },
+      "required": [
+        "mode",
+        "timestamp"
+      ],
+      "title": "FrontMatter",
+      "type": "object"
+    },
+    "HeaderSection": {
+      "properties": {
+        "Thread_Archetype": {
+          "title": "Thread Archetype",
+          "type": "string"
+        },
+        "Ignition_Vector": {
+          "title": "Ignition Vector",
+          "type": "string"
+        },
+        "Focus_Domains": {
+          "title": "Focus Domains",
+          "type": "string"
+        },
+        "Thread_Depth": {
+          "title": "Thread Depth",
+          "type": "string"
+        },
+        "Completion_State": {
+          "title": "Completion State",
+          "type": "string"
+        },
+        "Momentum_Indicator": {
+          "title": "Momentum Indicator",
+          "type": "string"
+        },
+        "Finalization_Beacon": {
+          "title": "Finalization Beacon",
+          "type": "string"
+        },
+        "Invoker": {
+          "title": "Invoker",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Thread_Archetype",
+        "Ignition_Vector",
+        "Focus_Domains",
+        "Thread_Depth",
+        "Completion_State",
+        "Momentum_Indicator",
+        "Finalization_Beacon",
+        "Invoker"
+      ],
+      "title": "HeaderSection",
+      "type": "object"
+    },
+    "InvocationMode": {
+      "description": "Supported USS v1.3 invocation modes.",
+      "enum": [
+        "checkpoint",
+        "re_entry",
+        "archive"
+      ],
+      "title": "InvocationMode",
+      "type": "string"
+    },
+    "OpenVectorsSection": {
+      "properties": {
+        "Unresolved_Queries": {
+          "title": "Unresolved Queries",
+          "type": "string"
+        },
+        "Priority_Vectors": {
+          "title": "Priority Vectors",
+          "type": "string"
+        },
+        "Risk_Surfaces": {
+          "title": "Risk Surfaces",
+          "type": "string"
+        }
+      },
+      "required": [
+        "Unresolved_Queries",
+        "Priority_Vectors",
+        "Risk_Surfaces"
+      ],
+      "title": "OpenVectorsSection",
+      "type": "object"
+    },
+    "ThreadTopologySection": {
+      "properties": {
+        "Parent_Threads": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Parent Threads"
+        },
+        "Child_Threads": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Child Threads"
+        },
+        "Sibling_Threads": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Sibling Threads"
+        },
+        "Cross_Project_Links": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cross Project Links"
+        }
+      },
+      "title": "ThreadTopologySection",
+      "type": "object"
+    }
+  },
+  "description": "Structured representation of a USS Markdown artifact.",
+  "properties": {
+    "frontmatter": {
+      "$ref": "#/$defs/FrontMatter"
+    },
+    "header": {
+      "$ref": "#/$defs/HeaderSection"
+    },
+    "failure_semantics": {
+      "$ref": "#/$defs/FailureSemanticsSection"
+    },
+    "cosmic_core": {
+      "$ref": "#/$defs/CosmicCoreSection"
+    },
+    "decisions_grafts": {
+      "$ref": "#/$defs/DecisionsGraftsSection"
+    },
+    "open_vectors": {
+      "$ref": "#/$defs/OpenVectorsSection"
+    },
+    "invocation_lock": {
+      "title": "Invocation Lock",
+      "type": "string"
+    },
+    "thread_topology": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ThreadTopologySection"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "execution_artifacts": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ExecutionArtifactsSection"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "frontmatter",
+    "header",
+    "failure_semantics",
+    "cosmic_core",
+    "decisions_grafts",
+    "open_vectors",
+    "invocation_lock"
+  ],
+  "title": "USSSummaryArtifact",
+  "type": "object"
+}

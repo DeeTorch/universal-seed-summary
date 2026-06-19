@@ -1,0 +1,275 @@
+{
+  "$defs": {
+    "EvidenceAnchor": {
+      "additionalProperties": false,
+      "description": "A single source-thread anchor supporting a USS claim.",
+      "properties": {
+        "message_id": {
+          "title": "Message Id",
+          "type": "string"
+        },
+        "role": {
+          "title": "Role",
+          "type": "string"
+        },
+        "source_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Index"
+        },
+        "timestamp": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Timestamp"
+        },
+        "excerpt": {
+          "default": "",
+          "title": "Excerpt",
+          "type": "string"
+        },
+        "match_score": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Match Score",
+          "type": "number"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EvidenceConfidence",
+          "default": "unsupported"
+        }
+      },
+      "required": [
+        "message_id",
+        "role"
+      ],
+      "title": "EvidenceAnchor",
+      "type": "object"
+    },
+    "EvidenceClaim": {
+      "additionalProperties": false,
+      "description": "One parsed claim extracted from a USS summary field.",
+      "properties": {
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "section": {
+          "title": "Section",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "claim_text": {
+          "title": "Claim Text",
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/EvidenceStatus",
+          "default": "unsupported"
+        },
+        "confidence": {
+          "$ref": "#/$defs/EvidenceConfidence",
+          "default": "unsupported"
+        },
+        "anchors": {
+          "items": {
+            "$ref": "#/$defs/EvidenceAnchor"
+          },
+          "title": "Anchors",
+          "type": "array"
+        },
+        "explicit_message_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Explicit Message Refs",
+          "type": "array"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "claim_id",
+        "section",
+        "field",
+        "claim_text"
+      ],
+      "title": "EvidenceClaim",
+      "type": "object"
+    },
+    "EvidenceConfidence": {
+      "description": "Confidence level attached to an evidence claim.",
+      "enum": [
+        "explicit_reference",
+        "lexical_match",
+        "weak_lexical_match",
+        "absent",
+        "unsupported"
+      ],
+      "title": "EvidenceConfidence",
+      "type": "string"
+    },
+    "EvidenceCoverage": {
+      "description": "Aggregate evidence coverage metrics.",
+      "properties": {
+        "claim_count": {
+          "default": 0,
+          "title": "Claim Count",
+          "type": "integer"
+        },
+        "supported_count": {
+          "default": 0,
+          "title": "Supported Count",
+          "type": "integer"
+        },
+        "weakly_supported_count": {
+          "default": 0,
+          "title": "Weakly Supported Count",
+          "type": "integer"
+        },
+        "unsupported_count": {
+          "default": 0,
+          "title": "Unsupported Count",
+          "type": "integer"
+        },
+        "absent_claim_count": {
+          "default": 0,
+          "title": "Absent Claim Count",
+          "type": "integer"
+        },
+        "explicit_ref_count": {
+          "default": 0,
+          "title": "Explicit Ref Count",
+          "type": "integer"
+        },
+        "anchor_count": {
+          "default": 0,
+          "title": "Anchor Count",
+          "type": "integer"
+        },
+        "coverage_ratio": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Coverage Ratio",
+          "type": "number"
+        },
+        "weighted_support_ratio": {
+          "default": 0.0,
+          "maximum": 1.0,
+          "minimum": 0.0,
+          "title": "Weighted Support Ratio",
+          "type": "number"
+        }
+      },
+      "title": "EvidenceCoverage",
+      "type": "object"
+    },
+    "EvidenceStatus": {
+      "description": "Support status for a generated claim.",
+      "enum": [
+        "supported",
+        "weakly_supported",
+        "unsupported",
+        "absent_claim"
+      ],
+      "title": "EvidenceStatus",
+      "type": "string"
+    },
+    "InvocationMode": {
+      "description": "Supported USS v1.3 invocation modes.",
+      "enum": [
+        "checkpoint",
+        "re_entry",
+        "archive"
+      ],
+      "title": "InvocationMode",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Machine-readable map from USS claims to source-thread messages.",
+  "properties": {
+    "artifact_id": {
+      "title": "Artifact Id",
+      "type": "string"
+    },
+    "thread_id": {
+      "title": "Thread Id",
+      "type": "string"
+    },
+    "mode": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/InvocationMode"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "protocol_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Protocol Version"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/EvidenceClaim"
+      },
+      "title": "Claims",
+      "type": "array"
+    },
+    "coverage": {
+      "$ref": "#/$defs/EvidenceCoverage"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "artifact_id",
+    "thread_id",
+    "generated_at"
+  ],
+  "title": "EvidenceMap",
+  "type": "object"
+}

@@ -1,0 +1,25 @@
+{
+  "thread_id": "thread_minimal_001",
+  "source": "example",
+  "created_at": "2026-06-18T20:00:00Z",
+  "messages": [
+    {
+      "id": "msg_001",
+      "role": "user",
+      "timestamp": "2026-06-18T20:00:01Z",
+      "content": "I want to turn the Universal Seed Summary Invoker protocol into a real-world local-first tool."
+    },
+    {
+      "id": "msg_002",
+      "role": "assistant",
+      "timestamp": "2026-06-18T20:00:05Z",
+      "content": "The best next move is to build a validator-backed USS Engine with transcript normalization, prompt compilation, and a generator loop."
+    },
+    {
+      "id": "msg_003",
+      "role": "user",
+      "timestamp": "2026-06-18T20:00:10Z",
+      "content": "Proceed with USS Engine v0.2: Runtime Prompt Compiler + Transcript Normalizer."
+    }
+  ]
+}
