@@ -12,7 +12,7 @@ from pathlib import Path
 
 from pydantic import BaseModel, Field
 
-from .clients.base import LLMClient, StaticLLMClient
+from .clients.base import LLMClient
 from .prompt_compiler import RuntimePrompt, compile_repair_prompt, compile_runtime_prompt, load_protocol
 from .redactor import RedactionConfig, RedactionReport, redact_thread
 from .schema import InvocationMode, ValidationReport

@@ -1,6 +1,7 @@
 from pathlib import Path
 
-from uss_engine.generator import GenerationConfig, StaticLLMClient, generate_summary
+from uss_engine.clients.base import StaticLLMClient
+from uss_engine.generator import GenerationConfig, generate_summary
 from uss_engine.prompt_compiler import load_protocol
 from uss_engine.schema import InvocationMode
 from uss_engine.transcript import load_thread
