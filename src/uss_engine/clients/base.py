@@ -10,7 +10,6 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Protocol, runtime_checkable
 
-
 ChatMessage = dict[str, str]
 
 
@@ -32,7 +31,7 @@ class StaticLLMClient:
 
     outputs: list[str]
 
-    def complete(self, messages: list[ChatMessage]) -> str:  # noqa: ARG002
+    def complete(self, messages: list[ChatMessage]) -> str:
         if not self.outputs:
             raise RuntimeError("StaticLLMClient has no outputs remaining")
         return self.outputs.pop(0)
@@ -54,3 +53,13 @@ class ClientConfig:
             raise ValueError("model is required")
         if self.timeout_seconds < 1:
             raise ValueError("timeout_seconds must be positive")
+
+
+def build_openai_payload(config: ClientConfig, messages: list[ChatMessage]) -> dict[str, Any]:
+    """Build a standard OpenAI-compatible JSON payload."""
+    return {
+        "model": config.model,
+        "messages": messages,
+        "temperature": 0,
+        **(config.extra_payload or {}),
+    }
