@@ -64,7 +64,7 @@ classifies new nodes, or changes ecosystem state.
 - Creates decision record in `vault/decisions/`
 - Updates affected nodes with new status/L-rating
 - Updates ecosystem health score
-- May close one or more gaps (GAP-XXXXX)
+- May close one or more gaps (GAP-SPACE-##)
 
 **Example**:
 ```
@@ -161,7 +161,7 @@ AFFECTED:      [Which nodes/spaces change]
 When a gap is closed, document:
 
 ```
-GAP_ID:           [GAP-XXXXX-NN]
+GAP_ID:           [GAP-SPACE-##]
 CLOSURE_TYPE:     [RESOLVED|INFERRED|ORACLE_DECLARED|DEPRECATED|UNRESOLVABLE]
 CLOSED_BY:        [Who closed it (Oracle, automation, etc.)]
 CLOSED_DATE:      [ISO date]
