@@ -9,7 +9,6 @@ import urllib.request
 from typing import Any
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
-
 SENSITIVE_QUERY_KEYS = {
     "key",
     "api_key",
@@ -71,8 +70,12 @@ def post_json(
     timeout_seconds: int = 60,
 ) -> dict[str, Any]:
     """POST JSON and return parsed JSON, raising sanitized RuntimeError on failure."""
+    parsed_url = urlsplit(url)
+    if parsed_url.scheme not in ("http", "https"):
+        raise ValueError(f"URL scheme {parsed_url.scheme!r} is not allowed. Only http and https are permitted.")
+
     body = json.dumps(payload).encode("utf-8")
-    request = urllib.request.Request(
+    request = urllib.request.Request(  # noqa: S310
         url=url,
         data=body,
         headers={
