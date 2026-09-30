@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from ._http import post_json
-from .base import ChatMessage, ClientConfig
+from .base import ChatMessage, ClientConfig, build_openai_payload
 
 DEFAULT_OPENAI_BASE_URL = "https://api.openai.com/v1"
 
@@ -31,7 +31,7 @@ class OpenAIClient:
         base_url: str | None = None,
         timeout_seconds: int = 120,
         **extra_payload: Any,
-    ) -> "OpenAIClient":
+    ) -> OpenAIClient:
         return cls(
             ClientConfig(
                 model=model,
@@ -48,12 +48,7 @@ class OpenAIClient:
             raise RuntimeError("OPENAI_API_KEY is required for OpenAIClient")
 
         base_url = (self.config.base_url or DEFAULT_OPENAI_BASE_URL).rstrip("/")
-        payload: dict[str, Any] = {
-            "model": self.config.model,
-            "messages": messages,
-            "temperature": 0,
-            **(self.config.extra_payload or {}),
-        }
+        payload = build_openai_payload(self.config, messages)
         headers = {
             "Authorization": f"Bearer {api_key}",
             **(self.config.extra_headers or {}),
