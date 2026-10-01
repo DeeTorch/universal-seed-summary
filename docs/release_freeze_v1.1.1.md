@@ -23,7 +23,7 @@ This release is a freeze point. Do not add new architecture, provider clients, o
 
 ## Release Discipline
 
-- Preserve the current provider behavior unless a verified bug requires a minimal fix.
+- Preserve the current provider behavior unless a verified issue requires a minimal fix.
 - Keep local provider keys, `.env`, `.venv/`, `output/`, caches, and generated local artifacts out of Git.
 - Prefer documentation, validation proof, and security hardening over new engine behavior.
 - Use this release as the baseline for v1.2 planning.
