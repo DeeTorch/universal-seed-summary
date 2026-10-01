@@ -97,7 +97,7 @@ Begin execution now.
 Your summary should include:
 
 ✅ All required section headers  
-✅ Populated fields (not "TODO" or placeholders)  
+✅ Populated fields (not "TBD" or placeholders)
 ✅ Explicit declarations for absent information  
 ✅ Timestamp in correct format  
 ✅ Token count within target budget  
