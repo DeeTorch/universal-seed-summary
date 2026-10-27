@@ -19,7 +19,7 @@ Thank you for your interest in improving USS! This protocol benefits from divers
 - Thread characteristics (depth, complexity, domain)
 
 **Issue Types**:
-- 🐛 **Bug**: Protocol specification ambiguity, validation errors
+- 🐛 **Bug Report**: Protocol specification ambiguity, validation errors
 - 📚 **Documentation**: Unclear instructions, missing examples
 - 💡 **Enhancement**: New features, improved workflows
 - 🔧 **Tool**: Validator, indexer, converter improvements
